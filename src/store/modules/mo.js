@@ -15,9 +15,9 @@ const actions = {
   searchMO ({ commit }, inputMO) {
     shopMO.searchMO(
         inputMO,
-        listMO => {
-            console.log('listMO=', listMO)
-            commit('setMO', listMO)
+        list => {
+            // console.log('listMO=', listMO)
+            commit('setMO', list)
         }
     )
     console.log('inputMO=', inputMO)
@@ -35,6 +35,7 @@ const mutations = {
     setMO (state, listMO) {
         state.listMO = listMO
         console.log('state=', state.listMO)
+        console.log('state2=', state.listMO[0].id)
     }
 //   setCategory (state, categoryValue) {
 //     state.category = categoryValue

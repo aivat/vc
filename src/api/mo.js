@@ -7,8 +7,8 @@ const _mo = [
     {"id": 6, "name": "Новоорская РБ", "INN": 1234},
     {"id": 7, "name": "Новоорская РБ", "INN": 1234},
     {"id": 9, "name": "Новоорская РБ", "INN": 1234},
-    {"id": 9, "name": "Новоорская РБ", "INN": 1234},
-    {"id": 10, "name": "Новоорская РБ", "INN": 1234}
+    {"id": 10, "name": "Новоорская РБ", "INN": 1234},
+    {"id": 11, "name": "Новоорская РБ", "INN": 1234}
   ]
   
   export default {
@@ -17,10 +17,12 @@ const _mo = [
         cb( _mo.filter(function(item) {
             // return item.name.indexOf(mo.toLowerCase)
             console.log('item.name=', item.name)
-            if ( item.name == mo ) {
-                console.log('Нашел', item.name)
+            let lpu = item.name.toLowerCase().indexOf(mo.toLowerCase())
+            if ( lpu >=0 ) {
+                // console.log('Нашел', item.name)
+                return item.name
             }
-            return item.name == mo
+            
           }))
         }, 100)
       },
