@@ -5,7 +5,7 @@
        <input v-model="message" placeholder="Введите МО">
        <button @click="search(message)">Поиск</button>
         <div class="wrap" v-for="item in mo" :key="item.id">
-          <p class="ftw100"> id:<b>{{ item.id }}</b> {{ item.title }}</p>
+          <p class="ftw100"> id:<b>{{ item.id }}</b> {{ item.name }}</p>
 
         </div>
     </div>
