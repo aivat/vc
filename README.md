@@ -1,1 +1,3 @@
-# uc
+# npm install
+
+# npm run dev
