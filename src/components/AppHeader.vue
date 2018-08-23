@@ -11,10 +11,10 @@
       </div>
       <div class="wrap">
         <div class="item">
-          Мед. работник
+           {{ role }}
         </div>
         <div class="item item-mo">
-          Красногвардейская РБ
+          {{ mo }}
         </div>
         <div class="item item-logout">
           Выход
@@ -42,11 +42,20 @@
 </template>
 
 <script>
+
+import { mapState, mapActions } from 'vuex'
+
+
 export default {
   data () {
     return {
     }
-  }
+  },
+  computed: 
+    mapState({
+        mo: state => state.mo.mo,
+        role: state => state.mo.role
+    })
 }
 </script>
 
@@ -63,6 +72,7 @@ header {
   width: 100%;
   font-weight: 500;
   color: rgb(60, 64, 67);
+  z-index: 10;
 }
 .wrap-top {
   display: flex;

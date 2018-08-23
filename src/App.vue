@@ -29,6 +29,7 @@ body {
   margin: 0;
   font-size: 16px;
   height: 100%;
+  overflow-y: scroll;
 }
 
 #app {
