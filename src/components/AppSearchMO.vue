@@ -3,26 +3,23 @@
         <div class="container">
             <div class="mo-wrap">
                 <div class="mo-h2" >
-                    В строке поиске найдите свою медицинскую организацию
+                    В строке поиска найдите и выберите свою медицинскую организацию
                 </div>
                 <div class="mo-body">
                     <div class="mo-body-search">
-                        Мед оргнизации
                         <input class="in-search" v-model="message" placeholder="Поиск медицинской организации">
                         <button @click="search(message)">Поиск</button>
                             <ul class="wrap" v-for="item in listMO" :key="item.id">
-                                <li class="">
-                                    <!-- {{ item.shortname }} -->
-                                    <input type="radio" :id="item.id" :value="item.shortname" v-model="picked" name="dzen">
-                                    <label :for="item.id">{{ item.shortname }} {{picked}}</label>
-                                    <div class="circle" v-bind:class="{ 'circle-active': item.shortname == picked ?  true : false }"></div>
-                                    <!-- <div> {{ picked2}} </div> -->
+                                <li class="" v-bind:class="{ 'active': item.shortname == picked2 ?  true : false }">
+                                    <input class="radio" type="radio" :id="item.id" :value="item.shortname" v-model="picked2" name="dzen">
+                                    <label :for="item.id">{{ item.shortname }}</label>
+                                    <!-- <div class="circle" v-bind:class="{ 'circle-active': item.shortname == picked2 ?  true : false }"></div> -->
                                 </li>
                             </ul>
                     </div>
                     <div class="mo-body-link">
-                        <router-link to="/two">
-                            <span :click="qwe()">Далее</span>
+                        <router-link to="/two" class="button-link">
+                            Далее
                         </router-link>
                     </div>
                 </div>           
@@ -48,18 +45,26 @@ export default {
             
         }
     },
-    computed: 
-    //     picked2: function () {
-    //         return this.$store.state.getters.mo
-    //     },
-    //     mo() {
-    //         // return this.$store.state.mo.listMO;
-    //         return this.$store.state.listMO
-    //     }
-    // },
-        mapState({
-            listMO: state => state.mo.listMO
-        }),
+    computed: {
+        picked2: {
+            get () {
+                return this.$store.state.mo.myMO
+            },
+            set (value) {
+                console.log('value=', value)
+                this.$store.commit('setMO', value)
+            }
+        },
+        listMO() {
+            return this.$store.state.mo.listMO
+        } 
+    },
+        // mapState({
+        //     listMO: state => state.mo.listMO,
+        //     asd() {
+        //         return this.picked
+        //     }
+        // }),
 
     methods: {
         search(nameMO) {
@@ -67,11 +72,12 @@ export default {
             this.$store.dispatch('searchMO', nameMO)
         },
         qwe() {
-            this.$store.dispatch('setMO', this.picked)
+            // this.$store.dispatch('setMO', this.picked)
+            // this.$store.dispatch('setMO', this.asd)
         }
     },
     created () {
-        this.$store.dispatch('initialiseStoreMO')
+        // this.$store.dispatch('initialiseStoreMO')
     }
 }
 </script>
@@ -81,7 +87,8 @@ export default {
 .mo {
     /* margin-top: 25px; */
     display: flex;
-    background-color: rgb(242, 245, 248);
+    /* background-color: rgb(242, 245, 248);
+    background-color:#edeef0; */
 }
 
 .container {
@@ -96,6 +103,11 @@ export default {
     /* background-color: rgb(242, 245, 248); */
     /* padding: 10px; */
     /* margin-bottom: 15px; */
+}
+
+.mo-h2 {
+    /* text-align: center; */
+    padding: 10px 0;
 }
 .circle {
     width: 48px;
@@ -114,7 +126,80 @@ export default {
 }
 
 .in-search {
-    width: 300px;
+    width: 400px;
+    outline: 0;
+    border-radius: 2px;
+    /* border: 1px solid rgb(34, 34, 34); */
+    border: 0;
+    font-size: 16px;
+    font-weight: 500;
+    height: 32px;
+    padding: 5px 15px;
+    color: rgb(34, 34, 34);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    margin-right: 15px;
+    /* line-height: 40px; */
+}
+
+button {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 2px;
+    border: 0;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    outline: 0;
+    color: rgb(34, 34, 34);
+    cursor: pointer;
+}
+
+button:active {
+    background-color: rgba(0,0,0,0.08)
+}
+.button-link {
+    background-color: rgb(138, 200, 88);
+    text-decoration: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 2px;
+    display: block;
+}
+
+.button-link:hover {
+    background-color: rgba(138, 200, 88, .85);
+}
+
+ul {
+     margin: 0;
+    padding: 0;   
+}
+
+li {
+    list-style-type: none;
+    display: flex;
+    background-color: white;
+    border-radius: 4px;
+    margin-top: 10px;
+box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    cursor: pointer;
+    transition: all .15s ease-out;
+}
+li:hover:not(.active) {
+    background-color: rgba(66, 133, 244, .9);
+    color: white;
+}
+.active {
+    background-color: rgba(0,0,0,0.1);
+    background-color: rgb(138, 200, 88);
+    color: white;
+}
+.radio {
+    display: none;
+}
+label {
+    width: 100%;
+    cursor: pointer;
+        padding: 15px;
 }
 @media (min-width: 1280px) {
     .mo {

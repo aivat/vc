@@ -37,7 +37,13 @@
         <li class="progress-item">
           5
         </li>
+
     </ul>
+    <!-- <div>
+              <svg class='under' viewBox='0 0 100 1'>
+            <line id="line" x1="0" y1="0" x2="100%"  y2="0" stroke="rgba(129,34,25,1)" stroke-width="1" stroke-dasharray="100%" v-bind:style="{ 'stroke-dashoffset':  dashoffset }"></line>
+        </svg>
+    </div> -->
   </header>
 </template>
 
@@ -53,9 +59,16 @@ export default {
   },
   computed: 
     mapState({
-        mo: state => state.mo.mo,
-        role: state => state.mo.role
-    })
+        mo: state => state.mo.myMO,
+        role: state => state.mo.myRole,
+        dashoffset: function () {
+            return  -(100 / 4) * 1
+        }
+    }),
+  created () {
+        this.$store.dispatch('initialiseStoreRole')
+        this.$store.dispatch('initialiseStoreMO')
+  }
 }
 </script>
 
@@ -120,6 +133,6 @@ ul {
 .active {
   background-color: #4285f4;
   color: white;
-  border-radius: 0 8px 8px 0;
+  /* border-radius: 0 8px 8px 0; */
 }
 </style>

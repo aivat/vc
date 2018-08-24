@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import AppHeader from '@/components/AppHeader'
 import AppSearchMO from '@/components/AppSearchMO'
 import AppChooseRole from '@/components/AppChooseRole'
+import AppIndividual from '@/components/AppIndividual'
 
 Vue.use(Router)
 
@@ -16,8 +17,13 @@ export default new Router({
     },
     {
       path: '/two',
-      name: 'news',
+      name: 'two',
       component: AppChooseRole
+    },
+    {
+      path: '/three',
+      name: 'three',
+      component: AppIndividual
     }
   ]
 })

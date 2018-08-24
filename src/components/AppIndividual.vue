@@ -7,9 +7,48 @@
                 </div>
                 <div class="mo-body">
                     <div class="mo-body-link">
-                        <router-link to="/">
+                        <router-link to="/two">
                             Назад
                         </router-link>
+                    </div>
+                    <div class="individual">
+                        <div class="individual-h2">Введите данные сотрудника, кому необходимо получить электронную подпись</div>
+                        <div class="individual-wrap">
+                            <label for="surname">Фамилия:</label>
+                            <input class="in" type="text" id="surname">
+                            <br>
+                            <label for="name">Имя:</label>
+                            <input class="in" type="text" id="name">
+                            <br>
+                            <label for="patronymic">Отчество:</label>
+                            <input class="in" type="text" id="patronymic">
+                            <br>
+                            <label> Выберите пол:</label>
+                            <input class="radio" type="radio" id="sex1" name="sex">   
+                            <label for="sex1">Муж</label>
+                            <input class="radio" type="radio" id="sex2" name="sex">   
+                            <label for="sex2">Жен</label>
+                            <br>
+                            <label for="series">Серия:</label>
+                            <input class="in" type="text" id="series">
+                            <label for="number">Номер:</label>
+                            <input class="in" type="text" id="number"> 
+                            <br>
+                            <label for="issued_by">Кем выдан:</label>
+                            <input class="in" type="text" id="issued_by">
+                            <br>
+                            <label for="date_of_issue">Дата выдачи</label>
+                            <input class="in" type="text" id="date_of_issue"> 
+                            <br>
+                            <label for="date_of_issue">Код подразделения</label>
+                            <input class="in" type="text" id="date_of_issue">
+                            <br>
+                            <label for="date_of_birth">Дата рождения</label>
+                            <input class="in" type="text" id="date_of_birth"> 
+                            <br>
+                            <label for="place_of_birth">Место рождения</label>
+                            <input class="in" type="text" id="place_of_birth">                                                                           
+                        </div>
                     </div>
                     <div class="mo-body-search">
                             <ul class="wrap" v-for="item in role" :key="item.id">

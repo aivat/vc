@@ -2,14 +2,14 @@ import shopMO from '../../api/mo'
 
 const state = {
     listMO: [],
-    mo: 'sd',
-    role: 'qwe'
+    myMO: '',
+    myRole: ''
 }
 
 const getters = {
     getMO: state => state.listMO,
-    mo: state => state.mo,
-    role: state => state.role
+    getMyMO: state => state.myMO,
+    getMyRole: state => state.role
 }
 
 // actions
@@ -24,16 +24,20 @@ const actions = {
   },
   setMO({ commit },  inputMO) {
     commit('setMO', inputMO)
-
   },
   setRole({ commit },  inputRole) {
     commit('setRole', inputRole)
   },
   initialiseStoreMO({ commit }, state) {
-    if(localStorage.getItem('mo')) {
-      commit ('setMOFromLocalStorage', localStorage.getItem('mo'))
+    if(localStorage.getItem('myMO')) {
+      commit ('setMOFromLocalStorage', localStorage.getItem('myMO'))
     }
-  }  
+  },
+  initialiseStoreRole({ commit }, state) {
+    if(localStorage.getItem('myRole')) {
+      commit ('setRoleFromLocalStorage', localStorage.getItem('myRole'))
+    }
+  }    
 }
 
 // mutations
@@ -43,14 +47,18 @@ const mutations = {
         // console.log('state2=', state.listMO[0].id)
     },
     setMO (state, inputMO) {
-        state.mo = inputMO
-        localStorage.setItem('mo', inputMO)
+        state.myMO = inputMO
+        localStorage.setItem('myMO', inputMO)
     },
     setRole (state, inputRole) {
-        state.role = inputRole
+        state.myRole = inputRole
+        localStorage.setItem('myRole', inputRole)
     },
     setMOFromLocalStorage (state, storeMOFromLocalStorage) {
-        state.mo = storeMOFromLocalStorage
+        state.myMO = storeMOFromLocalStorage
+    },
+    setRoleFromLocalStorage (state, storeRoleFromLocalStorage) {
+        state.myRole = storeRoleFromLocalStorage
     }
 }
 
