@@ -4,6 +4,7 @@ import AppHeader from '@/components/AppHeader'
 import AppSearchMO from '@/components/AppSearchMO'
 import AppChooseRole from '@/components/AppChooseRole'
 import AppIndividual from '@/components/AppIndividual'
+import AppPersonInCharge from '@/components/AppPersonInCharge'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/three',
       name: 'three',
       component: AppIndividual
-    }
+    },
+    {
+      path: '/four',
+      name: 'four',
+      component: AppPersonInCharge
+    },
   ]
 })
