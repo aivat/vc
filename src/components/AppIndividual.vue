@@ -41,16 +41,19 @@
                             </p>
                             <p>
                                 <label for="series">Серия:</label>
-                                <input class="in" id="series" v-model.lazy="series" maxlength="4"> {{ series }}
+                                <input class="in" id="series" v-model.lazy="series" maxlength="4"> 
+                                <label v-show="!error.series">{{ series }} </label>
                                 <label v-show="error.series">{{ error.series }} </label>
                                 <label for="number">Номер:</label>
-                                <input class="in" type="text" id="number" maxlength="6">
+                                <input class="in" type="text" v-model.lazy="number" id="number" maxlength="6">
+                                <label v-show="!error.number">{{ number }}</label>
                                 <label v-show="error.number">{{ error.number }} </label>
                             </p>
                             <p>
                                 <label for="issued_by">Кем выдан:</label>
-                                <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > {{ issued_by }}
-                                <label v-show="error.issued_by">{{ error.issued_by }} </label>
+                                <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
+                                <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
+                                <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
                                 <label v-html="errorHTML"> </label>
                             </p>
                             <p>
@@ -59,7 +62,9 @@
                             </p>
                             <p>
                                 <label for="code">Код подразделения</label>
-                                <input class="in" type="number" id="code">
+                                <input class="in" type="text" id="code" v-model="code" maxlength="7">
+                                <label v-show="!error.code">{{ code }}</label>
+                                <label v-show="error.code">{{ error.code }} </label>
                             </p>
                             <p>
                                 <label for="date_of_birth">Дата рождения</label>
@@ -196,6 +201,20 @@ export default {
                 }    
             }
         },
+        number: {
+            get () {
+                return this.$store.state.individual.individual.number 
+            },
+            set (value) {
+                if ( this.chekNumber(value) ) {
+                    this.error.number = false
+                    this.$store.dispatch('setNumber', value.toUpperCase())
+                } else {
+                    // this.error.series = 'Недопустимые символы, например, буквы или '
+                    this.$store.dispatch('setNumber', null)
+                }    
+            }            
+        },
         issued_by: {
             get () {
                 return this.$store.state.individual.individual.issued_by 
@@ -206,9 +225,32 @@ export default {
                     this.$store.dispatch('setIssuedBy', value.toUpperCase())
                 } else {
                     // this.error.series = 'Недопустимые символы, например, буквы или '
-                    // this.$store.dispatch('setIssuedBy', null)
+                   this.$store.dispatch('setIssuedBy', value.toUpperCase())
                 }    
             }            
+        },
+        code: {
+            get () {
+                return this.$store.state.individual.individual.code
+            },
+            set (value) {
+                if ( value.length == 3 ) {
+                    value = value + '-'
+                    // this.error.number = 'Номер паспорта состоит из 6 цифр'
+                    this.$store.dispatch('setCode', value.toUpperCase())
+                    // return false
+                }
+                if ( value.length == 7 ) {
+                    if ( this.chekCode(value) ) {
+                        this.error.code = false
+                        this.$store.dispatch('setCode', value.toUpperCase())
+                    } else {
+                        // this.$store.dispatch('setCode', null)
+                        // this.error.series = 'Недопустимые символы, например, буквы или '
+                    //    this.$store.dispatch('setCode', value.toUpperCase())
+                    }
+                }
+            }             
         }        
     },
     methods: {
@@ -229,7 +271,19 @@ export default {
                 return false
             } else return true        
         },
+        chekNumber(value) {
+            if ( value.length != 6 ) {
+                this.error.number = 'Номер паспорта состоит из 6 цифр'
+                return false
+            }
+            let regex = /^[0-9]{6}?$/
+            if ( value.match(regex) === null ) {
+                this.error.number = 'Номер паспорта должны быть из цифр'
+                return false
+            } else return true        
+        },
         chekIssuedBy(value) {
+            let err = false
             let arr = value.toUpperCase().split(' ')
             console.log('arr=', arr)
             let arrFilter = arr.filter(function(item) {
@@ -240,23 +294,43 @@ export default {
                 return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ')) 
             })
             console.log(arrFilter );
-            let newArr = arrFilter.map(function(item, i) {
+            let newArr = arrFilter.map( (item, i) =>{
                 console.log( i + ": " + item )
                 if (~item.indexOf(".")) {
                     console.log( 'совпадение есть!' );
+                    err = true
+                    this.error.issued_by = 'Ошибка! Надо писать как в паспорте без сокращений имен собственных'
                     return '<span style="text-decoration: underline; color: red">' + item + '</span>'
                 } 
                 if (~item.indexOf("-")) {
                     console.log( 'совпадение есть!' );
                     return '<span style="text-decoration: underline; color: green">' + item + '</span>'
                 }  else {
-                    return '<span>' + item + '</span>'
+                    // return '<span>' + item + '</span>'
                     console.log( 'совпадение нет' );
                 }
             });
             this.errorHTML = newArr.join(' ')
-            console.log('qw=e', this.errorHTML)
-            return true
+            if (!err) {
+                return true
+            } else false
+            // console.log('qw=e', this.errorHTML)
+            // return true
+        },
+        chekCode(value) {
+            // if ( value.length == 3 ) {
+            //     value = value + '-'
+            //     // this.error.number = 'Номер паспорта состоит из 6 цифр'
+            //     this.$store.dispatch('setCode', value.toUpperCase())
+            //     // return false
+            // }
+
+            let regex = /^[0-9]{3}-[0-9]{3}?$/
+            console.log('qwe=', value.match(regex))
+            if ( value.match(regex) === null ) {
+                this.error.code = 'Номер паспорта должны быть из цифр'
+                return false
+            } else return true               
         },
         onward() {
 
