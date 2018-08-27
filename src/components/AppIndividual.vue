@@ -34,18 +34,18 @@
                             </p>
                             <p>
                                 <label> Выберите пол:</label>
-                                <input class="radio" type="radio" id="sex1" name="sex">   
+                                <input class="radio" type="radio" id="sex1" name="sex" v-model="sex" value="муж.">   
                                 <label for="sex1">Муж</label>
-                                <input class="radio" type="radio" id="sex2" name="sex">   
+                                <input class="radio" type="radio" id="sex2" name="sex" v-model="sex" value="жен.">   
                                 <label for="sex2">Жен</label>
                             </p>
                             <p>
                                 <label for="series">Серия:</label>
-                                <input class="in" id="series" v-model.lazy="series" maxlength="4"> 
+                                <input class="in" id="series" v-model.lazy="series" maxlength="4" placeholder="1234"> 
                                 <label v-show="!error.series">{{ series }} </label>
                                 <label v-show="error.series">{{ error.series }} </label>
                                 <label for="number">Номер:</label>
-                                <input class="in" type="text" v-model.lazy="number" id="number" maxlength="6">
+                                <input class="in" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456">
                                 <label v-show="!error.number">{{ number }}</label>
                                 <label v-show="error.number">{{ error.number }} </label>
                             </p>
@@ -54,29 +54,35 @@
                                 <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
                                 <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
                                 <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
-                                <label v-html="errorHTML"> </label>
+                                <label v-html="errorHTML_issued_by"> </label>
                             </p>
                             <p>
                                 <label for="date_of_issue">Дата выдачи</label>
-                                <input class="in" type="month" id="date_of_issue"> 
+                                <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
+                                <label v-show="!error.date_of_issue">{{ date_of_issue }}</label>
+                                <label v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
                             </p>
                             <p>
                                 <label for="code">Код подразделения</label>
-                                <input class="in" type="text" id="code" v-model="code" maxlength="7">
+                                <input class="in" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123">
                                 <label v-show="!error.code">{{ code }}</label>
                                 <label v-show="error.code">{{ error.code }} </label>
                             </p>
                             <p>
                                 <label for="date_of_birth">Дата рождения</label>
-                                <input class="in" type="date" id="date_of_birth">
+                                <input class="in" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991">
+                                <label v-show="!error.date_of_birth">{{ date_of_birth }}</label>
+                                <label v-show="error.date_of_birth">{{ error.date_of_birth }} </label>
                             </p>
                             <p>
                                 <label for="place_of_birth">Место рождения</label>
-                                <input class="in" type="text" id="place_of_birth">    
+                                <input class="in" type="text" id="place_of_birth" v-model="place_of_birth">
+                                <label v-html="errorHTML_place_of_birth"> </label>    
                             </p>
                             <p>
                                 <label for="position">Должность</label>
-                                <input class="in" type="text" id="position">    
+                                <input class="in" type="text" id="position" v-model="position">  
+                                <label> {{ position }} </label> 
                             </p>                                                                     
                         </div>
                     </div>
@@ -144,7 +150,8 @@ export default {
                 place_of_birth: false,
                 position: false                
             },
-            errorHTML: ''
+            errorHTML_issued_by: '',
+            errorHTML_place_of_birth: ''
         }
     },
     computed: {
@@ -220,13 +227,37 @@ export default {
                 return this.$store.state.individual.individual.issued_by 
             },
             set (value) {
-                if ( this.chekIssuedBy(value) ) {
-                    this.error.issued_by = false
+                let qwe
+                // ошибок нет придет false, ошибки есть придет true
+                if ( qwe = this.chekIssuedBy(value) ) {
+                    this.error.issued_by = true
                     this.$store.dispatch('setIssuedBy', value.toUpperCase())
+                    this.errorHTML_issued_by = qwe
                 } else {
-                    // this.error.series = 'Недопустимые символы, например, буквы или '
                    this.$store.dispatch('setIssuedBy', value.toUpperCase())
-                }    
+                   this.error.issued_by = false
+                   this.errorHTML_issued_by = null
+                }  
+                  
+            }            
+        },
+        place_of_birth: {
+            get () {
+                return this.$store.state.individual.individual.place_of_birth 
+            },
+            set (value) {
+                let qwe
+                // ошибок нет придет false, ошибки есть придет true
+                if ( qwe = this.chekIssuedBy(value) ) {
+                    this.error.place_of_birth = true
+                    this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
+                    this.errorHTML_place_of_birth = qwe
+                } else {
+                   this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
+                   this.error.place_of_birth = false
+                   this.errorHTML_place_of_birth = null
+                }  
+                  
             }            
         },
         code: {
@@ -240,18 +271,87 @@ export default {
                     this.$store.dispatch('setCode', value.toUpperCase())
                     // return false
                 }
-                if ( value.length == 7 ) {
+                this.$store.dispatch('setCode', value.toUpperCase())
+                // if ( value.length == 7 ) {
                     if ( this.chekCode(value) ) {
                         this.error.code = false
-                        this.$store.dispatch('setCode', value.toUpperCase())
+                        // this.$store.dispatch('setCode', value.toUpperCase())
                     } else {
                         // this.$store.dispatch('setCode', null)
                         // this.error.series = 'Недопустимые символы, например, буквы или '
                     //    this.$store.dispatch('setCode', value.toUpperCase())
                     }
-                }
+                // }
             }             
-        }        
+        },
+        date_of_birth: {
+            get () {
+                return this.$store.state.individual.individual.date_of_birth
+            },
+            set (value) {
+                if ( ( value.length == 2 ) || (value.length == 5)){
+                    value = value + '.'
+                    // this.error.number = 'Номер паспорта состоит из 6 цифр'
+                    this.$store.dispatch('setDateOfBirth', value.toUpperCase())
+                    // return false
+                }
+                this.$store.dispatch('setDateOfBirth', value.toUpperCase())
+                // if ( value.length == 10 ) {
+                    if ( this.chekDate(value) ) {
+                        this.error.date_of_birth = false
+                        
+                    } else {
+                        this.error.date_of_birth = 'Дата в формате "31.12.1991"'
+                        // this.$store.dispatch('setCode', null)
+                        // this.error.series = 'Недопустимые символы, например, буквы или '
+                    //    this.$store.dispatch('setCode', value.toUpperCase())
+                    }
+                // }
+            }             
+        },
+        date_of_issue: {
+            get () {
+                return this.$store.state.individual.individual.date_of_issue
+            },
+            set (value) {
+                if ( ( value.length == 2 ) || (value.length == 5)){
+                    value = value + '.'
+                    // this.error.number = 'Номер паспорта состоит из 6 цифр'
+                    this.$store.dispatch('setDateOfIssue', value.toUpperCase())
+                    // return false
+                }
+                this.$store.dispatch('setDateOfIssue', value.toUpperCase())
+                // if ( value.length == 10 ) {
+                    if ( this.chekDate(value) ) {
+                        this.error.date_of_issue = false
+                        
+                    } else {
+                        this.error.date_of_issue = 'Дата в формате "31.12.1991"'
+                        // this.$store.dispatch('setCode', null)
+                        // this.error.series = 'Недопустимые символы, например, буквы или '
+                    //    this.$store.dispatch('setCode', value.toUpperCase())
+                    }
+                // }
+            }             
+        },
+        sex: {
+            get () {
+                return this.$store.state.individual.individual.sex
+            },
+            set (value) {
+                this.$store.dispatch('setSex', value)
+                this.error.sex = false
+            }            
+        },
+        position: {
+            get () {
+                return this.$store.state.individual.individual.position
+            },
+            set (value) {
+                this.$store.dispatch('setPosition', value)
+                this.error.position = false
+            }              
+        }      
     },
     methods: {
         checkForm(value) {
@@ -291,7 +391,7 @@ export default {
                 if (item == 'Р-ОН' ) {
                     console.log(item, 'Р-ОН');
                 }
-                return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ')) 
+                return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'Г.') && (item != 'Р.')) 
             })
             console.log(arrFilter );
             let newArr = arrFilter.map( (item, i) =>{
@@ -310,10 +410,10 @@ export default {
                     console.log( 'совпадение нет' );
                 }
             });
-            this.errorHTML = newArr.join(' ')
-            if (!err) {
-                return true
-            } else false
+            // this.errorHTML = newArr.join(' ')
+            if (err) {
+                return newArr.join(' ')
+            } else return false
             // console.log('qw=e', this.errorHTML)
             // return true
         },
@@ -328,9 +428,18 @@ export default {
             let regex = /^[0-9]{3}-[0-9]{3}?$/
             console.log('qwe=', value.match(regex))
             if ( value.match(regex) === null ) {
-                this.error.code = 'Номер паспорта должны быть из цифр'
+                this.error.code = 'Номер паспорта в формате 123-456'
                 return false
             } else return true               
+        },
+        chekDate(value) {
+            let regex = /^[0-3][0-9].[0-1][0-9].[0-9]{4}?$/
+            // let regex = /^[0-9]{2}.[0-9]{2}.[0-9]{4}?$/
+            console.log('qwe=', value.match(regex))
+            if ( value.match(regex) === null ) {
+                
+                return false
+            } else return true                
         },
         onward() {
 
