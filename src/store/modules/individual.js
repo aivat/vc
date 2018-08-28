@@ -13,7 +13,8 @@ const state = {
         code: null,
         date_of_birth: null,
         place_of_birth: null,
-        position: null
+        position: null,
+        snils: null
     }
 }
 
@@ -57,6 +58,9 @@ const actions = {
   },
   setPosition({ commit },  input) {
     commit('setPosition', input)
+  },
+  setSnils({ commit },  input) {
+    commit('setSnils', input)
   }
 //   initialiseStoreRole({ commit }, state) {
 //     if(localStorage.getItem('myRole')) {
@@ -115,7 +119,10 @@ const mutations = {
         state.individual.position = input
         localStorage.setItem('individual', JSON.stringify(state.individual))
     },
-
+    setSnils (state, input) {
+        state.individual.snils = input
+        localStorage.setItem('individual', JSON.stringify(state.individual))
+    }
 
     // setRoleFromLocalStorage (state, storeRoleFromLocalStorage) {
     //     state.myRole = storeRoleFromLocalStorage

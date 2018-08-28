@@ -83,7 +83,15 @@
                                 <label for="position">Должность</label>
                                 <input class="in" type="text" id="position" v-model="position">  
                                 <label> {{ position }} </label> 
-                            </p>                                                                     
+                            </p>
+                            <p>
+                                <label for="snils">СНИЛС</label>
+                                <input class="in" type="text" id="snils" v-model="snils" maxlength="14" @keyup.delete="submitQ">  
+                                <label> {{ snils }} </label>
+                                <label v-show="error.snils.is"> {{ error.snils.is }} </label>
+                                <label v-show="error.snils.is"> {{ error.snils.text }} </label>
+                                <label v-show="!error.snils.is"> Все верно  </label>  
+                            </p>                                                                        
                         </div>
                     </div>
 
@@ -134,7 +142,11 @@ export default {
                 code: null,
                 date_of_birth: null,
                 place_of_birth: null,
-                position: null
+                position: null,
+                snils: {
+                    is: null,
+                    text: ''
+                }
             },
             errorFalse: {
                 surname: false ,
@@ -148,7 +160,8 @@ export default {
                 code: false,
                 date_of_birth: false,
                 place_of_birth: false,
-                position: false                
+                position: false,
+                snils: false               
             },
             errorHTML_issued_by: '',
             errorHTML_place_of_birth: ''
@@ -351,7 +364,38 @@ export default {
                 this.$store.dispatch('setPosition', value)
                 this.error.position = false
             }              
-        }      
+        },
+        snils: {
+            get () {
+                return this.$store.state.individual.individual.snils
+            },
+            set (value) {
+                let snilsChek = this.chekSnils(value)
+                console.log('snilsChek=', snilsChek)
+                
+                        if ( ( value.length == 3 ) || (value.length == 7)) {
+                            value = value + '-'
+                            // this.$store.dispatch('setSnils', value.toUpperCase())
+                        }
+                        if ( value.length == 11 ) {
+                            value = value + ' '
+                            // this.$store.dispatch('setSnils', value.toUpperCase())                     
+                        }
+                
+
+                
+                
+                // ошибка нет false, ошибки есть true
+                if ( !snilsChek) {
+                    this.error.snils.is = false
+                    this.$store.dispatch('setSnils', value)
+                } else {
+                    this.error.snils.is = true
+                    this.error.snils.text = snilsChek.text
+                    this.$store.dispatch('setSnils', value)
+                }
+            }              
+        }        
     },
     methods: {
         checkForm(value) {
@@ -440,6 +484,87 @@ export default {
                 
                 return false
             } else return true                
+        },
+        chekSnils(value) {
+            let err = {
+                type: '',
+                text: ''
+            }
+
+            let regex = /^[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}?$/
+            console.log('qwe1=', value.match(regex))
+            if ( value.match(regex) === null ) { 
+                err.type = 0
+                err.text = 'СНИЛС формата 111-111-111-11'   
+            }
+            let regex2 = /[a-zа-яё]/gi  
+            console.log('qwe2=', value.match(regex2))
+            if ( value.match(regex2) !== null ) { 
+                err.type = 1
+                err.text = 'В СНИЛСе не должны быть буквы'   
+            }
+             console.log('err=', err)
+             console.log('err.type=', err.type)
+            if ( err.type === '' ) {
+                let regex3 = /\d{1,}/g
+                let as = value.match(regex3).join('')
+                if ( this.chekSnilsSum(as) ) {
+                    return false
+                } else {
+                    err.type = 2
+                    err.text = 'В СНИЛСе контрольная сумма неверна' 
+                    return err
+                }
+                // let zx = as.join('')
+                // console.log('zx=', as)
+                // return false
+            } else {
+                console.log('return=', err)
+                return err
+            }
+            
+        },
+
+        chekSnilsSum(value) {
+            console.log('value=',value)
+            let sum = 0
+            let chekSum = '00'
+            for (let i = 0; i < 9; i++ ) {
+                sum = sum + (value[i] * (9 - i))
+            }
+            console.log('sum=',sum)
+            if ( sum < 100 ) {
+                chekSum = sum
+            }
+            if ( sum == 100 || sum == 101) {
+                chekSum = '00'
+            }
+            if ( sum > 101 ) {
+                chekSum = sum % 101
+                if ( chekSum == 100 || chekSum == 101) {
+                    chekSum = '00'
+                }                
+            }
+            let chekSumValue = value.substring(9,11)
+            console.log('chekSumValue=',chekSumValue)
+            console.log('chekSum=',chekSum)
+            if ( chekSumValue ==  chekSum) {
+                return true
+            } return false
+            // return 
+        },
+        submitQ(value) {
+                // if ( this.snils.length < 5 ) {
+                //     this.snils = this.snils.substring(0, 2)                    
+                // }
+                // if ( this.snils.length < 9 ) {
+                //     this.snils = this.snils.substring(0, 6)                    
+                // }                
+
+                // if ( this.snils.length == 12 ) {
+                //     this.snils = this.snils.substring(0, 10)                    
+                // }
+            // this.snils = ''
         },
         onward() {
 
