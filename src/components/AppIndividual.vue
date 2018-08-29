@@ -2,104 +2,125 @@
     <div class="mo">
         <div class="container">
             <div class="mo-wrap">
-                <div class="mo-h2" >
-                    Введите данные сотрудника, кому необходимо получить электронную подпись
-                </div>
-                <div class="mo-body">
+                <header>
                     <div class="mo-body-link">
-                        <router-link to="/two">
+                        <router-link to="/two" class="button-link">
                             Назад
                         </router-link>
                     </div>
+                    <div class="mo-h2" >
+                        Введите данные сотрудника, которому необходимо получить электронную подпись
+                    </div>
+                    <div class="mo-body-link">
+                        <!-- <router-link to="/four" > -->
+                            <span @click="onward()" class="button-link">Далее</span>
+                        <!-- </router-link> -->
+                    </div>
+                </header>
+
+                <div class="mo-body">
+
                     <div class="individual">
-                        <div class="individual-h2">Введите данные сотрудника, кому необходимо получить электронную подпись</div>
+                        <div class="individual-h2">
+                            <div class="rules-logo">Подсказка:&nbsp;</div>
+                            <div class="rules">{{ rules }}</div>
+                        </div>
                         <div class="individual-wrap">
                             <p>
-                                <label for="surname">Фамилия:</label>
-                                <input class="in" type="text" id="surname" v-model.trim="surname">
-                                <label> {{ surname }} </label>
-                                <label v-show="error.surname">{{ error.surname }} </label>
+                                <label for="surname" class="label-name" >Фамилия:</label>
+                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
+                                <label class="label-show"> {{ surname }} </label>
+                                <label class="label-error" v-show="error.surname">{{ error.surname }} </label>
                             </p>
                             <p>
-                                <label for="name">Имя:</label>
-                                <input class="in" type="text" id="name" v-model.trim="name">
-                                <label> {{ name }} </label>
-                                <label v-show="error.name">{{ error.name }} </label>
+                                <label for="name" class="label-name" >Имя:</label>
+                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
+                                <label class="label-show"> {{ name }} </label>
+                                <label class="label-error" v-show="error.name">{{ error.name }} </label>
                             </p>
                             <p>
-                                <label for="patronymic">Отчество:</label>
-                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic">
-                                <label> {{ patronymic }} </label>
-                                <label v-show="error.patronymic">{{ error.patronymic }} </label>
+                                <label for="patronymic" class="label-name" >Отчество:</label>
+                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ">
+                                <label class="label-show"> {{ patronymic }} </label>
+                                <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
                             </p>
                             <p>
-                                <label> Выберите пол:</label>
+                                <label class="label-name"> Выберите пол:</label>
                                 <input class="radio" type="radio" id="sex1" name="sex" v-model="sex" value="муж.">   
                                 <label for="sex1">Муж</label>
                                 <input class="radio" type="radio" id="sex2" name="sex" v-model="sex" value="жен.">   
                                 <label for="sex2">Жен</label>
                             </p>
                             <p>
-                                <label for="series">Серия:</label>
-                                <input class="in" id="series" v-model.lazy="series" maxlength="4" placeholder="1234"> 
-                                <label v-show="!error.series">{{ series }} </label>
-                                <label v-show="error.series">{{ error.series }} </label>
-                                <label for="number">Номер:</label>
-                                <input class="in" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456">
-                                <label v-show="!error.number">{{ number }}</label>
-                                <label v-show="error.number">{{ error.number }} </label>
+                                <label for="position" class="label-name">Должность:</label>
+                                <input class="in position" type="text" id="position" v-model="position">  
+                                <label class="label-show"> {{ position }} </label> 
                             </p>
                             <p>
-                                <label for="issued_by">Кем выдан:</label>
-                                <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
-                                <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
-                                <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
-                                <label v-html="errorHTML_issued_by"> </label>
-                            </p>
-                            <p>
-                                <label for="date_of_issue">Дата выдачи</label>
-                                <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
-                                <label v-show="!error.date_of_issue">{{ date_of_issue }}</label>
-                                <label v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
-                            </p>
-                            <p>
-                                <label for="code">Код подразделения</label>
-                                <input class="in" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123">
-                                <label v-show="!error.code">{{ code }}</label>
-                                <label v-show="error.code">{{ error.code }} </label>
-                            </p>
-                            <p>
-                                <label for="date_of_birth">Дата рождения</label>
-                                <input class="in" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991">
-                                <label v-show="!error.date_of_birth">{{ date_of_birth }}</label>
-                                <label v-show="error.date_of_birth">{{ error.date_of_birth }} </label>
-                            </p>
-                            <p>
-                                <label for="place_of_birth">Место рождения</label>
-                                <input class="in" type="text" id="place_of_birth" v-model="place_of_birth">
-                                <label v-html="errorHTML_place_of_birth"> </label>    
-                            </p>
-                            <p>
-                                <label for="position">Должность</label>
-                                <input class="in" type="text" id="position" v-model="position">  
-                                <label> {{ position }} </label> 
-                            </p>
-                            <p>
-                                <label for="snils">СНИЛС</label>
-                                <input class="in" type="text" id="snils" v-model="snils" maxlength="14" @keyup.delete="submitQ">  
-                                <label> {{ snils }} </label>
-                                <label v-show="error.snils.is"> {{ error.snils.is }} </label>
-                                <label v-show="error.snils.is"> {{ error.snils.text }} </label>
+                                <label for="snils" class="label-name">СНИЛС:</label>
+                                <input class="in snils" type="text" id="snils" v-model="snils" maxlength="14" placeholder="111-222-333 44">  
+                                <label class="label-show"> {{ snils }} </label>
+                                <!-- <label v-show="error.snils.is"> {{ error.snils.is }} </label> -->
+                                <label v-show="error.snils.is" class="label-error"> {{ error.snils.text }} </label>
                                 <label v-show="!error.snils.is"> Все верно  </label>  
-                            </p>                                                                        
+                            </p>     
+                            <fieldset>
+                                <legend>Паспорт</legend>
+                                <p>
+                                    <label for="series" class="label-name">Серия:</label>
+                                    <input class="in series" id="series" v-model.lazy="series" maxlength="4" placeholder="1234"> 
+                                    <label v-show="!error.series" class="label-show">{{ series }} </label>
+                                    <label v-show="error.series" class="label-error">{{ error.series }} </label>
+                                </p>
+                                <p>
+                                    <label for="number" class="label-name">Номер:</label>
+                                    <input class="in number" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456">
+                                    <label class="label-show" v-show="!error.number">{{ number }}</label>
+                                    <label v-show="error.number" class="label-error">{{ error.number }} </label>
+                                </p>
+                                <p>
+                                    <label for="issued_by" class="label-name">Кем выдан:</label>
+                                    <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
+                                    <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
+                                    <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
+                                    <label v-html="errorHTML_issued_by"> </label>
+                                </p>
+                                <p>
+                                    <label for="issued_by2" class="label-name"></label>
+                                    <label class="label-show">{{ issued_by }}</label>
+                                </p>
+                                <p>
+                                    <label for="date_of_issue" class="label-name">Дата выдачи:</label>
+                                    <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
+                                    <label class="label-show" v-show="!error.date_of_issue">{{ date_of_issue }}</label>
+                                    <label class="label-error" v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
+                                </p>
+                                <p>
+                                    <label for="code" class="label-name">Код подразделения:</label>
+                                    <input class="in" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123">
+                                    <label class="label-show" v-show="!error.code">{{ code }}</label>
+                                    <label class="label-error" v-show="error.code">{{ error.code }} </label>
+                                </p>
+                                <p>
+                                    <label for="date_of_birth" class="label-name">Дата рождения:</label>
+                                    <input class="in" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991">
+                                    <label class="label-show" v-show="!error.date_of_birth">{{ date_of_birth }}</label>
+                                    <label class="label-error" v-show="error.date_of_birth">{{ error.date_of_birth }} </label>
+                                </p>
+                                <p>
+                                    <label for="place_of_birth" class="label-name">Место рождения:</label>
+                                    <input class="in issued_by" type="text" id="place_of_birth" v-model="place_of_birth">
+                                    <label v-html="errorHTML_place_of_birth"> </label>    
+                                </p>
+                                <p>
+                                    <label for="place_of_birth" class="label-name"></label>
+                                    <label class="label-show">{{ place_of_birth }}</label>    
+                                </p>
+                            </fieldset>                                                                   
                         </div>
                     </div>
 
-                    <div class="mo-body-link">
-                        <!-- <router-link to="/four" > -->
-                            <span @click="onward()">Далее</span>
-                        <!-- </router-link> -->
-                    </div>
+
                 </div>
                 <div class="mo-body-search">
                         <ul class="wrap" v-for="item in role" :key="item.id">
@@ -164,7 +185,8 @@ export default {
                 snils: false               
             },
             errorHTML_issued_by: '',
-            errorHTML_place_of_birth: ''
+            errorHTML_place_of_birth: '',
+            rules: ' все поля форм заполняются строго как в документах. '
         }
     },
     computed: {
@@ -173,12 +195,14 @@ export default {
                 return this.$store.state.individual.individual.surname
             },
             set (value) {
+                this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 if ( this.checkForm(value) ) {
                     this.error.surname = false
-                    this.$store.dispatch('setSurname', value.toUpperCase())
+                    // this.$store.dispatch('setSurname', value.toUpperCase())
                 }  else {
                     this.error.surname = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.'
                 }       
+                this.$store.dispatch('setSurname', value.toUpperCase())
             }
         },
         name: {
@@ -186,6 +210,7 @@ export default {
                 return this.$store.state.individual.individual.name
             },
             set (value) {
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 if ( this.checkForm(value) ) {
                    this.error.name = false
                    this.$store.dispatch('setName', value.toUpperCase())
@@ -212,6 +237,7 @@ export default {
                 return this.$store.state.individual.individual.series 
             },
             set (value) {
+                this.rules = 'серию и номер паспорта перед внесением необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 if ( this.chekSeries(value) ) {
                     this.error.series = false
                     this.$store.dispatch('setSeries', value.toUpperCase())
@@ -226,6 +252,7 @@ export default {
                 return this.$store.state.individual.individual.number 
             },
             set (value) {
+                this.rules = 'серию и номер паспорта перед внесением необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 if ( this.chekNumber(value) ) {
                     this.error.number = false
                     this.$store.dispatch('setNumber', value.toUpperCase())
@@ -240,6 +267,7 @@ export default {
                 return this.$store.state.individual.individual.issued_by 
             },
             set (value) {
+                this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                 let qwe
                 // ошибок нет придет false, ошибки есть придет true
                 if ( qwe = this.chekIssuedBy(value) ) {
@@ -259,6 +287,7 @@ export default {
                 return this.$store.state.individual.individual.place_of_birth 
             },
             set (value) {
+                this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                 let qwe
                 // ошибок нет придет false, ошибки есть придет true
                 if ( qwe = this.chekIssuedBy(value) ) {
@@ -515,9 +544,6 @@ export default {
                     err.text = 'В СНИЛСе контрольная сумма неверна' 
                     return err
                 }
-                // let zx = as.join('')
-                // console.log('zx=', as)
-                // return false
             } else {
                 console.log('return=', err)
                 return err
@@ -551,7 +577,6 @@ export default {
             if ( chekSumValue ==  chekSum) {
                 return true
             } return false
-            // return 
         },
         submitQ(value) {
                 // if ( this.snils.length < 5 ) {
@@ -588,7 +613,8 @@ export default {
 .mo {
     /* margin-top: 25px; */
     display: flex;
-    background-color: rgb(242, 245, 248);
+    /* background-color: rgb(242, 245, 248);
+    background-color:#edeef0; */
 }
 
 .container {
@@ -600,9 +626,18 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     padding: 0 25px;
+    padding-top: 15px;
     /* background-color: rgb(242, 245, 248); */
     /* padding: 10px; */
     /* margin-bottom: 15px; */
+}
+
+.mo-h2 {
+    /* text-align: center; */
+    padding: 10px 0;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
 }
 .circle {
     width: 48px;
@@ -616,17 +651,149 @@ export default {
 
 .mo-body {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 
 }
-
+header {
+    display: flex;
+    justify-content: space-between;   
+}
 .in-search {
-    width: 300px;
-    
+    width: 400px;
+    outline: 0;
+    border-radius: 2px;
+    /* border: 1px solid rgb(34, 34, 34); */
+    border: 0;
+    font-size: 16px;
+    font-weight: 500;
+    height: 32px;
+    padding: 5px 15px;
+    color: rgb(34, 34, 34);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    margin-right: 15px;
+    /* line-height: 40px; */
+}
+
+button {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 2px;
+    border: 0;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    outline: 0;
+    color: rgb(34, 34, 34);
+    cursor: pointer;
+}
+
+button:active {
+    background-color: rgba(0,0,0,0.08)
+}
+.button-link {
+    background-color: rgb(138, 200, 88);
+    text-decoration: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 2px;
+    display: block;
+}
+
+.button-link:hover {
+    background-color: rgba(138, 200, 88, .85);
+}
+
+ul {
+     margin: 0;
+    padding: 0;   
+}
+
+li {
+    list-style-type: none;
+    display: flex;
+    background-color: white;
+    border-radius: 4px;
+    margin-top: 10px;
+box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    cursor: pointer;
+    transition: all .15s ease-out;
+}
+li:hover:not(.active) {
+    background-color: rgba(66, 133, 244, .9);
+    color: white;
+}
+.active {
+    background-color: rgba(0,0,0,0.1);
+    background-color: rgb(138, 200, 88);
+    color: white;
+}
+.radio {
+    /* display: none; */
+}
+/* label {
+    width: 100%;
+    cursor: pointer;
+        padding: 15px;
+} */
+.individual {
+    width: 100%;
+}
+.individual-h2 {
+    padding: 10px 0;
+    font-weight: 700;
+    font-size: 16px;
+    /* text-align: center;  */
+    color:rgba(66, 133, 244, .9);  
+    display: flex;
+}
+.rules-logo {
+    color: rgba(189, 3, 3, 1);
+    color: black;
+}
+.individual-wrap>p {
+    margin: 0;
+    margin: 10px 0;
+}
+.label-name {
+    display: inline-block;
+    width: 155px;
+}
+
+.in {
+    border-radius: 4px;
+    outline: 0;
+    border: 1px solid rgb(212, 212, 212);
+    font-size: 14px;
+    padding: 5px 15px;
+    font-weight: 400;
+}
+
+.in:focus {
+    border: 1px solid rgb(117, 116, 116);
+}
+
+.label-error {
+    color: red;
+}
+.label-show {
+    font-weight: 700;
+    margin-left: 10px;
+}
+.snils {
+    width: 100px;
+}
+
+.position {
+    width: 400px;
+}
+
+.series {
+    width: 38px;
+}
+.number {
+    width: 50px;
 }
 .issued_by {
-    width:  650px;
-    /* height: 50px; */
+    width: 700px;
 }
 @media (min-width: 1280px) {
     .mo {
