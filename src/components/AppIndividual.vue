@@ -83,7 +83,7 @@
                                     <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
                                     <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
                                     <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
-                                    <label v-html="errorHTML_issued_by"> </label>
+                                    <label v-html="errorHTML.issued_by"> </label>
                                 </p>
                                 <p>
                                     <label for="issued_by2" class="label-name"></label>
@@ -110,7 +110,7 @@
                                 <p>
                                     <label for="place_of_birth" class="label-name">Место рождения:</label>
                                     <input class="in issued_by" type="text" id="place_of_birth" v-model="place_of_birth">
-                                    <label v-html="errorHTML_place_of_birth"> </label>    
+                                    <label v-html="errorHTML.place_of_birth"> </label>    
                                 </p>
                                 <p>
                                     <label for="place_of_birth" class="label-name"></label>
@@ -122,15 +122,15 @@
 
 
                 </div>
-                <div class="mo-body-search">
+                <!-- <div class="mo-body-search">
                         <ul class="wrap" v-for="item in role" :key="item.id">
                             <li class="">tgtg
-                                <!-- <input type="radio" :id="item.id" :value="item.name" v-model="picked">
+                                <input type="radio" :id="item.id" :value="item.name" v-model="picked">
                                 <label :for="item.id">{{ item.name }} {{picked}}</label>
-                                <div class="circle" v-bind:class="{ 'circle-active': item.name == picked ?  true : false }"></div> -->
+                                <div class="circle" v-bind:class="{ 'circle-active': item.name == picked ?  true : false }"></div>
                             </li>
                         </ul>
-                </div>          
+                </div>           -->
             </div>
         </div>
     </div>
@@ -166,7 +166,7 @@ export default {
                 position: null,
                 snils: {
                     is: null,
-                    text: ''
+                    text: null
                 }
             },
             errorFalse: {
@@ -182,10 +182,15 @@ export default {
                 date_of_birth: false,
                 place_of_birth: false,
                 position: false,
-                snils: false               
+                snils: {
+                    is: false,
+                    text: null
+                }              
             },
-            errorHTML_issued_by: '',
-            errorHTML_place_of_birth: '',
+            errorHTML: {
+                issued_by: '',
+                place_of_birth: ''
+            },
             rules: ' все поля форм заполняются строго как в документах. '
         }
     },
@@ -196,12 +201,13 @@ export default {
             },
             set (value) {
                 this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                if ( this.checkForm(value) ) {
-                    this.error.surname = false
-                    // this.$store.dispatch('setSurname', value.toUpperCase())
-                }  else {
-                    this.error.surname = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.'
-                }       
+                this.checkForm(value, 'surname')
+                // if ( this.checkFormTest(value, 'surname') ) {
+                //     this.error.surname = false
+                //     // this.$store.dispatch('setSurname', value.toUpperCase())
+                // }  else {
+                //     this.error.surname = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.'
+                // }       
                 this.$store.dispatch('setSurname', value.toUpperCase())
             }
         },
@@ -211,12 +217,7 @@ export default {
             },
             set (value) {
                 this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                if ( this.checkForm(value) ) {
-                   this.error.name = false
-                   this.$store.dispatch('setName', value.toUpperCase())
-                } else {
-                    this.error.name = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.' 
-                }            
+                this.checkForm(value, 'name')        
             }
         },
         patronymic: {
@@ -224,12 +225,8 @@ export default {
                 return this.$store.state.individual.individual.patronymic 
             },
             set (value) {
-                if ( this.checkForm(value) ) {
-                   this.error.patronymic = false
-                    this.$store.dispatch('setPatronymic', value.toUpperCase())
-                } else {
-                    this.error.patronymic = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.' 
-                }    
+                this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                this.checkForm(value, 'patronymic')  
             }
         },
         series: {
@@ -237,14 +234,9 @@ export default {
                 return this.$store.state.individual.individual.series 
             },
             set (value) {
-                this.rules = 'серию и номер паспорта перед внесением необходимо проверить на сайте МВД по списку недействительных российских паспортов'
-                if ( this.chekSeries(value) ) {
-                    this.error.series = false
-                    this.$store.dispatch('setSeries', value.toUpperCase())
-                } else {
-                    // this.error.series = 'Недопустимые символы, например, буквы или '
-                    this.$store.dispatch('setSeries', null)
-                }    
+                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
+                this.chekSeries(value)
+                this.$store.dispatch('setSeries', value.toUpperCase())
             }
         },
         number: {
@@ -252,14 +244,9 @@ export default {
                 return this.$store.state.individual.individual.number 
             },
             set (value) {
-                this.rules = 'серию и номер паспорта перед внесением необходимо проверить на сайте МВД по списку недействительных российских паспортов'
-                if ( this.chekNumber(value) ) {
-                    this.error.number = false
-                    this.$store.dispatch('setNumber', value.toUpperCase())
-                } else {
-                    // this.error.series = 'Недопустимые символы, например, буквы или '
-                    this.$store.dispatch('setNumber', null)
-                }    
+                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
+                this.chekNumber(value)
+                this.$store.dispatch('setNumber', value.toUpperCase())
             }            
         },
         issued_by: {
@@ -269,17 +256,18 @@ export default {
             set (value) {
                 this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                 let qwe
+                this.chekIssuedBy(value, 'issued_by')
                 // ошибок нет придет false, ошибки есть придет true
-                if ( qwe = this.chekIssuedBy(value) ) {
-                    this.error.issued_by = true
-                    this.$store.dispatch('setIssuedBy', value.toUpperCase())
-                    this.errorHTML_issued_by = qwe
-                } else {
-                   this.$store.dispatch('setIssuedBy', value.toUpperCase())
-                   this.error.issued_by = false
-                   this.errorHTML_issued_by = null
-                }  
-                  
+                // if ( qwe = this.chekIssuedBy(value) ) {
+                //     this.error.issued_by = true
+                //     this.$store.dispatch('setIssuedBy', value.toUpperCase())
+                //     this.errorHTML_issued_by = qwe
+                // } else {
+                //    this.$store.dispatch('setIssuedBy', value.toUpperCase())
+                //    this.error.issued_by = false
+                //    this.errorHTML_issued_by = null
+                // }  
+                this.$store.dispatch('setIssuedBy', value.toUpperCase())
             }            
         },
         place_of_birth: {
@@ -288,17 +276,19 @@ export default {
             },
             set (value) {
                 this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                let qwe
+                // let qwe
+                this.chekIssuedBy(value, 'place_of_birth')
+                this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
                 // ошибок нет придет false, ошибки есть придет true
-                if ( qwe = this.chekIssuedBy(value) ) {
-                    this.error.place_of_birth = true
-                    this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                    this.errorHTML_place_of_birth = qwe
-                } else {
-                   this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                   this.error.place_of_birth = false
-                   this.errorHTML_place_of_birth = null
-                }  
+                // if ( qwe = this.chekIssuedBy(value) ) {
+                //     this.error.place_of_birth = true
+                //     this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
+                //     this.errorHTML_place_of_birth = qwe
+                // } else {
+                //    this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
+                //    this.error.place_of_birth = false
+                //    this.errorHTML_place_of_birth = null
+                // }  
                   
             }            
         },
@@ -417,6 +407,7 @@ export default {
                 // ошибка нет false, ошибки есть true
                 if ( !snilsChek) {
                     this.error.snils.is = false
+                    this.error.snils.text = null
                     this.$store.dispatch('setSnils', value)
                 } else {
                     this.error.snils.is = true
@@ -427,68 +418,67 @@ export default {
         }        
     },
     methods: {
-        checkForm(value) {
-            // сonsole.log('', value.indexOf(" ")) 
+        checkForm(value, index) {
             let regex = /^[a-zA-Zа-яА-Я']+[a-zA-Zа-яА-Я']?$/
-            console.log('value=',  value.match(regex))
-            return value.match(regex) === null ? false : true
+            value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
         },
         chekSeries(value) {
+            let regex = /^[0-9]{4}?$/
+
             if ( value.length != 4 ) {
                 this.error.series = 'Серия паспорта состоит из 4 цифр'
-                return false
+            } 
+            else if ( value.match(regex) === null ) {
+                this.error.series = 'Серия паспорта должно состоять только из цифр'
+            } 
+            else {
+                this.error.series = false    
             }
-            let regex = /^[0-9]{4}?$/
-            if ( value.match(regex) === null ) {
-                this.error.series = 'Серия паспорта должны быть из цифр'
-                return false
-            } else return true        
+                
         },
         chekNumber(value) {
+            let regex = /^[0-9]{6}?$/
+
             if ( value.length != 6 ) {
                 this.error.number = 'Номер паспорта состоит из 6 цифр'
-                return false
             }
-            let regex = /^[0-9]{6}?$/
-            if ( value.match(regex) === null ) {
-                this.error.number = 'Номер паспорта должны быть из цифр'
-                return false
-            } else return true        
+            else if ( value.match(regex) === null ) {
+                this.error.number = 'Номер паспорта должна состоять только из цифр'
+            }
+            else {
+                this.error.number = false
+            }       
         },
-        chekIssuedBy(value) {
+        chekIssuedBy(value, index) {
             let err = false
             let arr = value.toUpperCase().split(' ')
-            console.log('arr=', arr)
             let arrFilter = arr.filter(function(item) {
                 console.log(item );
                 if (item == 'Р-ОН' ) {
                     console.log(item, 'Р-ОН');
                 }
-                return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'Г.') && (item != 'Р.')) 
+                return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
             })
-            console.log(arrFilter );
-            let newArr = arrFilter.map( (item, i) =>{
+            let newArr = arrFilter.map( (item, i) => {
                 console.log( i + ": " + item )
                 if (~item.indexOf(".")) {
-                    console.log( 'совпадение есть!' );
                     err = true
-                    this.error.issued_by = 'Ошибка! Надо писать как в паспорте без сокращений имен собственных'
                     return '<span style="text-decoration: underline; color: red">' + item + '</span>'
                 } 
                 if (~item.indexOf("-")) {
-                    console.log( 'совпадение есть!' );
+                    err = true
                     return '<span style="text-decoration: underline; color: green">' + item + '</span>'
                 }  else {
-                    // return '<span>' + item + '</span>'
                     console.log( 'совпадение нет' );
                 }
             });
-            // this.errorHTML = newArr.join(' ')
             if (err) {
-                return newArr.join(' ')
-            } else return false
-            // console.log('qw=e', this.errorHTML)
-            // return true
+                this.error[index] = true
+                this.errorHTML[index] = newArr.join(' ')
+            } else {
+                this.error[index] = false
+                this.errorHTML[index] = null
+            }
         },
         chekCode(value) {
             // if ( value.length == 3 ) {
@@ -596,6 +586,7 @@ export default {
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
                 this.$router.push('/four')
             } else {
+                this.rules = 'исправьте все ошибки'
                 console.log('this.error=',this.error)
                 console.log('this.errorTrue=',this.errorFalse)
                 console.log('ошибка исправьте все ошибки')
@@ -603,7 +594,13 @@ export default {
         }
     },
     created () {
-        // this.$store.dispatch('initialiseStoreRole')
+        this.$store.dispatch('initialiseStoreIndividual')
+        this.checkForm(this.surname, 'surname')
+        this.checkForm(this.name, 'name')
+        this.checkForm(this.patronymic, 'patronymic')
+         this.chekIssuedBy(this.issued_by, 'issued_by')
+        this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
+        // this.surname.set(this.surname)
     }
 }
 </script>

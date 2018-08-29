@@ -28,12 +28,12 @@ const actions = {
   setRole({ commit },  inputRole) {
     commit('setRole', inputRole)
   },
-  initialiseStoreMO({ commit }, state) {
+  initialiseStoreMO({ commit }) {
     if(localStorage.getItem('myMO')) {
       commit ('setMOFromLocalStorage', localStorage.getItem('myMO'))
     }
   },
-  initialiseStoreRole({ commit }, state) {
+  initialiseStoreRole({ commit }) {
     if(localStorage.getItem('myRole')) {
       commit ('setRoleFromLocalStorage', localStorage.getItem('myRole'))
     }

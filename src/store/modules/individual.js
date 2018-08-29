@@ -61,12 +61,12 @@ const actions = {
   },
   setSnils({ commit },  input) {
     commit('setSnils', input)
-  }
-//   initialiseStoreRole({ commit }, state) {
-//     if(localStorage.getItem('myRole')) {
-//       commit ('setRoleFromLocalStorage', localStorage.getItem('myRole'))
-//     }
-//   }    
+  },
+  initialiseStoreIndividual({ commit }) {
+    if(localStorage.getItem('individual')) {
+      commit ('setIndividualFromLocalStorage', JSON.parse(localStorage.getItem('individual')))
+    }
+  }    
 }
 
 // mutations
@@ -122,11 +122,10 @@ const mutations = {
     setSnils (state, input) {
         state.individual.snils = input
         localStorage.setItem('individual', JSON.stringify(state.individual))
+    },
+    setIndividualFromLocalStorage (state, storeIndividualFromLocalStorage) {
+        state.individual = storeIndividualFromLocalStorage
     }
-
-    // setRoleFromLocalStorage (state, storeRoleFromLocalStorage) {
-    //     state.myRole = storeRoleFromLocalStorage
-    // }
 }
 
 export default {
