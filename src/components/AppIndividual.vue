@@ -255,18 +255,7 @@ export default {
             },
             set (value) {
                 this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                let qwe
                 this.chekIssuedBy(value, 'issued_by')
-                // ошибок нет придет false, ошибки есть придет true
-                // if ( qwe = this.chekIssuedBy(value) ) {
-                //     this.error.issued_by = true
-                //     this.$store.dispatch('setIssuedBy', value.toUpperCase())
-                //     this.errorHTML_issued_by = qwe
-                // } else {
-                //    this.$store.dispatch('setIssuedBy', value.toUpperCase())
-                //    this.error.issued_by = false
-                //    this.errorHTML_issued_by = null
-                // }  
                 this.$store.dispatch('setIssuedBy', value.toUpperCase())
             }            
         },
@@ -598,7 +587,7 @@ export default {
         this.checkForm(this.surname, 'surname')
         this.checkForm(this.name, 'name')
         this.checkForm(this.patronymic, 'patronymic')
-         this.chekIssuedBy(this.issued_by, 'issued_by')
+        this.chekIssuedBy(this.issued_by, 'issued_by')
         this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
         // this.surname.set(this.surname)
     }
