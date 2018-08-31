@@ -73,6 +73,7 @@ const actions = {
 const mutations = {
     setSurname (state, input) {
         state.individual.surname = input
+        console.log('ind')
         localStorage.setItem('individual', JSON.stringify(state.individual))
     },
     setName (state, input) {

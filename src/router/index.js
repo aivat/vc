@@ -5,6 +5,7 @@ import AppSearchMO from '@/components/AppSearchMO'
 import AppChooseRole from '@/components/AppChooseRole'
 import AppIndividual from '@/components/AppIndividual'
 import AppPersonInCharge from '@/components/AppPersonInCharge'
+import AppAuthRepresent from '@/components/AppAuthRepresent'
 
 Vue.use(Router)
 
@@ -29,7 +30,7 @@ export default new Router({
     {
       path: '/four',
       name: 'four',
-      component: AppPersonInCharge
-    },
+      component: AppAuthRepresent
+    }
   ]
 })

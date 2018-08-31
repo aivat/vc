@@ -4,17 +4,16 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/two" class="button-link">
+                        <router-link to="/three" class="button-link">
                             Назад
                         </router-link>
                     </div>
                     <div class="mo-h2" >
-                        Введите данные сотрудника, которому необходимо получить электронную подпись
+                        Введите данные уполномоченного представителя
                     </div>
                     <div class="mo-body-link">
-                        <!-- <router-link to="/four" > -->
                             <span @click="onward()" class="button-link">Далее</span>
-                        <!-- </router-link> -->
+
                     </div>
                 </header>
 
@@ -45,27 +44,11 @@
                                 <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
                             </p>
                             <p>
-                                <label class="label-name"> Выберите пол:</label>
-                                <input class="radio" type="radio" id="sex1" name="sex" v-model="sex" value="муж.">   
-                                <label for="sex1">Муж</label>
-                                <input class="radio" type="radio" id="sex2" name="sex" v-model="sex" value="жен.">   
-                                <label for="sex2">Жен</label>
-                                <label class="label-error" v-show="error.sex">{{ error.sex }} </label>
-                            </p>
-                            <p>
                                 <label for="position" class="label-name">Должность:</label>
                                 <input class="in position" type="text" id="position" v-model="position">  
                                 <label class="label-show"> {{ position }} </label>
                                 <label class="label-error" v-show="error.position">{{ error.position }} </label>
-                            </p>
-                            <p>
-                                <label for="snils" class="label-name">СНИЛС:</label>
-                                <input class="in snils" type="text" id="snils" v-model="snils" maxlength="14" placeholder="111-222-333 44">  
-                                <label class="label-show"> {{ snils }} </label>
-                                <!-- <label v-show="error.snils.is"> {{ error.snils.is }} </label> -->
-                                <label v-show="error.snils.is" class="label-error"> {{ error.snils.text }} </label>
-                                <label v-show="!error.snils.is"> Все верно  </label>  
-                            </p>     
+                            </p> 
                             <fieldset>
                                 <legend>Паспорт</legend>
                                 <p>
@@ -83,8 +66,6 @@
                                 <p>
                                     <label for="issued_by" class="label-name">Кем выдан:</label>
                                     <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
-                                    <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
-                                    <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
                                     <label v-html="errorHTML.issued_by"> </label>
                                 </p>
                                 <p>
@@ -96,27 +77,6 @@
                                     <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
                                     <label class="label-show" v-show="!error.date_of_issue">{{ date_of_issue }}</label>
                                     <label class="label-error" v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
-                                </p>
-                                <p>
-                                    <label for="code" class="label-name">Код подразделения:</label>
-                                    <input class="in" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123">
-                                    <label class="label-show" v-show="!error.code">{{ code }}</label>
-                                    <label class="label-error" v-show="error.code">{{ error.code }} </label>
-                                </p>
-                                <p>
-                                    <label for="date_of_birth" class="label-name">Дата рождения:</label>
-                                    <input class="in" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991">
-                                    <label class="label-show" v-show="!error.date_of_birth">{{ date_of_birth }}</label>
-                                    <label class="label-error" v-show="error.date_of_birth">{{ error.date_of_birth }} </label>
-                                </p>
-                                <p>
-                                    <label for="place_of_birth" class="label-name">Место рождения:</label>
-                                    <input class="in issued_by" type="text" id="place_of_birth" v-model="place_of_birth">
-                                    <label v-html="errorHTML.place_of_birth"> </label>    
-                                </p>
-                                <p>
-                                    <label for="place_of_birth" class="label-name"></label>
-                                    <label class="label-show">{{ place_of_birth }}</label>    
                                 </p>
                             </fieldset>                                                                   
                         </div>
@@ -139,59 +99,31 @@
 </template>
 
 <script>
-// import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            role: {
-                0: {
-                    id: "0",
-                    name: "Медицинский работник"
-                },
-                1: {
-                    id: "1",
-                    name: "Программист"
-                }
-            },
             error: {
                 surname: null,
                 name: null,
                 patronymic: null,
-                sex: null,
                 series: null,
                 number: null,
                 issued_by: null,
                 date_of_issue: null,
-                code: null,
-                date_of_birth: null,
-                place_of_birth: null,
-                position: null,
-                snils: {
-                    is: null,
-                    text: null
-                }
+                position: null
             },
             errorFalse: {
                 surname: false ,
                 name: false ,
                 patronymic: false,
-                sex: false,
                 series: false,
                 number: false,
                 issued_by: false,
                 date_of_issue: false,
-                code: false,
-                date_of_birth: false,
-                place_of_birth: false,
-                position: false,
-                snils: {
-                    is: false,
-                    text: null
-                }              
+                position: false         
             },
             errorHTML: {
-                issued_by: '',
-                place_of_birth: ''
+                issued_by: ''
             },
             rules: ' все поля форм заполняются строго как в документах. '
         }
@@ -199,167 +131,85 @@ export default {
     computed: {
         surname: {
             get () {
-                return this.$store.state.individual.individual.surname
+                return this.$store.state.authrepresent.authrepresent.surname
             },
             set (value) {
                 this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'surname')
-                // if ( this.checkFormTest(value, 'surname') ) {
-                //     this.error.surname = false
-                //     // this.$store.dispatch('setSurname', value.toUpperCase())
-                // }  else {
-                //     this.error.surname = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.'
-                // }       
-                this.$store.dispatch('setSurname', value.toUpperCase())
+                this.checkForm(value, 'surname')  
+                this.$store.dispatch('setAuthRepresentSurname', value.toUpperCase())
             }
         },
         name: {
             get () {
-                return this.$store.state.individual.individual.name
+                return this.$store.state.authrepresent.authrepresent.name
             },
             set (value) {
                 this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'name')    
-                this.$store.dispatch('setName', value.toUpperCase())    
+                this.checkForm(value, 'name') 
+                this.$store.dispatch('setAuthRepresentName', value.toUpperCase()) 
             }
         },
         patronymic: {
             get () {
-                return this.$store.state.individual.individual.patronymic 
+                return this.$store.state.authrepresent.authrepresent.patronymic 
             },
             set (value) {
                 this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'patronymic')
-                this.$store.dispatch('setPatronymic', value.toUpperCase())  
+                this.checkForm(value, 'patronymic')  
+                this.$store.dispatch('setAuthRepresentPatronymic', value.toUpperCase())  
             }
         },
         series: {
             get () {
-                return this.$store.state.individual.individual.series 
+                return this.$store.state.authrepresent.authrepresent.series 
             },
             set (value) {
                 this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 this.chekSeries(value)
-                this.$store.dispatch('setSeries', value.toUpperCase())
+                this.$store.dispatch('setAuthRepresentSeries', value.toUpperCase())
             }
         },
         number: {
             get () {
-                return this.$store.state.individual.individual.number 
+                return this.$store.state.authrepresent.authrepresent.number 
             },
             set (value) {
                 this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 this.chekNumber(value)
-                this.$store.dispatch('setNumber', value.toUpperCase())
+                this.$store.dispatch('setAuthRepresentNumber', value.toUpperCase())
             }            
         },
         issued_by: {
             get () {
-                return this.$store.state.individual.individual.issued_by 
+                return this.$store.state.authrepresent.authrepresent.issued_by 
             },
             set (value) {
                 this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                 this.chekIssuedBy(value, 'issued_by')
-                this.$store.dispatch('setIssuedBy', value.toUpperCase())
+                this.$store.dispatch('setAuthRepresentIssuedBy', value.toUpperCase())
             }            
-        },
-        place_of_birth: {
-            get () {
-                return this.$store.state.individual.individual.place_of_birth 
-            },
-            set (value) {
-                this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                // let qwe
-                this.chekIssuedBy(value, 'place_of_birth')
-                this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                // ошибок нет придет false, ошибки есть придет true
-                // if ( qwe = this.chekIssuedBy(value) ) {
-                //     this.error.place_of_birth = true
-                //     this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                //     this.errorHTML_place_of_birth = qwe
-                // } else {
-                //    this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                //    this.error.place_of_birth = false
-                //    this.errorHTML_place_of_birth = null
-                // }  
-                  
-            }            
-        },
-        code: {
-            get () {
-                return this.$store.state.individual.individual.code
-            },
-            set (value) {
-                if ( value.length == 3 ) {
-                    value = value + '-'
-                }
-                this.chekCode(value)
-                this.$store.dispatch('setCode', value.toUpperCase())
-
-            }             
-        },
-        date_of_birth: {
-            get () {
-                return this.$store.state.individual.individual.date_of_birth
-            },
-            set (value) {
-                if ( ( value.length == 2 ) || (value.length == 5)){
-                    value = value + '.'
-                }
-                this.chekDate(value, 'date_of_birth')
-                this.$store.dispatch('setDateOfBirth', value.toUpperCase())
-            }             
         },
         date_of_issue: {
             get () {
-                return this.$store.state.individual.individual.date_of_issue
+                return this.$store.state.authrepresent.authrepresent.date_of_issue
             },
             set (value) {
                 if ( ( value.length == 2 ) || (value.length == 5)){
                     value = value + '.'
                 }
                 this.chekDate(value, 'date_of_issue')
-                this.$store.dispatch('setDateOfIssue', value.toUpperCase())
+                this.$store.dispatch('setAuthRepresentDateOfIssue', value.toUpperCase())
             }             
-        },
-        sex: {
-            get () {
-                return this.$store.state.individual.individual.sex
-            },
-            set (value) {
-                this.chekSex(value)
-                this.$store.dispatch('setSex', value)
-            }            
         },
         position: {
             get () {
-                return this.$store.state.individual.individual.position
+                return this.$store.state.authrepresent.authrepresent.position
             },
             set (value) {
                 this.chekPosition(value)
-                this.$store.dispatch('setPosition', value)
+                this.$store.dispatch('setAuthRepresentPosition', value)
             }              
-        },
-        snils: {
-            get () {
-                return this.$store.state.individual.individual.snils
-            },
-            set (value) {
-                // let snilsChek = this.chekSnils(value)
-                
-                // console.log('snilsChek=', snilsChek)
-                
-                if ( ( value.length == 3 ) || (value.length == 7)) {
-                    value = value + '-'
-                }
-                if ( value.length == 11 ) {
-                    value = value + ' '
-                }
-                this.chekSnils(value)
-                this.$store.dispatch('setSnils', value)
-
-            }              
-        }        
+        }    
     },
     methods: {
         checkForm(value, index) {
@@ -463,13 +313,6 @@ export default {
                 }
             } 
         },
-        chekSex(value) {
-            if (value == 'муж.' || value == 'жен.') {
-                 this.error.sex = false
-            } else {
-                 this.error.sex = 'Укажите пол'
-            }           
-        },
         chekPosition(value) {
             if (value != '') {
                  this.error.position = false
@@ -517,20 +360,21 @@ export default {
         }
     },
     created () {
-        this.$store.dispatch('initialiseStoreIndividual')
-        this.checkForm(this.surname, 'surname')
-        this.checkForm(this.name, 'name')
-        this.checkForm(this.patronymic, 'patronymic')
-        this.chekSeries(this.series)
-        this.chekNumber(this.number)
-        this.chekIssuedBy(this.issued_by, 'issued_by')
-        this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
-        this.chekCode(this.code)
-        this.chekDate(this.date_of_birth, 'date_of_birth')
-        this.chekDate(this.date_of_issue, 'date_of_issue')
-        this.chekSnils(this.snils)
-        this.chekSex(this.sex)
-        this.chekPosition(this.position)
+        console.log('Nfnmzyf')
+        this.$store.dispatch('initialiseStoreAuthRepresent')
+        // this.checkForm(this.surname, 'surname')
+        // this.checkForm(this.name, 'name')
+        // this.checkForm(this.patronymic, 'patronymic')
+        // this.chekSeries(this.series)
+        // this.chekNumber(this.number)
+        // this.chekIssuedBy(this.issued_by, 'issued_by')
+        // this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
+        // this.chekCode(this.code)
+        // this.chekDate(this.date_of_birth, 'date_of_birth')
+        // this.chekDate(this.date_of_issue, 'date_of_issue')
+        // this.chekSnils(this.snils)
+        // this.chekSex(this.sex)
+        // this.chekPosition(this.position)
 
         // this.surname.set(this.surname)
     }
