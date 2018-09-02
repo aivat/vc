@@ -4,12 +4,12 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/three" class="button-link">
+                        <router-link to="/four" class="button-link">
                             Назад
                         </router-link>
                     </div>
                     <div class="mo-h2" >
-                        Введите данные уполномоченного представителя
+                       Скачайте документы
                     </div>
                     <div class="mo-body-link">
                             <span @click="onward()" class="button-link">Далее</span>
@@ -80,6 +80,7 @@
                                 </p>
                             </fieldset>                                                                   
                         </div>
+                        <button @click="asd()">PDF</button>
                     </div>
 
 
@@ -99,6 +100,12 @@
 </template>
 
 <script>
+// require('pdfmake/build/pdfmake.js')
+// require('pdfmake/build/vfs_fonts.js')
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export default {
     data () {
         return {
@@ -350,13 +357,18 @@ export default {
         onward() {
 
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/five')
+                this.$router.push('/four')
             } else {
                 this.rules = 'исправьте все ошибки'
                 console.log('this.error=',this.error)
                 console.log('this.errorTrue=',this.errorFalse)
                 console.log('ошибка исправьте все ошибки')
             }
+        },
+        asd() {
+             var docDefinition = { content: 'This is an sample PDF printed with pdfMake' };
+            //   pdfMake.createPdf(docDefinition).open();
+              pdfMake.createPdf(docDefinition).download("optionalName.pdf");
         }
     },
     created () {
