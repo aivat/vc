@@ -32,7 +32,7 @@
                             </p>                                                            
                         </div>
                         <button @click="asd()">Скачать согласие</button>
-                        <button @click="asd()">Скачать заявление</button>
+                        <button @click="statement()">Скачать заявление</button>
                     </div>
 
 
@@ -114,6 +114,9 @@ export default {
         },
         position() {
             return this.$store.state.authrepresent.authrepresent.position     
+        },
+        mo() {
+            return this.$store.state.mo.myMOInfo
         }    
     },
     methods: {
@@ -222,6 +225,100 @@ export default {
             let strDate = date.getDate() + ' ' + monthA[date.getMonth()] + ' ' + date.getFullYear() + ' г.'
 
             return strDate
+        },
+        statement() {
+            pdfMake.fonts = {
+                myFont: {
+                    normal: 'TimesNewRoman.ttf',
+                    bold: 'TimesNewRomanBold.ttf',
+                    italics: 'TimesNewRoman.ttf',
+                    bolditalics: 'TimesNewRoman.ttf'
+                }
+            }
+            var docDefinition = {
+                title:'Тестовый документ PDF',
+                pageSize:'A4',
+                pageMargins:[25, 25],
+                defaultStyle: {
+                    font: 'myFont'
+                },              
+                styles: {
+                    body: {
+                        leadingIndent: 25,
+                        alignment: 'justify',
+                    },
+                    users: {
+                        decoration: 'underline'
+                    },
+                    data: {
+                       leadingIndent: 25
+                    },
+                    signature: {
+
+                    }
+                },
+                content: [{
+                    text:'Заявление на изготовление сертификата ключа проверки электронной подписи',
+                        margin: [45, 0 , 0, 0],
+                        style: {
+                            bold: true
+                        }
+                    }, {
+                    text: [
+                            this.mo.fullname,
+                            {
+                                text: this.surname + ' ' + this.name + ' ' + this.patronymic + ',',
+                                style: 'users',
+                            },{
+                                text: ' паспорт: '
+                            },{ 
+                                text: this.series + ' ' + this.number,
+                                style: 'users'
+                            },{
+                                text: ' выдан: '
+                            },{
+                                text: this.issued_by,
+                                style: 'users'
+                            },{
+                                text: ', дата выдачи: '
+                            }, {
+                                text: this.date_of_issue + ' г.,',
+                                style: 'users'
+                            }
+                        ],
+                        style: 'data'
+                    }, {                                                  
+                        text:'в соответствии с ч. 4 ст. 9 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных», даю своё согласие Удостоверяющему центру ГБУЗ «МИАЦ» (далее – Удостоверяющий центр), в лице директора Варенниковой Юлии Викторовны, действующей на основании Устава, расположенному по адресу г. Оренбург, ул. Маршала Жукова, д.42, на обработку моих персональных данных, с использованием или без использования средств автоматизации: сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), использование, обезличивание, блокирование, удаление, уничтожение, включающих: паспортные данные, должность, сведения о месте работы, адрес электронной почты, контактный(е) телефон(ы), страховой номер индивидуального лицевого счёта в Пенсионном фонде России (СНИЛС), индивидуальный номер налогоплательщика (ИНН), предоставляемых в Удостоверяющий центр согласно Регламенту Удостоверяющего центра (находящегося по адресу http://uc.mzorb.ru), в целях получения квалифицированного сертификата ключа проверки электронной подписи (далее - КСКПЭП), в соответствии со ст. 18 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
+                        style: 'body'                     
+                    }, {
+                        text:'Признаю, что мои персональные данные, в составе  КСКПЭП, относятся к общедоступным персональным данным, в соответствии с ч. 3 ст. 15 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
+                       
+                        style: 'body'
+                    }, {
+                        text: 'Настоящее согласие действует со дня его подписания до дня предоставления соответствующего отзыва в письменной форме или в случае прекращения деятельности Удостоверяющего центра.',
+                       
+                        style: 'body'             
+                    }, {
+                        columns: [
+                            {
+                                text: this.getDateNow(),
+                            }, {
+                            stack: [
+                                // second column consists of paragraphs
+                                '___________________________________',
+                                '(подпись субъекта персональных данных)',
+                            ],
+                                fontSize: 8
+                            },  
+                        ],
+                        margin: [0, 45, 0, 0],
+                        style: 'body'
+                    }
+
+                ]
+            }
+            console.log('this.surname=', this.surname)
+            pdfMake.createPdf(docDefinition).download("optionalName.pdf")
         }
     },
     created () {
