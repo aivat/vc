@@ -3,6 +3,7 @@ import shopMO from '../../api/mo'
 const state = {
     listMO: [],
     myMO: '',
+    myMOInfo: '',
     myRole: ''
 }
 
@@ -18,12 +19,23 @@ const actions = {
     shopMO.searchMO(
         inputMO,
         list => {
+            console.log('list=', list)
             commit('setListMO', list)
         }
     )
   },
   setMO({ commit },  inputMO) {
-    commit('setMO', inputMO)
+    console.log('inputMO=', inputMO)
+    shopMO.searchMO(
+        inputMO,
+        list => {
+            // commit('setListMO', list)
+            commit('setMO', inputMO)
+            let oneMO = list[0]
+            commit('setMyMOInfo', oneMO)
+            // console.log('qasd=', qasd)
+        }
+    )
   },
   setRole({ commit },  inputRole) {
     commit('setRole', inputRole)
@@ -49,6 +61,10 @@ const mutations = {
     setMO (state, inputMO) {
         state.myMO = inputMO
         localStorage.setItem('myMO', inputMO)
+    },
+    setMyMOInfo (state, inputMO) {
+        state.myMOInfo = inputMO
+        localStorage.setItem('myMOInfo', JSON.stringify(inputMO))
     },
     setRole (state, inputRole) {
         state.myRole = inputRole

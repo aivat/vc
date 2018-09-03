@@ -27,60 +27,12 @@
                         <div class="individual-wrap">
                             <p>
                                 <label for="surname" class="label-name" >Фамилия:</label>
-                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
                                 <label class="label-show"> {{ surname }} </label>
                                 <label class="label-error" v-show="error.surname">{{ error.surname }} </label>
-                            </p>
-                            <p>
-                                <label for="name" class="label-name" >Имя:</label>
-                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
-                                <label class="label-show"> {{ name }} </label>
-                                <label class="label-error" v-show="error.name">{{ error.name }} </label>
-                            </p>
-                            <p>
-                                <label for="patronymic" class="label-name" >Отчество:</label>
-                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ">
-                                <label class="label-show"> {{ patronymic }} </label>
-                                <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
-                            </p>
-                            <p>
-                                <label for="position" class="label-name">Должность:</label>
-                                <input class="in position" type="text" id="position" v-model="position">  
-                                <label class="label-show"> {{ position }} </label>
-                                <label class="label-error" v-show="error.position">{{ error.position }} </label>
-                            </p> 
-                            <fieldset>
-                                <legend>Паспорт</legend>
-                                <p>
-                                    <label for="series" class="label-name">Серия:</label>
-                                    <input class="in series" id="series" v-model.lazy="series" maxlength="4" placeholder="1234"> 
-                                    <label v-show="!error.series" class="label-show">{{ series }} </label>
-                                    <label v-show="error.series" class="label-error">{{ error.series }} </label>
-                                </p>
-                                <p>
-                                    <label for="number" class="label-name">Номер:</label>
-                                    <input class="in number" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456">
-                                    <label class="label-show" v-show="!error.number">{{ number }}</label>
-                                    <label v-show="error.number" class="label-error">{{ error.number }} </label>
-                                </p>
-                                <p>
-                                    <label for="issued_by" class="label-name">Кем выдан:</label>
-                                    <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
-                                    <label v-html="errorHTML.issued_by"> </label>
-                                </p>
-                                <p>
-                                    <label for="issued_by2" class="label-name"></label>
-                                    <label class="label-show">{{ issued_by }}</label>
-                                </p>
-                                <p>
-                                    <label for="date_of_issue" class="label-name">Дата выдачи:</label>
-                                    <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
-                                    <label class="label-show" v-show="!error.date_of_issue">{{ date_of_issue }}</label>
-                                    <label class="label-error" v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
-                                </p>
-                            </fieldset>                                                                   
+                            </p>                                                            
                         </div>
-                        <button @click="asd()">PDF</button>
+                        <button @click="asd()">Скачать согласие</button>
+                        <button @click="asd()">Скачать заявление</button>
                     </div>
 
 
@@ -106,6 +58,7 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 export default {
     data () {
         return {
@@ -136,259 +89,142 @@ export default {
         }
     },
     computed: {
-        surname: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.surname
-            },
-            set (value) {
-                this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'surname')  
-                this.$store.dispatch('setAuthRepresentSurname', value.toUpperCase())
-            }
+        surname() {
+            return this.$store.state.authrepresent.authrepresent.surname
         },
-        name: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.name
-            },
-            set (value) {
-                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'name') 
-                this.$store.dispatch('setAuthRepresentName', value.toUpperCase()) 
-            }
+        name() {
+            return this.$store.state.authrepresent.authrepresent.name
         },
-        patronymic: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.patronymic 
-            },
-            set (value) {
-                this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'patronymic')  
-                this.$store.dispatch('setAuthRepresentPatronymic', value.toUpperCase())  
-            }
+        patronymic() {
+            return this.$store.state.authrepresent.authrepresent.patronymic 
         },
-        series: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.series 
-            },
-            set (value) {
-                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
-                this.chekSeries(value)
-                this.$store.dispatch('setAuthRepresentSeries', value.toUpperCase())
-            }
+        series() {
+            return this.$store.state.authrepresent.authrepresent.series 
+            
         },
-        number: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.number 
-            },
-            set (value) {
-                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
-                this.chekNumber(value)
-                this.$store.dispatch('setAuthRepresentNumber', value.toUpperCase())
-            }            
+        number() {
+            return this.$store.state.authrepresent.authrepresent.number           
         },
-        issued_by: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.issued_by 
-            },
-            set (value) {
-                this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                this.chekIssuedBy(value, 'issued_by')
-                this.$store.dispatch('setAuthRepresentIssuedBy', value.toUpperCase())
-            }            
+        issued_by() {
+            return this.$store.state.authrepresent.authrepresent.issued_by           
         },
-        date_of_issue: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.date_of_issue
-            },
-            set (value) {
-                if ( ( value.length == 2 ) || (value.length == 5)){
-                    value = value + '.'
-                }
-                this.chekDate(value, 'date_of_issue')
-                this.$store.dispatch('setAuthRepresentDateOfIssue', value.toUpperCase())
-            }             
+        date_of_issue() {
+            return this.$store.state.authrepresent.authrepresent.date_of_issue
+                    
         },
-        position: {
-            get () {
-                return this.$store.state.authrepresent.authrepresent.position
-            },
-            set (value) {
-                this.chekPosition(value)
-                this.$store.dispatch('setAuthRepresentPosition', value)
-            }              
+        position() {
+            return this.$store.state.authrepresent.authrepresent.position     
         }    
     },
     methods: {
-        checkForm(value, index) {
-            let regex = /^[a-zA-Zа-яА-Я']+[a-zA-Zа-яА-Я']?$/
-            value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
-        },
-        chekSeries(value) {
-            let regex = /^[0-9]{4}?$/
-
-            if ( value.length != 4 ) {
-                this.error.series = 'Серия паспорта состоит из 4 цифр'
-            } 
-            else if ( value.match(regex) === null ) {
-                this.error.series = 'Серия паспорта должно состоять только из цифр'
-            } 
-            else {
-                this.error.series = false    
-            }
-                
-        },
-        chekNumber(value) {
-            let regex = /^[0-9]{6}?$/
-
-            if ( value.length != 6 ) {
-                this.error.number = 'Номер паспорта состоит из 6 цифр'
-            }
-            else if ( value.match(regex) === null ) {
-                this.error.number = 'Номер паспорта должна состоять только из цифр'
-            }
-            else {
-                this.error.number = false
-            }       
-        },
-        chekIssuedBy(value, index) {
-            let err = false
-            let arr = value.toUpperCase().split(' ')
-            let arrFilter = arr.filter(function(item) {
-                console.log(item );
-                if (item == 'Р-ОН' ) {
-                    console.log(item, 'Р-ОН');
-                }
-                return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
-            })
-            let newArr = arrFilter.map( (item, i) => {
-                console.log( i + ": " + item )
-                if (~item.indexOf(".")) {
-                    err = true
-                    return '<span style="text-decoration: underline; color: red">' + item + '</span>'
-                } 
-                if (~item.indexOf("-")) {
-                    err = true
-                    return '<span style="text-decoration: underline; color: green">' + item + '</span>'
-                }  else {
-                    console.log( 'совпадение нет' );
-                }
-            });
-            if (err) {
-                this.error[index] = true
-                this.errorHTML[index] = newArr.join(' ')
-            } else {
-                this.error[index] = false
-                this.errorHTML[index] = null
-            }
-        },
-        chekCode(value) {
-            let regex = /^[0-9]{3}-[0-9]{3}?$/
-
-            if ( value.match(regex) === null ) {
-                this.error.code = 'Номер паспорта в формате 123-456'
-            } else {
-                this.error.code = false
-            }          
-        },
-        chekDate(value, index) {
-            let regex = /^[0-3][0-9].[0-1][0-9].[0-9]{4}?$/
-
-            if ( value.match(regex) === null ) {
-                this.error[index] = 'Дата в формате "06.08.1991"'
-            } else {
-                this.error[index] = false
-            }   
-        },
-        chekSnils(value) {
-
-            let regex = /^[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}?$/
-
-            if ( value.match(regex) === null ) { 
-                this.error.snils.is = true
-                this.error.snils.text = 'СНИЛС формата 111-111-111-11'   
-            }
-            else  {
-                let regex3 = /\d{1,}/g
-                let as = value.match(regex3).join('')
-                if ( !this.chekSnilsSum(as) ) {
-      
-                    this.error.snils.is = true
-                    this.error.snils.text = 'В СНИЛСе контрольная сумма неверна'
-                } else {
-                    this.error.snils.is = false
-                    this.error.snils.text = null
-                }
-            } 
-        },
-        chekPosition(value) {
-            if (value != '') {
-                 this.error.position = false
-            } else {
-                 this.error.position = 'Укажите должность'
-            }           
-        },
-        chekSnilsSum(value) {
-            console.log('value=',value)
-            let sum = 0
-            let chekSum = '00'
-            for (let i = 0; i < 9; i++ ) {
-                sum = sum + (value[i] * (9 - i))
-            }
-            console.log('sum=',sum)
-            if ( sum < 100 ) {
-                chekSum = sum
-            }
-            if ( sum == 100 || sum == 101) {
-                chekSum = '00'
-            }
-            if ( sum > 101 ) {
-                chekSum = sum % 101
-                if ( chekSum == 100 || chekSum == 101) {
-                    chekSum = '00'
-                }                
-            }
-            let chekSumValue = value.substring(9,11)
-            console.log('chekSumValue=',chekSumValue)
-            console.log('chekSum=',chekSum)
-            if ( chekSumValue ==  chekSum) {
-                return true
-            } return false
-        },
-        onward() {
-
-            if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/four')
-            } else {
-                this.rules = 'исправьте все ошибки'
-                console.log('this.error=',this.error)
-                console.log('this.errorTrue=',this.errorFalse)
-                console.log('ошибка исправьте все ошибки')
-            }
-        },
         asd() {
-             var docDefinition = { content: 'This is an sample PDF printed with pdfMake' };
-            //   pdfMake.createPdf(docDefinition).open();
-              pdfMake.createPdf(docDefinition).download("optionalName.pdf");
+            pdfMake.fonts = {
+            myFont: {
+                normal: 'TimesNewRoman.ttf',
+                bold: 'TimesNewRomanBold.ttf',
+                italics: 'TimesNewRoman.ttf',
+                bolditalics: 'TimesNewRoman.ttf'
+            }
+          }
+            var docDefinition = {
+                title:'Тестовый документ PDF',
+                pageSize:'A4',
+                pageMargins:[25, 25],
+                defaultStyle: {
+                    font: 'myFont'
+                },              
+                
+                styles: {
+                    body: {
+                        leadingIndent: 25,
+                        alignment: 'justify',
+                    },
+                    users: {
+                        decoration: 'underline'
+                    },
+                    data: {
+                       leadingIndent: 25
+                    },
+                    signature: {
+
+                    }
+                },
+                content: [{
+                    text:'СОГЛАСИЕ',
+                        margin: [245, 0 , 0, 0],
+                        style: {
+                            bold: true
+                        }
+                    }, {
+                        text:'на обработку персональных данных',
+                        style:'body',
+                        margin: [150, 0 , 0, 25]
+                    }, {
+                        text: [
+                            'Я, ',
+                            {
+                                text: this.surname + ' ' + this.name + ' ' + this.patronymic + ',',
+                                style: 'users',
+                            },{
+                                text: ' паспорт: '
+                            },{ 
+                                text: this.series + ' ' + this.number,
+                                style: 'users'
+                            },{
+                                text: ' выдан: '
+                            },{
+                                text: this.issued_by,
+                                style: 'users'
+                            },{
+                                text: ', дата выдачи: '
+                            }, {
+                                text: this.date_of_issue + ' г.,',
+                                style: 'users'
+                            }
+                        ],
+                        style: 'data'
+                    }, {                                                  
+                        text:'в соответствии с ч. 4 ст. 9 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных», даю своё согласие Удостоверяющему центру ГБУЗ «МИАЦ» (далее – Удостоверяющий центр), в лице директора Варенниковой Юлии Викторовны, действующей на основании Устава, расположенному по адресу г. Оренбург, ул. Маршала Жукова, д.42, на обработку моих персональных данных, с использованием или без использования средств автоматизации: сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), использование, обезличивание, блокирование, удаление, уничтожение, включающих: паспортные данные, должность, сведения о месте работы, адрес электронной почты, контактный(е) телефон(ы), страховой номер индивидуального лицевого счёта в Пенсионном фонде России (СНИЛС), индивидуальный номер налогоплательщика (ИНН), предоставляемых в Удостоверяющий центр согласно Регламенту Удостоверяющего центра (находящегося по адресу http://uc.mzorb.ru), в целях получения квалифицированного сертификата ключа проверки электронной подписи (далее - КСКПЭП), в соответствии со ст. 18 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
+                        style: 'body'                     
+                    }, {
+                        text:'Признаю, что мои персональные данные, в составе  КСКПЭП, относятся к общедоступным персональным данным, в соответствии с ч. 3 ст. 15 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
+                       
+                        style: 'body'
+                    }, {
+                        text: 'Настоящее согласие действует со дня его подписания до дня предоставления соответствующего отзыва в письменной форме или в случае прекращения деятельности Удостоверяющего центра.',
+                       
+                        style: 'body'             
+                    }, {
+                        columns: [
+                            {
+                                text: this.getDateNow(),
+                            }, {
+                            stack: [
+                                // second column consists of paragraphs
+                                '___________________________________',
+                                '(подпись субъекта персональных данных)',
+                            ],
+                                fontSize: 8
+                            },  
+                        ],
+                        margin: [0, 45, 0, 0],
+                        style: 'body'
+                    }
+
+                ]
+            }
+            console.log('this.surname=', this.surname)
+            pdfMake.createPdf(docDefinition).download("optionalName.pdf")
+        },
+        getDateNow() {
+            let date = new Date()
+            let monthA = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
+            let strDate = date.getDate() + ' ' + monthA[date.getMonth()] + ' ' + date.getFullYear() + ' г.'
+
+            return strDate
         }
     },
     created () {
-        console.log('Nfnmzyf')
-        this.$store.dispatch('initialiseStoreAuthRepresent')
-        this.checkForm(this.surname, 'surname')
-        this.checkForm(this.name, 'name')
-        this.checkForm(this.patronymic, 'patronymic')
-        this.chekSeries(this.series)
-        this.chekNumber(this.number)
-        this.chekIssuedBy(this.issued_by, 'issued_by')
-        // this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
-        // this.chekCode(this.code)
-        // this.chekDate(this.date_of_birth, 'date_of_birth')
-        this.chekDate(this.date_of_issue, 'date_of_issue')
-        // this.chekSnils(this.snils)
-        // this.chekSex(this.sex)
-        this.chekPosition(this.position)
-
-        // this.surname.set(this.surname)
     }
 }
 </script>

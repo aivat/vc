@@ -52,7 +52,7 @@ export default {
             },
             set (value) {
                 console.log('value=', value)
-                this.$store.commit('setMO', value)
+                this.$store.dispatch('setMO', value)
             }
         },
         listMO() {
