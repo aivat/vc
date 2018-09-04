@@ -9,6 +9,12 @@ const _mo = [{"id":0,"name":"\"Адамовская районная больн�
             let lpu = item.shortname.toLowerCase().indexOf(mo.toLowerCase())
             if ( lpu >=0 ) {
                 // console.log('Нашел', item.name)
+                Object.keys(item).forEach(it => {
+                  if ( it != 'id' ) {
+                    item[it] = item[it].toUpperCase()
+                  }
+                  
+                })
                 return item
             }
             

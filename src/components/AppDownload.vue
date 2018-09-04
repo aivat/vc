@@ -116,6 +116,7 @@ export default {
             return this.$store.state.authrepresent.authrepresent.position     
         },
         mo() {
+            console.log('this.mo.fullname=', this.$store.state.mo.myMOInfo)
             return this.$store.state.mo.myMOInfo
         }    
     },
@@ -238,90 +239,81 @@ export default {
             var docDefinition = {
                 title:'Тестовый документ PDF',
                 pageSize:'A4',
-                pageMargins:[25, 25],
+                pageMargins:[30, 30],
                 defaultStyle: {
-                    font: 'myFont'
+                    font: 'myFont',
+                    fontSize: 11
                 },              
                 styles: {
                     body: {
-                        leadingIndent: 25,
+                        leadingIndent: 30,
                         alignment: 'justify',
                     },
                     users: {
                         decoration: 'underline'
                     },
+                    usersBold: {
+                        decoration: 'underline',
+                        bold: true
+                    },
                     data: {
-                       leadingIndent: 25
+                       leadingIndent: 30
                     },
                     signature: {
 
                     }
                 },
-                content: [{
-                    text:'Заявление на изготовление сертификата ключа проверки электронной подписи',
-                        margin: [45, 0 , 0, 0],
+                content: [
+                    {
+                        text: 'Заявление на изготовление сертификата ключа проверки электронной подписи',
+                        margin: [70, 0 , 0, 25],
                         style: {
                             bold: true
                         }
                     }, {
-                    text: [
-                            this.mo.fullname,
+                        text: [
                             {
-                                text: this.surname + ' ' + this.name + ' ' + this.patronymic + ',',
-                                style: 'users',
-                            },{
-                                text: ' паспорт: '
-                            },{ 
-                                text: this.series + ' ' + this.number,
+                                text: this.mo.fullname,
                                 style: 'users'
                             },{
-                                text: ' выдан: '
+                                text: ' в лице '
                             },{
-                                text: this.issued_by,
-                                style: 'users'
-                            },{
-                                text: ', дата выдачи: '
-                            }, {
-                                text: this.date_of_issue + ' г.,',
+                                text: 'главного врача',
                                 style: 'users'
                             }
                         ],
-                        style: 'data'
-                    }, {                                                  
-                        text:'в соответствии с ч. 4 ст. 9 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных», даю своё согласие Удостоверяющему центру ГБУЗ «МИАЦ» (далее – Удостоверяющий центр), в лице директора Варенниковой Юлии Викторовны, действующей на основании Устава, расположенному по адресу г. Оренбург, ул. Маршала Жукова, д.42, на обработку моих персональных данных, с использованием или без использования средств автоматизации: сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), использование, обезличивание, блокирование, удаление, уничтожение, включающих: паспортные данные, должность, сведения о месте работы, адрес электронной почты, контактный(е) телефон(ы), страховой номер индивидуального лицевого счёта в Пенсионном фонде России (СНИЛС), индивидуальный номер налогоплательщика (ИНН), предоставляемых в Удостоверяющий центр согласно Регламенту Удостоверяющего центра (находящегося по адресу http://uc.mzorb.ru), в целях получения квалифицированного сертификата ключа проверки электронной подписи (далее - КСКПЭП), в соответствии со ст. 18 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
-                        style: 'body'                     
-                    }, {
-                        text:'Признаю, что мои персональные данные, в составе  КСКПЭП, относятся к общедоступным персональным данным, в соответствии с ч. 3 ст. 15 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
-                       
                         style: 'body'
                     }, {
-                        text: 'Настоящее согласие действует со дня его подписания до дня предоставления соответствующего отзыва в письменной форме или в случае прекращения деятельности Удостоверяющего центра.',
-                       
-                        style: 'body'             
+                        text: this.mo.head_physician,
+                        margin: [170, 7, 0, 7],
+                        style: 'users'
                     }, {
-                        columns: [
+                        text: [
                             {
-                                text: this.getDateNow(),
+                                text: 'действующего на основании ',
+                            }, { 
+                                text: 'устава',
+                                style: 'users'
                             }, {
-                            stack: [
-                                // second column consists of paragraphs
-                                '___________________________________',
-                                '(подпись субъекта персональных данных)',
-                            ],
-                                fontSize: 8
-                            },  
+                                text:', просит изготовить квалифицированный сертификат ключа проверки электронной подписи уполномоченного представителя, в соответствии с указанными в настоящем заявлении данными, передать в единую систему идентификации и аутентификации сведения о лице, получившем квалифицированный сертификат подписи уполномоченного представителя'
+                            }
                         ],
-                        margin: [0, 45, 0, 0],
                         style: 'body'
+                    }, {
+                        text: 'БАЙМЕШОВ АЙВАТ САГИМБАЕВИЧ',
+                        margin: [170, 7, 0, 7],
+                        style: 'usersBold'
                     }
-
                 ]
             }
             console.log('this.surname=', this.surname)
-            pdfMake.createPdf(docDefinition).download("optionalName.pdf")
+            pdfMake.createPdf(docDefinition).download("zayuvlenie.pdf")
         }
     },
     created () {
+        
+        this.$store.dispatch('initialiseStoreMyMOInfo')
+        this.mo.fullname
     }
 }
 </script>

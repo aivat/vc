@@ -29,11 +29,9 @@ const actions = {
     shopMO.searchMO(
         inputMO,
         list => {
-            // commit('setListMO', list)
             commit('setMO', inputMO)
             let oneMO = list[0]
             commit('setMyMOInfo', oneMO)
-            // console.log('qasd=', qasd)
         }
     )
   },
@@ -49,7 +47,12 @@ const actions = {
     if(localStorage.getItem('myRole')) {
       commit ('setRoleFromLocalStorage', localStorage.getItem('myRole'))
     }
-  }    
+  },
+  initialiseStoreMyMOInfo({ commit }) {
+    if(localStorage.getItem('myMOInfo')) {
+      commit ('setMyMOInfoFromLocalStorage', JSON.parse(localStorage.getItem('myMOInfo')))
+    }
+  }      
 }
 
 // mutations
@@ -75,6 +78,9 @@ const mutations = {
     },
     setRoleFromLocalStorage (state, storeRoleFromLocalStorage) {
         state.myRole = storeRoleFromLocalStorage
+    },
+    setMyMOInfoFromLocalStorage (state, storeMyMOInfoFromLocalStorage) {
+        state.myMOInfo = storeMyMOInfoFromLocalStorage
     }
 }
 
