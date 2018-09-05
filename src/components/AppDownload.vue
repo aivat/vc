@@ -118,9 +118,18 @@ export default {
         mo() {
             console.log('this.mo.fullname=', this.$store.state.mo.myMOInfo)
             return this.$store.state.mo.myMOInfo
-        }    
+        },
+        ind() {
+            return this.$store.state.individual.individual
+        } 
+
+           
     },
     methods: {
+        brevisNameHeadPhysician(name) {
+            let brevis = name.split(' ')
+            return brevis[1].charAt(0) + '.' + brevis[2].charAt(0) + '. ' + brevis[0]
+        },
         asd() {
             pdfMake.fonts = {
             myFont: {
@@ -266,7 +275,8 @@ export default {
                 content: [
                     {
                         text: 'Заявление на изготовление сертификата ключа проверки электронной подписи',
-                        margin: [70, 0 , 0, 25],
+                        alignment: 'center',
+                        margin: [0, 0, 0, 15],
                         style: {
                             bold: true
                         }
@@ -285,7 +295,8 @@ export default {
                         style: 'body'
                     }, {
                         text: this.mo.head_physician,
-                        margin: [170, 7, 0, 7],
+                        alignment: 'center',
+                        margin: [0, 7, 0, 7],
                         style: 'users'
                     }, {
                         text: [
@@ -300,9 +311,135 @@ export default {
                         ],
                         style: 'body'
                     }, {
-                        text: 'БАЙМЕШОВ АЙВАТ САГИМБАЕВИЧ',
-                        margin: [170, 7, 0, 7],
+                        text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
+                        alignment: 'center',
+                        margin: [0, 7, 0, 7],
                         style: 'usersBold'
+                    }, {
+                        text: [
+                            {
+                                text: 'пол: '
+                            }, {
+                                text: this.ind.sex,
+                                style: 'usersBold' 
+                            }, {
+                                text: ', дата рождения: '
+                            }, {
+                                text: this.ind.date_of_birth,
+                                style: 'usersBold'
+                            }, {
+                                text: ' г., место рождения: '
+                            }, {
+                                text: this.ind.place_of_birth,
+                                style: 'usersBold'
+                            }, {
+                                text: ', документ, удостоверяющий личность: '
+                            }, {
+                                text: this.ind.series,
+                                style: 'usersBold'
+                            }, {
+                                text: ' № '
+                            }, {
+                                text: this.ind.number,
+                                style: 'usersBold'
+                            }, {
+                                text: ' от '
+                            }, {
+                                text: this.ind.date_of_issue,
+                                style: 'usersBold'
+                            }, {
+                                text: ' г., выдан '
+                            }, {
+                                text: this.ind.issued_by,
+                                style: 'usersBold'
+                            }, {
+                                 text: ', код подразделения: '
+                            }, {
+                                text: this.ind.code,
+                                style: 'usersBold'
+                            }
+                        ],
+                        margin: [0, 0, 0, 10],
+                    }, {
+                        table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: [ 'auto', 'auto', '*'],
+
+                            body: [
+                                [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic ],
+                                [ 'Contry', 'RU', 'Россия' ],
+                                [ 'State', 'Область', '56 Оренбургская область' ],
+                                [ 'Locality', 'Город', this.mo.Locality ],
+                                [ 'streetAddress', 'Адрес', this.mo.streetAddress ], 
+                                [ 'Organization', 'Наименование организации', this.mo.shortname ],
+                                [ 'Title', 'Должность', this.ind.position ],
+                                [ 'OGRN', 'ОГРН', this.mo.OGRN ],
+                                [ 'SNILS', 'СНИЛС', this.ind.snils ],
+                                [ 'INN', 'ИНН', this.mo.INN ],
+                                [ 'E-Mail (E)', 'Адрес электронной почты', 'aivat@mail.ru']                            
+                            ]
+                        }
+                    }, {
+                        text: 'Руководитель организации',
+                        margin: [0, 25, 0, 0]
+                    }, {
+                        columns: [
+                            {
+                                width: 120,
+                                
+                                text: 'Главный врач'
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________ (подпись)                                     М.П.'
+                            }, {
+                                width: '*',
+                                text: this.brevisNameHeadPhysician(this.mo.head_physician)    
+                            }
+                        ],
+                        columnGap: 80
+                    }, {
+                        text: this.getDateNow(),
+                        margin: [0, 10, 0, 0],
+                    }, {
+                        text: 'Уполномоченный представитель',
+                        margin: [0, 25, 0, 0]
+                    }, {
+                        columns: [
+                            {
+                                width: 120,
+                                text: this.ind.position
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________          (подпись)'
+                            }, {
+                                width: '*',
+                                text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic) 
+                            }
+                        ],
+                        columnGap: 80
+                    }, {
+                        text: this.getDateNow(),
+                        margin: [0, 10, 0, 0],
+                    }, {
+                        canvas: [
+                            { type: 'line', x1: 0, y1: 40, x2: 535, y2: 40, dash: {length: 4, space: 4} }
+                        ]
+                    }, {
+                        text: '(заполняется уполномоченным лицом ГБУЗ «МИАЦ»)',
+                        alignment: 'center',
+                        fontSize: 8
+                    }, {
+                        text: 'Данное Заявление зарегистрированы в реестре Удостоверяющего центра ГБУЗ «МИАЦ».',
+                        margin: [0, 15, 0, 0]
+                    }, {
+                        text: 'Регистрационный № _________________ от «_____» ________________ 20__ г.'
+                    }, {
+                        text: 'Уполномоченное лицо ГБУЗ «МИАЦ» (доверенность №__ от __ . __ . 20__г.)		___________(______________)',
+                        margin: [0, 15, 0, 0]
                     }
                 ]
             }
@@ -313,6 +450,7 @@ export default {
     created () {
         
         this.$store.dispatch('initialiseStoreMyMOInfo')
+        this.$store.dispatch('initialiseStoreIndividual')
         this.mo.fullname
     }
 }
