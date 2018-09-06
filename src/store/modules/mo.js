@@ -52,11 +52,21 @@ const actions = {
     if(localStorage.getItem('myMOInfo')) {
       commit ('setMyMOInfoFromLocalStorage', JSON.parse(localStorage.getItem('myMOInfo')))
     }
-  }      
+  },
+  setMyMOInformation({ commit }, ind) {
+      console.log('qwe=', ind)
+    commit('setMyMOInformation', { index: ind.index, val: ind.val })
+  }
 }
 
 // mutations
 const mutations = {
+    setMyMOInformation(state, {index, val}) {
+        console.log('bal=', val)
+        console.log('state.myMOInfo[index]', state.myMOInfo[index])
+        state.myMOInfo[index] = val
+        localStorage.setItem('myMOInfo', JSON.stringify(state.myMOInfo))
+    },
     setListMO (state, listMO) {
         state.listMO = listMO
         // console.log('state2=', state.listMO[0].id)

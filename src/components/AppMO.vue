@@ -32,44 +32,46 @@
                                     <input class="in fullname" :class="{ activeInput: readonly.fullname}" type="text" id="fullname" v-model.trim="fullname" placeholder="ПОЛНОЕ НАИМЕНОВАНИЕ" :readonly="readonly.fullname">
                                     <div class="edit" @click="readonly.fullname = !readonly.fullname">Изменить</div>
                                 </div>
-
-                                <!-- <label class="label-show"> {{ surname }} </label> -->
-                                <!-- <label class="label-error" v-show="error.surname">{{ error.surname }} </label> -->
+                            </div>
+                            <div class="wrap-item">
+                                <label for="shortname" class="label-name" >Сокращенное наименование:</label>
+                                <input class="in" :class="{ activeInput: readonly.shortname }" type="text" id="shortname" v-model.trim="shortname" placeholder="ДЕЙЛ" :readonly="readonly.shortname">
+                                <div class="edit" @click="readonly.shortname = !readonly.shortname">Изменить</div>
+                            </div>
+                            <div class="wrap-item">
+                                <label for="Locality" class="label-name" >Город:</label>
+                                <input class="in" :class="{ activeInput: readonly.Locality }" type="text" id="Locality" v-model.trim="Locality" placeholder="ДЕЙЛ" :readonly="readonly.Locality">
+                                <div class="edit" @click="readonly.Locality = !readonly.Locality">Изменить</div>
+                            </div>
+                            <div class="wrap-item">
+                                <label for="streetAddress" class="label-name" >Улица:</label>
+                                <input class="in" :class="{ activeInput: readonly.streetAddress }" type="text" id="streetAddress" v-model.trim="streetAddress" placeholder="ДЕЙЛ" :readonly="readonly.streetAddress">
+                                <div class="edit" @click="readonly.streetAddress = !readonly.streetAddress">Изменить</div>
+                            </div>
+                            <div class="wrap-item">
+                                <label for="INN" class="label-name" >ИНН:</label>
+                                <input class="in" :class="{ activeInput: readonly.INN }" type="text" id="INN" v-model.trim="INN" placeholder="ДЕЙЛ" :readonly="readonly.INN">
+                                <div class="edit" @click="readonly.INN = !readonly.INN">Изменить</div>
+                            </div>
+                            <div class="wrap-item">
+                                <label for="OGRN" class="label-name" >ОГРН:</label>
+                                <input class="in" :class="{ activeInput: readonly.OGRN }" type="text" id="OGRN" v-model.trim="OGRN" placeholder="ДЕЙЛ" :readonly="readonly.OGRN">
+                                <div class="edit" @click="readonly.OGRN = !readonly.OGRN">Изменить</div>
                             </div>
                             <p>
-                                <label for="name" class="label-name" >Имя:</label>
-                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
-                                <label class="label-show"> {{ name }} </label>
-                                <label class="label-error" v-show="error.name">{{ error.name }} </label>
+                                <label class="label-name"> Должность руководителя:</label>
+                                <input class="radio" type="radio" id="sex1" name="position" v-model="position" value="главный врач">   
+                                <label for="sex1">Главный врач</label>
+                                <input class="radio" type="radio" id="sex2" name="position" v-model="position" value="и.о. главного врача">   
+                                <label for="sex2">и.о. главного врача</label>
+                                <input class="radio" type="radio" id="sex3" name="position" v-model="position" value="директор">   
+                                <label for="sex3">Директор</label>
                             </p>
-                            <p>
-                                <label for="patronymic" class="label-name" >Отчество:</label>
-                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ">
-                                <label class="label-show"> {{ patronymic }} </label>
-                                <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
-                            </p>
-                            <p>
-                                <label class="label-name"> Выберите пол:</label>
-                                <input class="radio" type="radio" id="sex1" name="sex" v-model="sex" value="муж.">   
-                                <label for="sex1">Муж</label>
-                                <input class="radio" type="radio" id="sex2" name="sex" v-model="sex" value="жен.">   
-                                <label for="sex2">Жен</label>
-                                <label class="label-error" v-show="error.sex">{{ error.sex }} </label>
-                            </p>
-                            <p>
-                                <label for="position" class="label-name">Должность:</label>
-                                <input class="in position" type="text" id="position" v-model="position">  
-                                <label class="label-show"> {{ position }} </label>
-                                <label class="label-error" v-show="error.position">{{ error.position }} </label>
-                            </p>
-                            <p>
-                                <label for="snils" class="label-name">СНИЛС:</label>
-                                <input class="in snils" type="text" id="snils" v-model="snils" maxlength="14" placeholder="111-222-333 44">  
-                                <label class="label-show"> {{ snils }} </label>
-                                <!-- <label v-show="error.snils.is"> {{ error.snils.is }} </label> -->
-                                <label v-show="error.snils.is" class="label-error"> {{ error.snils.text }} </label>
-                                <label v-show="!error.snils.is"> Все верно  </label>  
-                            </p>                                                                     
+                            <div class="wrap-item">
+                                <label for="head_physician" class="label-name" >ФИО руководителя:</label>
+                                <input class="in" :class="{ activeInput: readonly.head_physician }" type="text" id="head_physician" v-model.trim="head_physician" placeholder="ДЕЙЛ" :readonly="readonly.head_physician">
+                                <div class="edit" @click="readonly.head_physician = !readonly.head_physician">Изменить</div>
+                            </div>                                                                 
                         </div>
                     </div>
                 </div>
@@ -84,7 +86,13 @@ export default {
         return {
             readonly: {
                 fullname: true,
-                OGRN: true
+                shortname: true,
+                Locality: true,
+                streetAddress: true,
+                INN: true,
+                OGRN: true,
+                position: true,
+                head_physician: true
             },
             error: {
                 surname: null,
@@ -126,7 +134,8 @@ export default {
                 issued_by: '',
                 place_of_birth: ''
             },
-            rules: ' все поля форм заполняются строго как в документах. '
+            rules: ' все поля форм заполняются строго как в документах. ',
+            mo: ''
         }
     },
     computed: {
@@ -136,87 +145,103 @@ export default {
             },
             set (value) {
                 this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'surname')
-                // if ( this.checkFormTest(value, 'surname') ) {
-                //     this.error.surname = false
-                //     // this.$store.dispatch('setSurname', value.toUpperCase())
-                // }  else {
-                //     this.error.surname = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.'
-                // }       
-                this.$store.dispatch('setSurname', value.toUpperCase())
+                let temp = {
+                    index: 'fullname',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)
             }
         },
-        name: {
+        shortname: {
             get () {
-                return this.$store.state.individual.individual.name
+                return this.$store.state.mo.myMOInfo.shortname
             },
             set (value) {
                 this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'name')    
-                this.$store.dispatch('setName', value.toUpperCase())    
+                let temp = {
+                    index: 'shortname',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
             }
         },
-        patronymic: {
+        Locality: {
             get () {
-                return this.$store.state.individual.individual.patronymic 
+                return this.$store.state.mo.myMOInfo.Locality
             },
             set (value) {
-                this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'patronymic')
-                this.$store.dispatch('setPatronymic', value.toUpperCase())  
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'Locality',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
             }
         },
-        series: {
+        streetAddress: {
             get () {
-                return this.$store.state.individual.individual.series 
+                return this.$store.state.mo.myMOInfo.streetAddress
             },
             set (value) {
-                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
-                this.chekSeries(value)
-                this.$store.dispatch('setSeries', value.toUpperCase())
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'streetAddress',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
             }
         },
-        number: {
+        INN: {
             get () {
-                return this.$store.state.individual.individual.number 
+                return this.$store.state.mo.myMOInfo.INN
             },
             set (value) {
-                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
-                this.chekNumber(value)
-                this.$store.dispatch('setNumber', value.toUpperCase())
-            }            
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'INN',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
+            }
         },
-        issued_by: {
+        OGRN: {
             get () {
-                return this.$store.state.individual.individual.issued_by 
+                return this.$store.state.mo.myMOInfo.OGRN
             },
             set (value) {
-                this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                this.chekIssuedBy(value, 'issued_by')
-                this.$store.dispatch('setIssuedBy', value.toUpperCase())
-            }            
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'OGRN',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
+            }
         },
-        place_of_birth: {
+        position: {
             get () {
-                return this.$store.state.individual.individual.place_of_birth 
+                return this.$store.state.mo.myMOInfo.position
             },
             set (value) {
-                this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                // let qwe
-                this.chekIssuedBy(value, 'place_of_birth')
-                this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                // ошибок нет придет false, ошибки есть придет true
-                // if ( qwe = this.chekIssuedBy(value) ) {
-                //     this.error.place_of_birth = true
-                //     this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                //     this.errorHTML_place_of_birth = qwe
-                // } else {
-                //    this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                //    this.error.place_of_birth = false
-                //    this.errorHTML_place_of_birth = null
-                // }  
-                  
-            }            
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'position',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
+            }
+        },
+        head_physician: {
+            get () {
+                return this.$store.state.mo.myMOInfo.head_physician
+            },
+            set (value) {
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'head_physician',
+                    val: value
+                }
+                this.$store.dispatch('setMyMOInformation', temp)    
+            }
         },
         code: {
             get () {
@@ -263,15 +288,6 @@ export default {
                 this.chekSex(value)
                 this.$store.dispatch('setSex', value)
             }            
-        },
-        position: {
-            get () {
-                return this.$store.state.individual.individual.position
-            },
-            set (value) {
-                this.chekPosition(value)
-                this.$store.dispatch('setPosition', value)
-            }              
         },
         snils: {
             get () {
@@ -452,6 +468,8 @@ export default {
     created () {
         this.$store.dispatch('initialiseStoreIndividual')
         this.$store.dispatch('initialiseStoreMyMOInfo')
+        this.mo = this.$store.state.mo.myMOInfo
+        console.log('mo=', this.mo)
         // this.checkForm(this.surname, 'surname')
         // this.checkForm(this.name, 'name')
         // this.checkForm(this.patronymic, 'patronymic')
@@ -618,7 +636,7 @@ li:hover:not(.active) {
 }
 .label-name {
     display: inline-block;
-    width: 155px;
+    width: 230px;
 }
 
 .in {
@@ -628,6 +646,7 @@ li:hover:not(.active) {
     font-size: 14px;
     padding: 5px 15px;
     font-weight: 400;
+    width: 300px;
 }
 
 .in:focus {
@@ -670,18 +689,26 @@ li:hover:not(.active) {
 }
 
 .activeInput {
-    background-color: rgba(212, 212, 212, .7);
+    background-color: rgba(212, 212, 212, .5);
 }
 
 .fullname-wrap {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .edit {
     border-bottom: 1px dashed rgb(212, 212, 212);
     cursor: pointer;
+}
+.wrap-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.wrap-item input {
+    margin-right: 10px;
 }
 @media (min-width: 1280px) {
     .mo {
