@@ -4,12 +4,12 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/three" class="button-link">
+                        <router-link to="/two" class="button-link">
                             Назад
                         </router-link>
                     </div>
                     <div class="mo-h2" >
-                        Введите данные сотрудника, которому необходимо получить электронную подпись
+                        Проверьте данные организации
                     </div>
                     <div class="mo-body-link">
                         <!-- <router-link to="/four" > -->
@@ -26,12 +26,16 @@
                             <div class="rules">{{ rules }}</div>
                         </div>
                         <div class="individual-wrap">
-                            <p>
-                                <label for="surname" class="label-name" >Фамилия:</label>
-                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
-                                <label class="label-show"> {{ surname }} </label>
-                                <label class="label-error" v-show="error.surname">{{ error.surname }} </label>
-                            </p>
+                            <div>
+                                <label for="fullname" class="label-name label-name-fullname" >Наименование организации:</label>
+                                <div class="fullname-wrap">
+                                    <input class="in fullname" :class="{ activeInput: readonly.fullname}" type="text" id="fullname" v-model.trim="fullname" placeholder="ПОЛНОЕ НАИМЕНОВАНИЕ" :readonly="readonly.fullname">
+                                    <div class="edit" @click="readonly.fullname = !readonly.fullname">Изменить</div>
+                                </div>
+
+                                <!-- <label class="label-show"> {{ surname }} </label> -->
+                                <!-- <label class="label-error" v-show="error.surname">{{ error.surname }} </label> -->
+                            </div>
                             <p>
                                 <label for="name" class="label-name" >Имя:</label>
                                 <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
@@ -65,93 +69,22 @@
                                 <!-- <label v-show="error.snils.is"> {{ error.snils.is }} </label> -->
                                 <label v-show="error.snils.is" class="label-error"> {{ error.snils.text }} </label>
                                 <label v-show="!error.snils.is"> Все верно  </label>  
-                            </p>     
-                            <fieldset>
-                                <legend>Паспорт</legend>
-                                <p>
-                                    <label for="series" class="label-name">Серия:</label>
-                                    <input class="in series" id="series" v-model.lazy="series" maxlength="4" placeholder="1234"> 
-                                    <label v-show="!error.series" class="label-show">{{ series }} </label>
-                                    <label v-show="error.series" class="label-error">{{ error.series }} </label>
-                                </p>
-                                <p>
-                                    <label for="number" class="label-name">Номер:</label>
-                                    <input class="in number" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456">
-                                    <label class="label-show" v-show="!error.number">{{ number }}</label>
-                                    <label v-show="error.number" class="label-error">{{ error.number }} </label>
-                                </p>
-                                <p>
-                                    <label for="issued_by" class="label-name">Кем выдан:</label>
-                                    <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
-                                    <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
-                                    <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
-                                    <label v-html="errorHTML.issued_by"> </label>
-                                </p>
-                                <p>
-                                    <label for="issued_by2" class="label-name"></label>
-                                    <label class="label-show">{{ issued_by }}</label>
-                                </p>
-                                <p>
-                                    <label for="date_of_issue" class="label-name">Дата выдачи:</label>
-                                    <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
-                                    <label class="label-show" v-show="!error.date_of_issue">{{ date_of_issue }}</label>
-                                    <label class="label-error" v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
-                                </p>
-                                <p>
-                                    <label for="code" class="label-name">Код подразделения:</label>
-                                    <input class="in" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123">
-                                    <label class="label-show" v-show="!error.code">{{ code }}</label>
-                                    <label class="label-error" v-show="error.code">{{ error.code }} </label>
-                                </p>
-                                <p>
-                                    <label for="date_of_birth" class="label-name">Дата рождения:</label>
-                                    <input class="in" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991">
-                                    <label class="label-show" v-show="!error.date_of_birth">{{ date_of_birth }}</label>
-                                    <label class="label-error" v-show="error.date_of_birth">{{ error.date_of_birth }} </label>
-                                </p>
-                                <p>
-                                    <label for="place_of_birth" class="label-name">Место рождения:</label>
-                                    <input class="in issued_by" type="text" id="place_of_birth" v-model="place_of_birth">
-                                    <label v-html="errorHTML.place_of_birth"> </label>    
-                                </p>
-                                <p>
-                                    <label for="place_of_birth" class="label-name"></label>
-                                    <label class="label-show">{{ place_of_birth }}</label>    
-                                </p>
-                            </fieldset>                                                                   
+                            </p>                                                                     
                         </div>
                     </div>
-
-
                 </div>
-                <!-- <div class="mo-body-search">
-                        <ul class="wrap" v-for="item in role" :key="item.id">
-                            <li class="">tgtg
-                                <input type="radio" :id="item.id" :value="item.name" v-model="picked">
-                                <label :for="item.id">{{ item.name }} {{picked}}</label>
-                                <div class="circle" v-bind:class="{ 'circle-active': item.name == picked ?  true : false }"></div>
-                            </li>
-                        </ul>
-                </div>           -->
             </div>
         </div>
     </div>
 </template>
 
 <script>
-// import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            role: {
-                0: {
-                    id: "0",
-                    name: "Медицинский работник"
-                },
-                1: {
-                    id: "1",
-                    name: "Программист"
-                }
+            readonly: {
+                fullname: true,
+                OGRN: true
             },
             error: {
                 surname: null,
@@ -197,9 +130,9 @@ export default {
         }
     },
     computed: {
-        surname: {
+        fullname: {
             get () {
-                return this.$store.state.individual.individual.surname
+                return this.$store.state.mo.myMOInfo.fullname
             },
             set (value) {
                 this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
@@ -507,7 +440,7 @@ export default {
         onward() {
 
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/five')
+                this.$router.push('/four')
             } else {
                 this.rules = 'исправьте все ошибки'
                 console.log('this.error=',this.error)
@@ -518,19 +451,20 @@ export default {
     },
     created () {
         this.$store.dispatch('initialiseStoreIndividual')
-        this.checkForm(this.surname, 'surname')
-        this.checkForm(this.name, 'name')
-        this.checkForm(this.patronymic, 'patronymic')
-        this.chekSeries(this.series)
-        this.chekNumber(this.number)
-        this.chekIssuedBy(this.issued_by, 'issued_by')
-        this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
-        this.chekCode(this.code)
-        this.chekDate(this.date_of_birth, 'date_of_birth')
-        this.chekDate(this.date_of_issue, 'date_of_issue')
-        this.chekSnils(this.snils)
-        this.chekSex(this.sex)
-        this.chekPosition(this.position)
+        this.$store.dispatch('initialiseStoreMyMOInfo')
+        // this.checkForm(this.surname, 'surname')
+        // this.checkForm(this.name, 'name')
+        // this.checkForm(this.patronymic, 'patronymic')
+        // this.chekSeries(this.series)
+        // this.chekNumber(this.number)
+        // this.chekIssuedBy(this.issued_by, 'issued_by')
+        // this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
+        // this.chekCode(this.code)
+        // this.chekDate(this.date_of_birth, 'date_of_birth')
+        // this.chekDate(this.date_of_issue, 'date_of_issue')
+        // this.chekSnils(this.snils)
+        // this.chekSex(this.sex)
+        // this.chekPosition(this.position)
 
         // this.surname.set(this.surname)
     }
@@ -631,7 +565,7 @@ button:active {
 }
 
 ul {
-     margin: 0;
+    margin: 0;
     padding: 0;   
 }
 
@@ -641,8 +575,8 @@ li {
     background-color: white;
     border-radius: 4px;
     margin-top: 10px;
-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
     cursor: pointer;
     transition: all .15s ease-out;
 }
@@ -723,6 +657,31 @@ li:hover:not(.active) {
 }
 .issued_by {
     width: 700px;
+}
+.fullname {
+    width: 1100px;
+}
+.label-name-fullname {
+    width: auto;
+}
+.activeInput:focus {
+    border: 1px solid rgb(212, 212, 212);
+    
+}
+
+.activeInput {
+    background-color: rgba(212, 212, 212, .7);
+}
+
+.fullname-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.edit {
+    border-bottom: 1px dashed rgb(212, 212, 212);
+    cursor: pointer;
 }
 @media (min-width: 1280px) {
     .mo {

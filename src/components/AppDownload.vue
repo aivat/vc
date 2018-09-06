@@ -276,32 +276,36 @@ export default {
                     {
                         text: 'Заявление на изготовление сертификата ключа проверки электронной подписи',
                         alignment: 'center',
-                        margin: [0, 0, 0, 15],
+                        margin: [0, 0, 0, 25],
                         style: {
                             bold: true
                         }
                     }, {
+                        text: this.mo.fullname,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 10]
+                    }, {
                         text: [
                             {
-                                text: this.mo.fullname,
-                                style: 'users'
-                            },{
-                                text: ' в лице '
+                            //     text: this.mo.fullname,
+                            //     style: 'users'
+                            // },{
+                                text: 'в лице '
                             },{
                                 text: 'главного врача',
                                 style: 'users'
-                            }
-                        ],
-                        style: 'body'
-                    }, {
-                        text: this.mo.head_physician,
-                        alignment: 'center',
-                        margin: [0, 7, 0, 7],
-                        style: 'users'
-                    }, {
-                        text: [
-                            {
-                                text: 'действующего на основании ',
+                            }, {
+                                text: ' '
+                            }, {
+                                text: this.mo.head_physician,
+                                // alignment: 'center',
+                                // margin: [0, 7, 0, 7],
+                                style: {
+                                    bold: true,
+                                    decoration: 'underline'
+                                }      
+                            }, {
+                                text: ', действующего на основании ',
                             }, { 
                                 text: 'устава',
                                 style: 'users'
@@ -310,62 +314,177 @@ export default {
                             }
                         ],
                         style: 'body'
+                    // }, {
+                    //     text: this.mo.head_physician,
+                    //     alignment: 'center',
+                    //     margin: [0, 7, 0, 7],
+                    //     style: 'users'
+                    // }, {
+                    //     text: [
+                    //         {
+                    //             text: 'действующего на основании ',
+                    //         }, { 
+                    //             text: 'устава',
+                    //             style: 'users'
+                    //         }, {
+                    //             text:', просит изготовить квалифицированный сертификат ключа проверки электронной подписи уполномоченного представителя, в соответствии с указанными в настоящем заявлении данными, передать в единую систему идентификации и аутентификации сведения о лице, получившем квалифицированный сертификат подписи уполномоченного представителя'
+                    //         }
+                    //     ],
+                    //     style: 'body'
                     }, {
                         text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
                         alignment: 'center',
                         margin: [0, 7, 0, 7],
                         style: 'usersBold'
                     }, {
-                        text: [
+                        columns: [
                             {
+                                // width: 190,
+                                 width: 'auto',
                                 text: 'пол: '
                             }, {
+                                width: 'auto',
                                 text: this.ind.sex,
-                                style: 'usersBold' 
+                                style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
+                        //  margin: [0, 0, 0, 2]
+                    }, {
+                        columns: [
+                            {
+                                // width: 190,
+                                 width: 'auto',
+                                text: 'дата рождения:'
                             }, {
-                                text: ', дата рождения: '
-                            }, {
+                                width: 'auto',
                                 text: this.ind.date_of_birth,
                                 style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
+                        //  margin: [0, 0, 0, 2]
+                    }, {
+                        columns: [
+                            {
+                                // width: 190,
+                                 width: 'auto',
+                                text: 'место рождения:'
                             }, {
-                                text: ' г., место рождения: '
-                            }, {
+                                width: 'auto',
                                 text: this.ind.place_of_birth,
                                 style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
+                        //  margin: [0, 0, 0, 2]
+                    }, {
+                        columns: [
+                            {
+                                // width: 190,
+                                 width: 'auto',
+                                text: 'документ, удостоверяющий личность, паспорт:'
                             }, {
-                                text: ', документ, удостоверяющий личность: '
-                            }, {
-                                text: this.ind.series,
+                                width: 'auto',
+                                text: this.ind.series + ' № ' + this.ind.number,
                                 style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
+                        //  margin: [0, 0, 0, 2]
+                    }, {
+                        columns: [
+                            {
+                                // width: 190,
+                                 width: 'auto',
+                                text: 'дата выдачи:'
                             }, {
-                                text: ' № '
-                            }, {
-                                text: this.ind.number,
-                                style: 'usersBold'
-                            }, {
-                                text: ' от '
-                            }, {
+                                width: 'auto',
                                 text: this.ind.date_of_issue,
                                 style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
+                        //  margin: [0, 0, 0, 2]
+                    }, {
+                        columns: [
+                            {
+                                // width: 190,
+                                 width: 'auto',
+                                text: 'выдан: '
                             }, {
-                                text: ' г., выдан '
-                            }, {
+                                width: 'auto',
                                 text: this.ind.issued_by,
                                 style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
+                        // margin: [0, 0, 0, 2]
+                    }, {
+                        columns: [
+                            {
+                                // width: 190,
+                                 width: 'auto',
+                                text: 'код подразделения: '
                             }, {
-                                 text: ', код подразделения: '
-                            }, {
+                                width: 'auto',
                                 text: this.ind.code,
                                 style: 'usersBold'
-                            }
+                            }                            
                         ],
-                        margin: [0, 0, 0, 10],
+                        columnGap: 2,
+                        margin: [0, 0, 0, 10]
                     }, {
+                    //     text: [
+                    //         {
+                    //             text: 'пол: '
+                    //         }, {
+                    //             text: this.ind.sex,
+                    //             style: 'usersBold' 
+                    //         }, {
+                    //             text: ', дата рождения: '
+                    //         }, {
+                    //             text: this.ind.date_of_birth,
+                    //             style: 'usersBold'
+                    //         }, {
+                    //             text: ' г., место рождения: '
+                    //         }, {
+                    //             text: this.ind.place_of_birth,
+                    //             style: 'usersBold'
+                    //         }, {
+                    //             text: ', документ, удостоверяющий личность: '
+                    //         }, {
+                    //             text: this.ind.series,
+                    //             style: 'usersBold'
+                    //         }, {
+                    //             text: ' № '
+                    //         }, {
+                    //             text: this.ind.number,
+                    //             style: 'usersBold'
+                    //         }, {
+                    //             text: ' от '
+                    //         }, {
+                    //             text: this.ind.date_of_issue,
+                    //             style: 'usersBold'
+                    //         }, {
+                    //             text: ' г., выдан '
+                    //         }, {
+                    //             text: this.ind.issued_by,
+                    //             style: 'usersBold'
+                    //         }, {
+                    //              text: ', код подразделения: '
+                    //         }, {
+                    //             text: this.ind.code,
+                    //             style: 'usersBold'
+                    //         }
+                    //     ],
+                    //     margin: [0, 0, 0, 10],
+                    // }, {
                         table: {
                             // headers are automatically repeated if the table spans over multiple pages
                             // you can declare how many rows should be treated as headers
                             headerRows: 1,
-                            widths: [ 'auto', 'auto', '*'],
+                            widths: [ 120, 'auto', '*'],
 
                             body: [
                                 [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic ],
@@ -393,7 +512,8 @@ export default {
                             }, {
                                 width: 130,
                                 fontSize: 8,
-                                text: '__________________________ (подпись)                                     М.П.'
+                                text: '__________________________ (подпись)',
+                                alignment: 'center'
                             }, {
                                 width: '*',
                                 text: this.brevisNameHeadPhysician(this.mo.head_physician)    
@@ -401,8 +521,13 @@ export default {
                         ],
                         columnGap: 80
                     }, {
+                        text: 'М.П.',
+                        fontSize: 8,
+                        margin: [350, 0, 0, 0]
+
+                    }, {
                         text: this.getDateNow(),
-                        margin: [0, 10, 0, 0],
+                        margin: [0, -5, 0, 0],
                     }, {
                         text: 'Уполномоченный представитель',
                         margin: [0, 25, 0, 0]
@@ -414,16 +539,18 @@ export default {
                             }, {
                                 width: 130,
                                 fontSize: 8,
-                                text: '__________________________          (подпись)'
+                                text: '__________________________          (подпись)',
+                                alignment: 'center',
                             }, {
                                 width: '*',
                                 text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic) 
-                            }
+                            },
+                            
                         ],
-                        columnGap: 80
+                        columnGap: 80,
                     }, {
                         text: this.getDateNow(),
-                        margin: [0, 10, 0, 0],
+                        margin: [0, 5, 0, 0],
                     }, {
                         canvas: [
                             { type: 'line', x1: 0, y1: 40, x2: 535, y2: 40, dash: {length: 4, space: 4} }
@@ -433,13 +560,18 @@ export default {
                         alignment: 'center',
                         fontSize: 8
                     }, {
-                        text: 'Данное Заявление зарегистрированы в реестре Удостоверяющего центра ГБУЗ «МИАЦ».',
+                        text: 'Данное заявление зарегистрировано в реестре Удостоверяющего центра ГБУЗ «МИАЦ».',
                         margin: [0, 15, 0, 0]
                     }, {
                         text: 'Регистрационный № _________________ от «_____» ________________ 20__ г.'
                     }, {
                         text: 'Уполномоченное лицо ГБУЗ «МИАЦ» (доверенность №__ от __ . __ . 20__г.)		___________(______________)',
                         margin: [0, 15, 0, 0]
+                    }, {
+                        text: 'М.П.',
+                        fontSize: 8,
+                        alignment: 'right',
+                        margin: [0, 10, 40, 0]
                     }
                 ]
             }

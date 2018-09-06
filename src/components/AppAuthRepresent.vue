@@ -4,7 +4,7 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/three" class="button-link">
+                        <router-link to="/four" class="button-link">
                             Назад
                         </router-link>
                     </div>
@@ -350,7 +350,7 @@ export default {
         onward() {
 
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/five')
+                this.$router.push('/six')
             } else {
                 this.rules = 'исправьте все ошибки'
                 console.log('this.error=',this.error)

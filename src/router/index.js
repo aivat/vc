@@ -7,6 +7,7 @@ import AppIndividual from '@/components/AppIndividual'
 import AppPersonInCharge from '@/components/AppPersonInCharge'
 import AppAuthRepresent from '@/components/AppAuthRepresent'
 import AppDownload from '@/components/AppDownload'
+import AppMO from '@/components/AppMO'
 Vue.use(Router)
 
 export default new Router({
@@ -25,16 +26,21 @@ export default new Router({
     {
       path: '/three',
       name: 'three',
-      component: AppIndividual
+      component: AppMO
     },
     {
       path: '/four',
       name: 'four',
-      component: AppAuthRepresent
+      component: AppIndividual
     },
     {
       path: '/five',
       name: 'five',
+      component: AppAuthRepresent
+    },
+    {
+      path: '/six',
+      name: 'six',
       component: AppDownload
     }
   ]
