@@ -60,18 +60,22 @@
                             </div>
                             <p>
                                 <label class="label-name"> Должность руководителя:</label>
-                                <input class="radio" type="radio" id="sex1" name="position" v-model="position" value="главный врач">   
+                                <input class="radio" type="radio" id="sex1" name="position" v-model="position"  value="ГЛАВНОГО ВРАЧА">   
                                 <label for="sex1">Главный врач</label>
-                                <input class="radio" type="radio" id="sex2" name="position" v-model="position" value="и.о. главного врача">   
+                                <input class="radio" type="radio" id="sex2" name="position" v-model="position" value="И.О. ГЛАВНОГО ВРАЧА">   
                                 <label for="sex2">и.о. главного врача</label>
-                                <input class="radio" type="radio" id="sex3" name="position" v-model="position" value="директор">   
+                                <input class="radio" type="radio" id="sex3" name="position" v-model="position" value="ДИРЕКТОРА">   
                                 <label for="sex3">Директор</label>
                             </p>
                             <div class="wrap-item">
                                 <label for="head_physician" class="label-name" >ФИО руководителя:</label>
                                 <input class="in" :class="{ activeInput: readonly.head_physician }" type="text" id="head_physician" v-model.trim="head_physician" placeholder="ДЕЙЛ" :readonly="readonly.head_physician">
                                 <div class="edit" @click="readonly.head_physician = !readonly.head_physician">Изменить</div>
-                            </div>                                                                 
+                            </div>                                                                <div class="wrap-item">
+                                <label for="basis" class="label-name" >Руководитель действует на основании: </label>
+                                <input class="in" :class="{ activeInput: readonly.basis }" type="text" id="basis" v-model.trim="basis" placeholder="устава" :readonly="readonly.basis">
+                                <div class="edit" @click="readonly.basis = !readonly.basis">Изменить</div>
+                            </div>   
                         </div>
                     </div>
                 </div>
@@ -92,7 +96,8 @@ export default {
                 INN: true,
                 OGRN: true,
                 position: true,
-                head_physician: true
+                head_physician: true,
+                basis: true
             },
             error: {
                 surname: null,
@@ -243,18 +248,18 @@ export default {
                 this.$store.dispatch('setMyMOInformation', temp)    
             }
         },
-        code: {
+        basis: {
             get () {
-                return this.$store.state.individual.individual.code
+                return this.$store.state.mo.myMOInfo.basis
             },
             set (value) {
-                if ( value.length == 3 ) {
-                    value = value + '-'
+                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                let temp = {
+                    index: 'basis',
+                    val: value
                 }
-                this.chekCode(value)
-                this.$store.dispatch('setCode', value.toUpperCase())
-
-            }             
+                this.$store.dispatch('setMyMOInformation', temp)    
+            }
         },
         date_of_birth: {
             get () {
@@ -454,15 +459,15 @@ export default {
             } return false
         },
         onward() {
-
-            if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/four')
-            } else {
-                this.rules = 'исправьте все ошибки'
-                console.log('this.error=',this.error)
-                console.log('this.errorTrue=',this.errorFalse)
-                console.log('ошибка исправьте все ошибки')
-            }
+this.$router.push('/four')
+            // if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
+            //     this.$router.push('/four')
+            // } else {
+            //     this.rules = 'исправьте все ошибки'
+            //     console.log('this.error=',this.error)
+            //     console.log('this.errorTrue=',this.errorFalse)
+            //     console.log('ошибка исправьте все ошибки')
+            // }
         }
     },
     created () {
@@ -636,7 +641,7 @@ li:hover:not(.active) {
 }
 .label-name {
     display: inline-block;
-    width: 230px;
+    width: 310px;
 }
 
 .in {
@@ -646,7 +651,7 @@ li:hover:not(.active) {
     font-size: 14px;
     padding: 5px 15px;
     font-weight: 400;
-    width: 300px;
+    width: 320px;
 }
 
 .in:focus {

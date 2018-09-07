@@ -33,6 +33,8 @@
                         </div>
                         <button @click="asd()">Скачать согласие</button>
                         <button @click="statement()">Скачать заявление</button>
+                        <button @click="powerAttorneyOrganization()">Скачать доверенность от организации</button>
+                        <button @click="powerAttorneyEmployee()">Скачать доверенность от сотрудника</button>
                     </div>
 
 
@@ -121,7 +123,10 @@ export default {
         },
         ind() {
             return this.$store.state.individual.individual
-        } 
+        },
+        authrepresent() {
+            return this.$store.state.authrepresent.authrepresent
+        }
 
            
     },
@@ -140,11 +145,12 @@ export default {
             }
           }
             var docDefinition = {
-                title:'Тестовый документ PDF',
+                title:'Согласие работника',
                 pageSize:'A4',
-                pageMargins:[25, 25],
+                pageMargins:[30, 30],
                 defaultStyle: {
-                    font: 'myFont'
+                    font: 'myFont',
+                    fontSize: 11
                 },              
                 
                 styles: {
@@ -155,6 +161,10 @@ export default {
                     users: {
                         decoration: 'underline'
                     },
+                   usersBold: {
+                        decoration: 'underline',
+                        bold: true
+                    },
                     data: {
                        leadingIndent: 25
                     },
@@ -164,35 +174,39 @@ export default {
                 },
                 content: [{
                     text:'СОГЛАСИЕ',
-                        margin: [245, 0 , 0, 0],
+                        margin: [0, 0 , 0, 0],
+                        alignment: 'center',
                         style: {
                             bold: true
                         }
                     }, {
                         text:'на обработку персональных данных',
-                        style:'body',
-                        margin: [150, 0 , 0, 25]
+                        alignment: 'center',
+                        // style:'body',
+                        margin: [0, 0 , 0, 25]
                     }, {
                         text: [
                             'Я, ',
                             {
-                                text: this.surname + ' ' + this.name + ' ' + this.patronymic + ',',
-                                style: 'users',
+                                text: this.surname + ' ' + this.name + ' ' + this.patronymic,
+                                style: 'usersBold',
                             },{
-                                text: ' паспорт: '
+                                text: ', паспорт: '
                             },{ 
                                 text: this.series + ' ' + this.number,
-                                style: 'users'
+                                style: 'usersBold'
                             },{
                                 text: ' выдан: '
                             },{
                                 text: this.issued_by,
-                                style: 'users'
+                                style: 'usersBold'
                             },{
                                 text: ', дата выдачи: '
                             }, {
-                                text: this.date_of_issue + ' г.,',
-                                style: 'users'
+                                text: this.date_of_issue,
+                                style: 'usersBold'
+                            }, {
+                                text: ' г.,'
                             }
                         ],
                         style: 'data'
@@ -221,7 +235,8 @@ export default {
                             },  
                         ],
                         margin: [0, 45, 0, 0],
-                        style: 'body'
+                        // style: 'body',
+                        columnGap: 230
                     }
 
                 ]
@@ -292,7 +307,8 @@ export default {
                             // },{
                                 text: 'в лице '
                             },{
-                                text: 'главного врача',
+                                // text: 'главного врача',
+                                text: this.mo.position.toLowerCase(),
                                 style: 'users'
                             }, {
                                 text: ' '
@@ -305,9 +321,10 @@ export default {
                                     decoration: 'underline'
                                 }      
                             }, {
-                                text: ', действующего на основании ',
+                                text: ', действующего на основании '
                             }, { 
-                                text: 'устава',
+                                // text: 'устава',
+                                text: this.mo.basis.toLowerCase(),
                                 style: 'users'
                             }, {
                                 text:', просит изготовить квалифицированный сертификат ключа проверки электронной подписи уполномоченного представителя, в соответствии с указанными в настоящем заявлении данными, передать в единую систему идентификации и аутентификации сведения о лице, получившем квалифицированный сертификат подписи уполномоченного представителя'
@@ -508,7 +525,7 @@ export default {
                             {
                                 width: 120,
                                 
-                                text: 'Главный врач'
+                                text: this.mo.position.toLowerCase()
                             }, {
                                 width: 130,
                                 fontSize: 8,
@@ -577,13 +594,381 @@ export default {
             }
             console.log('this.surname=', this.surname)
             pdfMake.createPdf(docDefinition).download("zayuvlenie.pdf")
+        },
+        powerAttorneyOrganization() {
+            pdfMake.fonts = {
+            myFont: {
+                normal: 'TimesNewRoman.ttf',
+                bold: 'TimesNewRomanBold.ttf',
+                italics: 'TimesNewRoman.ttf',
+                bolditalics: 'TimesNewRoman.ttf'
+            }
+          }
+            var docDefinition = {
+                title:'Согласие работника',
+                pageSize:'A4',
+                pageMargins:[30, 30],
+                defaultStyle: {
+                    font: 'myFont',
+                    fontSize: 11
+                },              
+                
+                styles: {
+                    body: {
+                        leadingIndent: 25,
+                        alignment: 'justify',
+                    },
+                    users: {
+                        decoration: 'underline'
+                    },
+                   usersBold: {
+                        decoration: 'underline',
+                        bold: true
+                    },
+                    data: {
+                       leadingIndent: 25
+                    },
+                    signature: {
+
+                    }
+                },
+                content: [{
+                    text:'ДОВЕРЕННОСТЬ',
+                        margin: [0, 0 , 0, 0],
+                        alignment: 'center',
+                        style: {
+                            bold: true
+                        }
+                    }, {
+                        text:'на выполнение действий от лица организации',
+                        alignment: 'center',
+                        // style:'body',
+                        margin: [0, 0 , 0, 25]
+                    }, {
+                        text: this.mo.Locality
+                    }, {
+                        text: this.getDateNow(),
+                        margin: [0, -12, 0, 0],
+                        alignment: 'right'
+                    }, {
+                        text: [
+                            {
+                                text: 'Настоящей доверенностью ' + this.mo.fullname
+                            }, {
+                                text: ' ИНН ' + this.mo.INN + ','
+                            }, {
+                                text: ' ОГРН ' + this.mo.OGRN
+                            }, {
+                                text: ' в лице '
+                            }, {
+                                text: this.mo.position.toLowerCase(),
+                                style: 'users'                                
+                            }, {
+                                text: ' '
+                            }, {
+                                text: this.mo.head_physician,
+                                style: {
+                                    bold: true,
+                                    decoration: 'underline'
+                                }                                    
+                            }, {
+                                 text: ', действующего на основании '
+                            }, {
+                                text: this.mo.basis.toLowerCase(),
+                                style: 'users'                                
+                            }, {
+                                text: ', уполномочивает'
+                            }
+                        ],
+                        margin: [0, 25, 0, 10],
+                        style: 'body'
+                    }, {
+                        table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: ['*'],
+
+                            body: [   
+                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center'} ],
+                                [ 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
+                            ]
+                        }                     
+                    }, {
+                        text: 'совершать следующие действия:',
+                        margin: [0, 15]
+                    }, {
+                        text: '1. Передавать в Удостоверяющий центр ГБУЗ «МИАЦ» комплекты документов, предусмотренных Регламентом Удостоверяющего центра ГБУЗ «МИАЦ» для регистрации, генерации ключа электронной подписи, создания сертификатов ключей проверки электронной подписи на свое имя;'
+                    }, {
+                        text: '2. Выступать в роли Пользователя УЦ ГБУЗ «МИАЦ»;'
+                    }, {
+                        text: '3. Получать в Удостоверяющем центре ГБУЗ «МИАЦ» ключи электронной подписи, сертификаты ключей проверки электронной подписи на свое имя;'
+                    }, {
+                        text: '4. Ознакомиться с информацией, содержащейся в заявлениях, запросах на изготовление, аннулирование (отзыв), приостановку сертификатов и информацией содержащейся в получаемых сертификатах ключей проверки электронных подписей включая кодовые, парольные фразы;'
+                    }, {
+                        text: '5. Получать руководства по обеспечению безопасности использования электронной подписи и средств электронной подписи;'
+                    }, {
+                        text: '6. Передавать в Удостоверяющий центр ГБУЗ «МИАЦ» заявления на аннулирование сертификатов ключей проверки электронных подписей;'
+                    }, {
+                        text: '7. Расписываться в соответствующих учетных формах, предназначенных для исполнения поручений определенных настоящей доверенностью, в том числе на сертификатах ключей проверки электронной подписи на бумажном носителе. '
+                    }, {
+                        text: 'Настоящая доверенность действительна по «____» _______________ 20____ г. Без права передоверия.',
+                        margin: [0, 20]
+                    }, {
+                        text: 'Собственноручную подпись уполномоченного представителя:',
+                        margin: [0, 5]
+                    }, {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', '*', 100],
+                            alignment: 'center',
+                            body: [ 
+                                [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
+                                [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center' },'']
+                            ]
+                        } 
+                    // }, {
+                    //     columns: [
+                    //         {
+                    //             width: 'auto',
+                    //             text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic
+                    //         }, {
+                    //             width: 130,
+                    //             fontSize: 8,
+                    //             text: '__________________________          (подпись)',
+                    //             alignment: 'center',
+                    //         }                            
+                    //     ],
+                    //     columnGap: 180,
+                    //     alignment: 'right'
+                    }, {
+                        text: 'удостоверяю.'
+                    }, {
+                        text: 'Руководитель организации',
+                        margin: [0, 35, 0, 0]
+                    }, {
+                        columns: [
+                            {
+                                width: 120,
+                                
+                                text: this.mo.position.toLowerCase()
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________ (подпись)',
+                                alignment: 'center'
+                            }, {
+                                width: '*',
+                                text: this.brevisNameHeadPhysician(this.mo.head_physician)    
+                            }
+                        ],
+                        columnGap: 80
+                    }, {
+                        text: 'М.П.',
+                        fontSize: 8,
+                        margin: [350, 0, 0, 0]
+                    }
+                ]
+            }
+            pdfMake.createPdf(docDefinition).download("powerAttorneyOrganization.pdf")            
+        },
+        powerAttorneyEmployee() {
+            pdfMake.fonts = {
+            myFont: {
+                normal: 'TimesNewRoman.ttf',
+                bold: 'TimesNewRomanBold.ttf',
+                italics: 'TimesNewRoman.ttf',
+                bolditalics: 'TimesNewRoman.ttf'
+            }
+          }
+            var docDefinition = {
+                title:'Доверенность на выполнение действий от лица сотрудника',
+                pageSize:'A4',
+                pageMargins:[30, 30],
+                defaultStyle: {
+                    font: 'myFont',
+                    fontSize: 11
+                },              
+                
+                styles: {
+                    body: {
+                        leadingIndent: 25,
+                        alignment: 'justify',
+                    },
+                    users: {
+                        decoration: 'underline'
+                    },
+                   usersBold: {
+                        decoration: 'underline',
+                        bold: true
+                    },
+                    data: {
+                       leadingIndent: 25
+                    },
+                    signature: {
+
+                    }
+                },
+                content: [{
+                    text:'ДОВЕРЕННОСТЬ',
+                        margin: [0, 0 , 0, 0],
+                        alignment: 'center',
+                        style: {
+                            bold: true
+                        }
+                    }, {
+                        text:'на выполнение действий от лица сотрудника',
+                        alignment: 'center',
+                        // style:'body',
+                        margin: [0, 0 , 0, 25]
+                    }, {
+                        text: this.mo.Locality
+                    }, {
+                        text: this.getDateNow(),
+                        margin: [0, -12, 0, 0],
+                        alignment: 'right'
+                    }, {
+                        text: [
+                            {
+                                text: this.mo.fullname
+                            }, {
+                                text: ' ИНН ' + this.mo.INN + ','
+                            }, {
+                                text: ' ОГРН ' + this.mo.OGRN
+                            }
+                        ],
+                        margin: [0, 25, 0, 0],
+                        style: 'body'
+                    }, {
+                        text: 'Настоящей доверенностью, я',
+                        margin: [0, 15]
+                    }, {
+                        table: {
+                            headerRows: 1,
+                            widths: ['*'],
+
+                            body: [   
+                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center'} ],
+                                [ 'паспорт: серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
+                            ]
+                        }                     
+                    }, {
+                        text: 'уполномочиваю',
+                        margin: [0, 15]
+                    }, {
+                        table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: ['*'],
+
+                            body: [   
+                                [ { text: this.authrepresent.position + ' ' + this.authrepresent.surname + ' ' + this.authrepresent.name + ' ' + this.authrepresent.patronymic, alignment: 'center'} ],
+                                [ 'паспорт: серия ' + this.authrepresent.series + ' № ' + this.authrepresent.number + ', выдан ' + this.authrepresent.date_of_issue + ' г. ' + this.authrepresent.issued_by]
+                            ]
+                        }                     
+                    }, {
+                        text: 'совершать следующие действия:',
+                        margin: [0, 15, 0, 0]
+                    }, {
+                        text: '1. Передавать в Удостоверяющий центр ГБУЗ «МИАЦ» комплекты документов, предусмотренных Регламентом Удостоверяющего центра ГБУЗ «МИАЦ» для регистрации доверителя(ей) в качестве Пользователя УЦ, генерации ключа электронной подписи, создания сертификатов ключей проверки электронной подписи доверителя(ей);'
+                    }, {
+                        text: '2. Получать в Удостоверяющем центре ГБУЗ «МИАЦ» ключи электронной подписи, сертификаты ключей проверки электронной подписи и в электронном виде и на бумажном носителе доверителя(ей);'
+                    }, {
+                        text: '3. Ознакомиться с информацией, содержащейся в заявлениях, запросах на изготовление, аннулирование (отзыв), приостановку сертификатов и информацией, содержащейся в получаемых сертификатах ключей проверки электронных подписей включая кодовые, парольные фразы доверителя(ей);'
+                    }, {
+                        text: '4. Получать руководства по обеспечению безопасности использования электронной подписи и средств электронной подписи;'
+                    }, {
+                        text: '5. Передавать в Удостоверяющий центр ГБУЗ «МИАЦ» заявления на аннулирование сертификатов ключей проверки электронных подписей доверителя(ей);'
+                    }, {
+                        text: '6. Расписываться в соответствующих учетных формах, предназначенных для исполнения поручений определенных настоящей доверенностью, в том числе на сертификатах ключей проверки электронной подписи на бумажных носителях доверителя(ей).'
+                    }, {
+                        text: 'Настоящая доверенность действительна по «____» _______________ 20____ г. Без права передоверия.',
+                        margin: [0, 20]
+                    }, {
+                        columns: [
+                            {
+                                width: 'auto',
+                                text: 'Собственноручную подпись '
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________ (подпись уполномоченного лица)',
+                                alignment: 'center',                                
+                             }, {
+                                width: 'auto',
+                                text: this.authrepresent.surname + ' ' + this.authrepresent.name + ' ' + this.authrepresent.patronymic + ' удостоверяю.',
+                                alignment: 'center',                                
+                            }
+                        ]
+                    // }, {
+                    //     text: 'удостоверяю.',
+                    //     margin: [0, 10, 0, 15]
+                    // }, {
+                    //     table: {
+                    //         headerRows: 1,
+                    //         widths: ['auto', '*', 100],
+                    //         alignment: 'center',
+                    //         body: [ 
+                    //             [{ text: 'Должность доверителя', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
+                    //             [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center' },'']
+                    //         ]
+                    //     } 
+                    }, {
+                        text: 'Должность доверителя:',
+                        margin: [0, 35, 0, 0]
+                    }, {
+                        columns: [
+                            {
+                                width: 120,
+                                
+                                text: this.ind.position.toLowerCase()
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________ (подпись доверителя)',
+                                alignment: 'center'
+                            }, {
+                                width: '*',
+                                text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic)    
+                            }
+                        ],
+                        columnGap: 80
+                    }, {
+                        text: 'Руководитель организации:',
+                        margin: [0, 35, 0, 0]
+                    }, {
+                        columns: [
+                            {
+                                width: 120,
+                                
+                                text: this.mo.position.toLowerCase()
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________ (подпись)',
+                                alignment: 'center'
+                            }, {
+                                width: '*',
+                                text: this.brevisNameHeadPhysician(this.mo.head_physician)    
+                            }
+                        ],
+                        columnGap: 80
+                    }, {
+                        text: 'М.П.',
+                        fontSize: 8,
+                        margin: [350, 0, 0, 0]
+                    }
+                ]
+            }
+            pdfMake.createPdf(docDefinition).download("powerAttorneyOrganization.pdf")            
         }
     },
     created () {
         
         this.$store.dispatch('initialiseStoreMyMOInfo')
         this.$store.dispatch('initialiseStoreIndividual')
-        this.mo.fullname
+        this.$store.dispatch('initialiseStoreAuthRepresent')
     }
 }
 </script>
