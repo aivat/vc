@@ -62,6 +62,8 @@ export default {
     },
     created () {
         // this.$store.dispatch('initialiseStoreRole')
+        this.$store.dispatch('setProgressValue', 32)
+        
     }
 }
 </script>

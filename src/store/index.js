@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import mo from './modules/mo'
 import individual from './modules/individual'
 import authrepresent from './modules/authrepresent'
+import progress from './modules/progress'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
   modules: {
     mo,
     individual,
-    authrepresent
+    authrepresent,
+    progress
   },
   strict: debug
 })

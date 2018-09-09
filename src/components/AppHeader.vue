@@ -21,36 +21,38 @@
         </div>
       </div>
     </div>
-    <ul class="progress">
-        <li class="progress-item active">
-          1
+    <progress class="progress" :value="progress" max="100"></progress>
+    <!-- <ul class="progress"> -->
+        <!-- <li class="progress-item" :class="{ active: progress.one }">
+          
         </li>
         <li class="progress-item">
-          2
+          
         </li>
         <li class="progress-item">
-          3
+          
         </li>
         <li class="progress-item">
-          4
+          
         </li>
         <li class="progress-item">
-          5
+          
         </li>
+        <li class="progress-item">
+          
+        </li> -->
+	
 
-    </ul>
-    <!-- <div>
-              <svg class='under' viewBox='0 0 100 1'>
-            <line id="line" x1="0" y1="0" x2="100%"  y2="0" stroke="rgba(129,34,25,1)" stroke-width="1" stroke-dasharray="100%" v-bind:style="{ 'stroke-dashoffset':  dashoffset }"></line>
-        </svg>
-    </div> -->
+    <!-- </ul> -->
+    <div>
+    </div>
   </header>
 </template>
 
 <script>
 
 import { mapState, mapActions } from 'vuex'
-
+// import ProgressBar from 'vue-progressbar-component'
 
 export default {
   data () {
@@ -62,8 +64,9 @@ export default {
         mo: state => state.mo.myMO,
         role: state => state.mo.myRole,
         dashoffset: function () {
-            return  -(100 / 4) * 1
-        }
+            return  (100 / 6) * 3
+        },
+        progress: state => state.progress.value
     }),
   created () {
         this.$store.dispatch('initialiseStoreRole')
@@ -85,6 +88,7 @@ header {
   width: 100%;
   font-weight: 500;
   color: rgb(60, 64, 67);
+  /* color: rgb(32, 33, 36); */
   z-index: 10;
 }
 .wrap-top {
@@ -134,5 +138,29 @@ ul {
   background-color: #4285f4;
   color: white;
   /* border-radius: 0 8px 8px 0; */
+}
+progress {
+  width: 100%;
+  height: 2px;
+  border: 0;
+  outline: 0;
+  /* border: 1px solid red; */
+  transition: all 1s ease-out;
+  background-color: rgb(255, 255, 255);
+}
+progress::-webkit-progress-bar {
+   background-color: rgb(255, 255, 255);
+  /* стили */
+   /* background-color: #4285f4;
+   color: #4285f4; */
+}
+ 
+progress::-webkit-progress-value {
+  background-color: #4285f4;
+
+}
+ 
+progress::-moz-progress-bar {
+  background-color: #4285f4;
 }
 </style>

@@ -4,16 +4,27 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/four" class="button-link">
-                            Назад
+                        <router-link to="/four" class="btn-link">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="48px" height="48px" viewBox="1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                            <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6l6,6L15.41,16.59z"/>
+                            <path fill="none" d="M0,0h24v24H0V0z"/>
+                            </svg>
                         </router-link>
                     </div>
                     <div class="mo-h2" >
                         Введите данные уполномоченного представителя
                     </div>
                     <div class="mo-body-link">
-                            <span @click="onward()" class="button-link">Далее</span>
-
+                        <!-- <router-link to="/four" > -->
+                            <span @click="onward()" class="btn-link">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    width="48px" height="48px" viewBox="-1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                                <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"/>
+                                <path fill="none" d="M0,0h24v24H0V0z"/>
+                                </svg>                                
+                            </span>
+                        <!-- </router-link> -->
                     </div>
                 </header>
 
@@ -21,6 +32,11 @@
 
                     <div class="individual">
                         <div class="individual-h2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <circle cx="12" cy="19" r="2"/>
+                                <path d="M10 3h4v12h-4z"/>
+                                <path fill="none" d="M0 0h24v24H0z"/>
+                            </svg>
                             <div class="rules-logo">Подсказка:&nbsp;</div>
                             <div class="rules">{{ rules }}</div>
                         </div>
@@ -360,6 +376,7 @@ export default {
         }
     },
     created () {
+        this.$store.dispatch('setProgressValue', 82)
         console.log('Nfnmzyf')
         this.$store.dispatch('initialiseStoreAuthRepresent')
         this.checkForm(this.surname, 'surname')
@@ -511,12 +528,42 @@ li:hover:not(.active) {
     width: 100%;
 }
 .individual-h2 {
+    position: relative;
     padding: 10px 0;
+    margin-top: 10px;
     font-weight: 700;
     font-size: 16px;
     /* text-align: center;  */
-    color:rgba(66, 133, 244, .9);  
+    color:rgba(66, 133, 244, .9); 
+    color: rgba(217, 48, 37, 1); 
     display: flex;
+    align-items: center;
+    border-bottom: 1px spolid 
+}
+.individual-h2:before {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    -webkit-box-shadow: inset 0 -1px 0 0 rgba(100,121,143,0.122);
+    box-shadow: inset 0 -1px 0 0 rgba(100,121,143,0.122);
+    content: '';
+    display: block;
+    position: absolute;
+}
+.individual-h2:after {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    -webkit-box-shadow: inset 0 1px 0 0 rgba(100,121,143,0.122);
+    box-shadow: inset 0 1px 0 0 rgba(100,121,143,0.122);
+    content: '';
+    display: block;
+    position: absolute;
+}
+.individual-h2>svg {
+    fill: currentColor;
 }
 .rules-logo {
     color: rgba(189, 3, 3, 1);
@@ -567,6 +614,24 @@ li:hover:not(.active) {
 }
 .issued_by {
     width: 700px;
+}
+
+.btn-link {
+    display: block;
+    width: 48px;
+    height: 48px;
+    color: rgba(66, 133, 244, 1);
+    border-radius: 50%;
+    background-color: rgba(66, 133, 244, .15);
+    transition: all .15s ease-out;
+    cursor: pointer;
+}
+.btn-link:hover {
+    color: white;
+    background-color: rgba(66, 133, 244, 1);
+}
+.btn-link>svg {
+    fill: currentColor;
 }
 @media (min-width: 1280px) {
     .mo {

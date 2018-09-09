@@ -2,7 +2,7 @@
   <div class="container" id="app">
     <AppHeader/>
     <main>
-      <transition name="fade" mode="out-in">
+      <transition name="modal" mode="out-in">
         <router-view></router-view>
       </transition>
     </main>
@@ -46,5 +46,27 @@ body {
 main {
     top: 61px;
     position: relative;  
+}
+.fade-enter-active, .fade-leave-active {
+ transition: all .1s ease-out;
+}
+  
+.fade-enter, .fade-leave-active {
+opacity: 0;
+}
+
+.modal-enter {
+  opacity: 0;
+  transition: all .1s ease-out;
+  /* transform: translateX(200px); */
+}
+.modal-leave-active {
+  opacity: 0;
+  transition: all .1s ease;
+  /* transform: translateX(-200px); */
+}
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  transition: all .1s ease;
 }
 </style>

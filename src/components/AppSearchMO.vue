@@ -18,8 +18,12 @@
                             </ul>
                     </div>
                     <div class="mo-body-link">
-                        <router-link to="/two" class="button-link">
-                            Далее
+                        <router-link to="/two" class="btn-link">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="48px" height="48px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                            <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"/>
+                            <path fill="none" d="M0,0h24v24H0V0z"/>
+                            </svg>
                         </router-link>
                     </div>
                 </div>           
@@ -78,6 +82,7 @@ export default {
     },
     created () {
         // this.$store.dispatch('initialiseStoreMO')
+        this.$store.dispatch('setProgressValue', 16)
     }
 }
 </script>
@@ -200,6 +205,23 @@ label {
     width: 100%;
     cursor: pointer;
         padding: 15px;
+}
+.btn-link {
+    display: block;
+    width: 48px;
+    height: 48px;
+    color: rgba(66, 133, 244, 1);
+    border-radius: 50%;
+    background-color: rgba(66, 133, 244, .2);
+    transition: all .15s ease-out;
+    cursor: pointer;
+}
+.btn-link:hover {
+    color: white;
+    background-color: rgba(66, 133, 244, 1);
+}
+.btn-link>svg {
+    fill: currentColor;
 }
 @media (min-width: 1280px) {
     .mo {
