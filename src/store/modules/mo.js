@@ -31,6 +31,8 @@ const actions = {
         list => {
             commit('setMO', inputMO)
             let oneMO = list[0]
+            oneMO.data_power_of_attorney = ''
+            oneMO.email = ''
             commit('setMyMOInfo', oneMO)
         }
     )
