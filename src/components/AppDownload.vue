@@ -33,12 +33,15 @@
                             <div class="rules-logo">Подсказка:&nbsp;</div>
                             <div class="rules">{{ rules }}</div>
                         </div>
-                        <div class="individual-wrap">                                                
+                            <div class="individual-wrap">                                            <button @click="consentRepresent()" class="consent-represent">Скачать согласие уполномоченного представителя</button>
+                                <p>Документы для скачивания на заявителя:</p>
+                                <button @click="statement()">Скачать заявление</button>
+                                <button @click="powerAttorneyOrganization()">Скачать доверенность от организации</button>
+                                <button @click="powerAttorneyEmployee()">Скачать доверенность от заявителя</button>
+                                <button @click="consentInd()">Скачать согласие заявителя</button>
+                                <router-link class="new-link" to="/three">Сгенерировать новые документы</router-link> 
                         </div>
-                        <button @click="asd()">Скачать согласие</button>
-                        <button @click="statement()">Скачать заявление</button>
-                        <button @click="powerAttorneyOrganization()">Скачать доверенность от организации</button>
-                        <button @click="powerAttorneyEmployee()">Скачать доверенность от сотрудника</button>
+
                     </div>
 
 
@@ -93,7 +96,7 @@ export default {
             errorHTML: {
                 issued_by: ''
             },
-            rules: ' все поля форм заполняются строго как в документах. '
+            rules: ' скачайте документы, распечатайте, поставьте все росписи и печати.  '
         }
     },
     computed: {
@@ -154,22 +157,132 @@ export default {
             let brevis = name.split(' ')
             return brevis[1].charAt(0) + '.' + brevis[2].charAt(0) + '. ' + brevis[0]
         },
-        asd() {
+        consentInd() {
             pdfMake.fonts = {
             myFont: {
                 normal: 'TimesNewRoman.ttf',
                 bold: 'TimesNewRomanBold.ttf',
                 italics: 'TimesNewRoman.ttf',
                 bolditalics: 'TimesNewRoman.ttf'
-            }
-          }
+                }
+            } 
             var docDefinition = {
                 title:'Согласие работника',
                 pageSize:'A4',
                 pageMargins:[30, 30],
                 defaultStyle: {
                     font: 'myFont',
-                    fontSize: 11
+                    fontSize: 14
+                },              
+                
+                styles: {
+                    body: {
+                        leadingIndent: 25,
+                        alignment: 'justify',
+                    },
+                    users: {
+                        decoration: 'underline'
+                    },
+                   usersBold: {
+                        decoration: 'underline',
+                        bold: true
+                    },
+                    data: {
+                       leadingIndent: 25
+                    },
+                    signature: {
+
+                    }
+                },
+                content: [{
+                    text:'СОГЛАСИЕ',
+                        margin: [0, 0 , 0, 0],
+                        alignment: 'center',
+                        style: {
+                            bold: true
+                        }
+                    }, {
+                        text:'на обработку персональных данных',
+                        alignment: 'center',
+                        // style:'body',
+                        margin: [0, 0 , 0, 25]
+                    }, {
+                        text: [
+                            'Я, ',
+                            {
+                                text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
+                                style: 'usersBold',
+                            },{
+                                text: ', паспорт: '
+                            },{ 
+                                text: this.ind.series + ' ' + this.ind.number,
+                                style: 'usersBold'
+                            },{
+                                text: ' выдан: '
+                            },{
+                                text: this.ind.issued_by,
+                                style: 'usersBold'
+                            },{
+                                text: ', дата выдачи: '
+                            }, {
+                                text: this.ind.date_of_issue,
+                                style: 'usersBold'
+                            }, {
+                                text: ' г.,'
+                            }
+                        ],
+                        style: 'data'
+                    }, {                                                  
+                        text:'в соответствии с ч. 4 ст. 9 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных», даю своё согласие Удостоверяющему центру ГБУЗ «МИАЦ» (далее – Удостоверяющий центр), в лице директора Варенниковой Юлии Викторовны, действующей на основании Устава, расположенному по адресу г. Оренбург, ул. Маршала Жукова, д.42, на обработку моих персональных данных, с использованием или без использования средств автоматизации: сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), использование, обезличивание, блокирование, удаление, уничтожение, включающих: паспортные данные, должность, сведения о месте работы, адрес электронной почты, контактный(е) телефон(ы), страховой номер индивидуального лицевого счёта в Пенсионном фонде России (СНИЛС), индивидуальный номер налогоплательщика (ИНН), предоставляемых в Удостоверяющий центр согласно Регламенту Удостоверяющего центра (находящегося по адресу http://uc.mzorb.ru), в целях получения квалифицированного сертификата ключа проверки электронной подписи (далее - КСКПЭП), в соответствии со ст. 18 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
+                        style: 'body'                     
+                    }, {
+                        text:'Признаю, что мои персональные данные, в составе  КСКПЭП, относятся к общедоступным персональным данным, в соответствии с ч. 3 ст. 15 Федерального закона от 06.04.2011 №63-ФЗ «Об электронной подписи».',
+                       
+                        style: 'body'
+                    }, {
+                        text: 'Настоящее согласие действует со дня его подписания до дня предоставления соответствующего отзыва в письменной форме или в случае прекращения деятельности Удостоверяющего центра.',
+                       
+                        style: 'body'             
+                    }, {
+                        columns: [
+                            {
+                                text: this.getDateNow(),
+                            }, {
+                            stack: [
+                                // second column consists of paragraphs
+                                '___________________________________',
+                                '(подпись субъекта персональных данных)',
+                            ],
+                                fontSize: 8
+                            },  
+                        ],
+                        margin: [0, 45, 0, 0],
+                        // style: 'body',
+                        columnGap: 230
+                    }
+
+                ]
+            }
+            // console.log('this.surname=', this.surname)
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_согласие.pdf'
+            pdfMake.createPdf(docDefinition).download(name)
+        },
+        consentRepresent() {
+            pdfMake.fonts = {
+            myFont: {
+                normal: 'TimesNewRoman.ttf',
+                bold: 'TimesNewRomanBold.ttf',
+                italics: 'TimesNewRoman.ttf',
+                bolditalics: 'TimesNewRoman.ttf'
+                }
+            } 
+            var docDefinition = {
+                title:'Согласие уполномоченного представителя',
+                pageSize:'A4',
+                pageMargins:[30, 30],
+                defaultStyle: {
+                    font: 'myFont',
+                    fontSize: 14
                 },              
                 
                 styles: {
@@ -261,7 +374,8 @@ export default {
                 ]
             }
             console.log('this.surname=', this.surname)
-            pdfMake.createPdf(docDefinition).download("optionalName.pdf")
+            let name = this.surname + '_' + this.name.charAt(0) + this.patronymic.charAt(0)+ '_согласие.pdf'
+            pdfMake.createPdf(docDefinition).download(name)
         },
         getDateNow() {
             let date = new Date()
@@ -534,7 +648,7 @@ export default {
                                 [ 'OGRN', 'ОГРН', this.mo.OGRN ],
                                 [ 'SNILS', 'СНИЛС', this.ind.snils ],
                                 [ 'INN', 'ИНН', this.mo.INN ],
-                                [ 'E-Mail (E)', 'Адрес электронной почты', 'aivat@mail.ru']                            
+                                [ 'E-Mail (E)', 'Адрес электронной почты', this.mo.email]                            
                             ]
                         }
                     }, {
@@ -612,8 +726,8 @@ export default {
                     }
                 ]
             }
-            console.log('this.surname=', this.surname)
-            pdfMake.createPdf(docDefinition).download("zayuvlenie.pdf")
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_заявление.pdf'
+            pdfMake.createPdf(docDefinition).download(name)
         },
         powerAttorneyOrganization() {
             pdfMake.fonts = {
@@ -806,7 +920,8 @@ export default {
                     }
                 ]
             }
-            pdfMake.createPdf(docDefinition).download("powerAttorneyOrganization.pdf")            
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_организация.pdf'
+            pdfMake.createPdf(docDefinition).download(name)          
         },
         powerAttorneyEmployee() {
             pdfMake.fonts = {
@@ -1012,7 +1127,8 @@ export default {
                     }
                 ]
             }
-            pdfMake.createPdf(docDefinition).download("powerAttorneyOrganization.pdf")            
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_сотрудник.pdf'
+            pdfMake.createPdf(docDefinition).download(name)            
         }
     },
     created () {
@@ -1093,17 +1209,26 @@ header {
 button {
     font-size: 16px;
     padding: 10px 15px;
-    border-radius: 2px;
+    border-radius: 19px;
     border: 0;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
     outline: 0;
     color: rgb(34, 34, 34);
     cursor: pointer;
+    width: 600px;
+    margin-bottom: 7px;
+    /* background-color: white; */
+    /* background-color: rgba(217, 48, 37, .05);  */
+    /* color: rgba(217, 48, 37, 1);  */
+    /* font-weight: 600; */
 }
-
+button:hover {
+    background-color: rgba(0,0,0,0.25)
+}
 button:active {
     background-color: rgba(0,0,0,0.08)
 }
+
 .button-link {
     background-color: rgb(138, 200, 88);
     text-decoration: none;
@@ -1198,6 +1323,13 @@ li:hover:not(.active) {
 .individual-wrap>p {
     margin: 0;
     margin: 10px 0;
+    font-weight: 500;
+}
+.individual-wrap {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .label-name {
     display: inline-block;
@@ -1257,6 +1389,16 @@ li:hover:not(.active) {
 }
 .btn-link>svg {
     fill: currentColor;
+}
+.consent-represent {
+    margin: 30px 0;
+}
+.new-link {
+    margin-top: 50px;
+    display: inline-block;
+    border-bottom: 1px dashed rgba(66, 133, 244, 1);
+    color: rgba(66, 133, 244, 1); 
+    text-decoration: none;
 }
 @media (min-width: 1280px) {
     .mo {

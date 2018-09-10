@@ -5,9 +5,9 @@
         <div class="item item-name">
           Система генерации документов для получения электронных подписей в ГБУЗ "МИАЦ"
         </div>
-        <div class="item">
+        <!-- <div class="item">
           ШАГ: 1
-        </div>
+        </div> -->
       </div>
       <div class="wrap">
         <div class="item">
@@ -16,9 +16,9 @@
         <div class="item item-mo">
           {{ mo }}
         </div>
-        <div class="item item-logout">
+        <!-- <div class="item item-logout">
           Выход
-        </div>
+        </div> -->
       </div>
     </div>
     <progress class="progress" :value="progress" max="100"></progress>
