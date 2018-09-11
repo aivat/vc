@@ -66,11 +66,33 @@ const actions = {
     if(localStorage.getItem('individual')) {
       commit ('setIndividualFromLocalStorage', JSON.parse(localStorage.getItem('individual')))
     }
-  }    
+  },
+  setClearIndividual({ commit }) {
+    commit('setClearIndividual')
+  }
 }
 
 // mutations
 const mutations = {
+    setClearIndividual(state) {
+        // if(localStorage.getItem('individual')) {
+        //     localStorage.removeItem('individual');
+        // }
+        state.individual.surname = null
+        state.individual.name = null
+        state.individual.patronymic = null
+        state.individual.sex = null
+        state.individual.series = null
+        state.individual.number = null
+        state.individual.issued_by = null
+        state.individual.date_of_issue = null
+        state.individual.code = null
+        state.individual.date_of_birth = null
+        state.individual.place_of_birth = null
+        state.individual.position = null
+        state.individual.snils = null
+        localStorage.setItem('individual', JSON.stringify(state.individual))
+    },
     setSurname (state, input) {
         state.individual.surname = input
         console.log('ind')

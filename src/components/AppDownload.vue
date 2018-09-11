@@ -641,9 +641,9 @@ export default {
                                 [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic ],
                                 [ 'Contry', 'RU', 'Россия' ],
                                 [ 'State', 'Область', '56 Оренбургская область' ],
-                                [ 'Locality', 'Город', this.mo.Locality ],
+                                [ 'Locality', 'Город', this.mo.locality ],
                                 [ 'streetAddress', 'Адрес', this.mo.streetAddress ], 
-                                [ 'Organization', 'Наименование организации', this.mo.shortname ],
+                                [ 'Organization', 'Наименование организации', this.mo.shortname_2 ],
                                 [ 'Title', 'Должность', this.ind.position ],
                                 [ 'OGRN', 'ОГРН', this.mo.OGRN ],
                                 [ 'SNILS', 'СНИЛС', this.ind.snils ],
@@ -779,7 +779,7 @@ export default {
                         // style:'body',
                         margin: [0, 0 , 0, 25]
                     }, {
-                        text: this.mo.Locality
+                        text: this.mo.locality
                     }, {
                         text: this.getDateNow(),
                         margin: [0, -12, 0, 0],
@@ -973,7 +973,7 @@ export default {
                         // style:'body',
                         margin: [0, 0 , 0, 25]
                     }, {
-                        text: this.mo.Locality
+                        text: this.mo.locality
                     }, {
                         text: this.getDateNow(),
                         margin: [0, -12, 0, 0],

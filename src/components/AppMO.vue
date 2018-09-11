@@ -56,10 +56,10 @@
                                 <label class="label-error" v-show="error.shortname">{{ error.shortname }} </label>
                             </div>
                             <div class="wrap-item">
-                                <label for="Locality" class="label-name" >Город:</label>
-                                <input class="in" :class="{ activeInput: readonly.Locality }" type="text" id="Locality" v-model.trim="Locality" placeholder="ДЕЙЛ" :readonly="readonly.Locality">
-                                <div class="edit" @click="readonly.Locality = !readonly.Locality">Изменить</div>
-                                <label class="label-error" v-show="error.Locality">{{ error.Locality }} </label>
+                                <label for="locality" class="label-name" >Город:</label>
+                                <input class="in" :class="{ activeInput: readonly.locality }" type="text" id="locality" v-model.trim="locality" placeholder="ДЕЙЛ" :readonly="readonly.locality">
+                                <div class="edit" @click="readonly.locality = !readonly.locality">Изменить</div>
+                                <label class="label-error" v-show="error.locality">{{ error.locality }} </label>
                             </div>
                             <div class="wrap-item">
                                 <label for="streetAddress" class="label-name" >Улица:</label>
@@ -126,7 +126,7 @@ export default {
             readonly: {
                 fullname: true,
                 shortname: true,
-                Locality: true,
+                locality: true,
                 streetAddress: true,
                 INN: true,
                 OGRN: true,
@@ -138,7 +138,7 @@ export default {
             error: {
                 fullname: null,
                 shortname: null,
-                Locality: null,
+                locality: null,
                 streetAddress: null,
                 INN: null,
                 OGRN: null,
@@ -150,7 +150,7 @@ export default {
             errorFalse: {
                 fullname: false,
                 shortname: false,
-                Locality: false,
+                locality: false,
                 streetAddress: false,
                 INN: false,
                 OGRN: false,
@@ -211,7 +211,7 @@ export default {
         },
         shortname: {
             get () {
-                return this.$store.state.mo.myMOInfo.shortname
+                return this.$store.state.mo.myMOInfo.shortname_2
             },
             set (value) {
                 this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
@@ -223,14 +223,14 @@ export default {
                 this.chekShortname(value) 
             }
         },
-        Locality: {
+        locality: {
             get () {
-                return this.$store.state.mo.myMOInfo.Locality
+                return this.$store.state.mo.myMOInfo.locality
             },
             set (value) {
                 this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 let temp = {
-                    index: 'Locality',
+                    index: 'locality',
                     val: value
                 }
                 this.$store.dispatch('setMyMOInformation', temp)  
@@ -383,9 +383,9 @@ export default {
         },
         chekLocality(value) {
             if (value != '') {
-                 this.error.Locality = false
+                 this.error.locality = false
             } else {
-                 this.error.Locality = 'Укажите название города, где зарегистрирована МО, согласно ЕГРЮЛ'
+                 this.error.locality = 'Укажите название города, где зарегистрирована МО, согласно ЕГРЮЛ'
             }           
         },
         chekStreetAddress(value) {
@@ -509,7 +509,7 @@ export default {
 
         
         this.chekShortname(this.shortname)
-        this.chekLocality(this.Locality)
+        this.chekLocality(this.locality)
         this.chekStreetAddress(this.streetAddress)
         this.chekINN(this.INN)
         this.chekOGRN(this.OGRN)

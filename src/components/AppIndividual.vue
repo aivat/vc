@@ -133,10 +133,13 @@
                                     <label for="place_of_birth" class="label-name"></label>
                                     <label class="label-show">{{ place_of_birth }}</label>    
                                 </p>
-                            </fieldset>                                                                   
+                            </fieldset>
+                            <div class="btn-wrap">
+                                <button class="btn-clear" @click="clearInd()">Очистить поля</button>
+                            </div>                                                                      
                         </div>
                     </div>
-
+                    
 
                 </div>
                 <!-- <div class="mo-body-search">
@@ -377,6 +380,10 @@ export default {
         }        
     },
     methods: {
+        clearInd() {
+            this.$store.dispatch('setClearIndividual')
+            this.checkForm(this.surname, 'surname')
+        },
         checkForm(value, index) {
             let regex = /^[a-zA-Zа-яА-Я']+[a-zA-Zа-яА-Я']?$/
             value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
@@ -681,6 +688,7 @@ li:hover:not(.active) {
 } */
 .individual {
     width: 100%;
+
 }
 .individual-h2 {
     position: relative;
@@ -786,6 +794,22 @@ li:hover:not(.active) {
 }
 .btn-link>svg {
     fill: currentColor;
+}
+.btn-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+}
+.btn-clear {
+    border-radius: 19px;
+    background-color: white;
+    color: rgba(189, 3, 3, 1);
+    font-weight: 600;
+    border: 1px solid rgba(189, 3, 3, 1);
+    /* align-self: center; */
+    /* margin: auto; */
+
 }
 @media (min-width: 1280px) {
     .mo {
