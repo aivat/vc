@@ -145,11 +145,12 @@ progress {
   border: 0;
   outline: 0;
   /* border: 1px solid red; */
-  transition: all 1s ease-out;
+  transition: all .5s ease-out;
   background-color: rgb(255, 255, 255);
 }
 progress::-webkit-progress-bar {
    background-color: rgb(255, 255, 255);
+   transition: all .5s ease-out;
   /* стили */
    /* background-color: #4285f4;
    color: #4285f4; */
@@ -157,10 +158,11 @@ progress::-webkit-progress-bar {
  
 progress::-webkit-progress-value {
   background-color: #4285f4;
-
+  transition: all .5s ease-out;
 }
  
 progress::-moz-progress-bar {
+  transition: all .5s ease-out;
   background-color: #4285f4;
 }
 </style>
