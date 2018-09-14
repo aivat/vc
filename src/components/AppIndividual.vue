@@ -41,46 +41,53 @@
                             <div class="rules">{{ rules }}</div>
                         </div>
                         <div class="individual-wrap">
-                            <p>
+                            <div class="wrap-item">
                                 <label for="surname" class="label-name" >Фамилия:</label>
                                 <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
                                 <label class="label-show"> {{ surname }} </label>
                                 <label class="label-error" v-show="error.surname">{{ error.surname }} </label>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="name" class="label-name" >Имя:</label>
                                 <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
                                 <label class="label-show"> {{ name }} </label>
                                 <label class="label-error" v-show="error.name">{{ error.name }} </label>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="patronymic" class="label-name" >Отчество:</label>
                                 <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ">
                                 <label class="label-show"> {{ patronymic }} </label>
                                 <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="wrap-item">
+                                <label for="patronymicTr" class="label-name" >Доп. поле для отчества:</label>
+                                <input class="in" :class="{ activeInput: readOnlyPatronymicTr }" type="text" id="patronymicTr" v-model.trim="patronymicTr" placeholder="КЫЗЫ/АГЛЫ и т.п." :readonly="readOnlyPatronymicTr">
+                                <div class="edit" @click="addPatrTr()">{{ readOnlyPatronymicTr ? 'Добавить к отчеству' : 'Не включать' }}</div>
+                                <!-- <div class="edit" @click="readOnlyPatronymicTr = !readOnlyPatronymicTr">Выключить</div> -->
+                                <label class="label-error" v-show="error.patronymicTr">{{ error.patronymicTr }} </label>
+                            </div>
+                            <div class="wrap-item">
                                 <label class="label-name"> Выберите пол:</label>
                                 <input class="radio" type="radio" id="sex1" name="sex" v-model="sex" value="муж.">   
                                 <label for="sex1">Муж</label>
                                 <input class="radio" type="radio" id="sex2" name="sex" v-model="sex" value="жен.">   
                                 <label for="sex2">Жен</label>
                                 <label class="label-error" v-show="error.sex">{{ error.sex }} </label>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="position" class="label-name">Должность:</label>
                                 <input class="in position" type="text" id="position" v-model="position">  
                                 <label class="label-show"> {{ position }} </label>
                                 <label class="label-error" v-show="error.position">{{ error.position }} </label>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="snils" class="label-name">СНИЛС:</label>
                                 <input class="in snils" type="text" id="snils" v-model="snils" maxlength="14" placeholder="111-222-333 44">  
                                 <label class="label-show"> {{ snils }} </label>
                                 <!-- <label v-show="error.snils.is"> {{ error.snils.is }} </label> -->
                                 <label v-show="error.snils.is" class="label-error"> {{ error.snils.text }} </label>
-                                <label v-show="!error.snils.is"> Все верно  </label>  
-                            </p>     
+                                <!-- <label v-show="!error.snils.is" class="label-show"> Все верно  </label>   -->
+                            </div>     
                             <fieldset>
                                 <legend>Паспорт</legend>
                                 <p>
@@ -171,10 +178,12 @@ export default {
                     name: "Программист"
                 }
             },
+            readOnlyPatronymicTr: true,
             error: {
                 surname: null,
                 name: null,
                 patronymic: null,
+                patronymicTr: false,
                 sex: null,
                 series: null,
                 number: null,
@@ -193,6 +202,7 @@ export default {
                 surname: false ,
                 name: false ,
                 patronymic: false,
+                patronymicTr: false,
                 sex: false,
                 series: false,
                 number: false,
@@ -250,6 +260,20 @@ export default {
                 this.checkForm(value, 'patronymic')
                 this.$store.dispatch('setPatronymic', value.toUpperCase())  
             }
+        },
+        patronymicTr: {
+            get () {
+                return this.$store.state.individual.individual.patronymicTr 
+            },
+            set (value) {
+                this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                // if (!this.readOnlyPatronymicTr) {
+                    this.checkForm(value, 'patronymicTr')
+                    this.$store.dispatch('setPatronymicTr', value.toUpperCase())  
+                // }
+                
+                // this.$store.dispatch('setPatronymic', value.toUpperCase())  
+            }            
         },
         series: {
             get () {
@@ -380,6 +404,15 @@ export default {
         }        
     },
     methods: {
+        addPatrTr() {
+            if (!this.readOnlyPatronymicTr) {
+                this.error.patronymicTr = false
+                this.$store.dispatch('setPatronymicTr', null)  
+            } else {
+                this.error.patronymicTr = null
+            }
+            this.readOnlyPatronymicTr = !this.readOnlyPatronymicTr
+        },
         clearInd() {
             this.$store.dispatch('setClearIndividual')
             // this.checkForm(this.surname, 'surname')
@@ -399,13 +432,12 @@ export default {
             this.error.snils.text = null
         },
         checkForm(value, index) {
-            let regex = /^[a-zA-Zа-яА-Я']+[a-zA-Zа-яА-Я']?$/
+            let regex = /^[a-zA-Zа-яёА-ЯЁ']+-? ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,}$/
             if ( value != null ) {
                 value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
             } else {
                 this.error[index] = null
             }
-
         },
         chekSeries(value) {
             let regex = /^[0-9]{4}?$/
@@ -421,8 +453,7 @@ export default {
                 }
             } else {
                 this.error.series = null
-            }
-                
+            }     
         },
         chekNumber(value) {
             let regex = /^[0-9]{6}?$/
@@ -591,6 +622,8 @@ export default {
         this.checkForm(this.surname, 'surname')
         this.checkForm(this.name, 'name')
         this.checkForm(this.patronymic, 'patronymic')
+        // this.checkForm(this.patronymicTr, 'patronymicTr')
+          
         this.chekSeries(this.series)
         this.chekNumber(this.number)
         this.chekIssuedBy(this.issued_by, 'issued_by')
@@ -601,6 +634,8 @@ export default {
         this.chekSnils(this.snils)
         this.chekSex(this.sex)
         this.chekPosition(this.position)
+
+        this.$store.dispatch('setPatronymicTr', null)
 
         // this.surname.set(this.surname)
     }
@@ -785,11 +820,14 @@ li:hover:not(.active) {
 }
 .label-name {
     display: inline-block;
-    width: 155px;
+    width: 220px;
 }
-
+.edit {
+    border-bottom: 1px dashed rgb(212, 212, 212);
+    cursor: pointer;
+}
 .in {
-    border-radius: 4px;
+    border-radius: 6px;
     outline: 0;
     border: 1px solid rgb(212, 212, 212);
     font-size: 14px;
@@ -803,10 +841,11 @@ li:hover:not(.active) {
 
 .label-error {
     color: red;
+    margin-left: 10px;
 }
 .label-show {
     font-weight: 700;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 .snils {
     width: 100px;
@@ -862,6 +901,35 @@ li:hover:not(.active) {
 .btn-clear:hover {
     background-color: rgba(189, 3, 3, 1);
     color: white;
+}
+.wrap-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.wrap-item input {
+    margin-right: 10px;
+}
+.activeInput:focus {
+    border: 1px solid rgb(212, 212, 212);
+    
+}
+
+.activeInput {
+    background-color: rgba(212, 212, 212, .5);
+}
+fieldset {
+    /* border: 1px solid rgba(212, 212, 212, .6); */
+    font-weight: 600;
+
+    border: 1px solid rgb(212, 212, 212);
+    border: 1px solid rgb(218, 220, 224);
+    /* border: none; */
+    border-radius: 8px;
+    /* box-shadow: 0 1px 5px 0 rgba(0,0,0,.14); */
+}
+fieldset p {
+    font-weight: 400;
 }
 @media (min-width: 1280px) {
     .mo {

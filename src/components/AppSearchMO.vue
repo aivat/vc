@@ -18,13 +18,15 @@
                             </ul>
                     </div>
                     <div class="mo-body-link">
-                        <router-link to="/two" class="btn-link">
+                        <!-- <router-link to="/two" class="btn-link"> -->
+                        <span @click="onward()" class="btn-link">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="48px" height="48px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
                             <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"/>
                             <path fill="none" d="M0,0h24v24H0V0z"/>
                             </svg>
-                        </router-link>
+                        </span>
+                        <!-- </router-link> -->
                     </div>
                 </div>           
             </div>
@@ -78,6 +80,16 @@ export default {
         qwe() {
             // this.$store.dispatch('setMO', this.picked)
             // this.$store.dispatch('setMO', this.asd)
+        },
+        onward() {
+            if ( this.picked2 != '' ) {
+                this.$router.push('/two')
+            } else {
+                // this.rules = 'Выберите роль!'
+                // console.log('this.error=',this.error)
+                // console.log('this.errorTrue=',this.errorFalse)
+                console.log('выберете МО')
+            }
         }
     },
     created () {

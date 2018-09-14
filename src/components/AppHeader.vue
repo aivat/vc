@@ -2,9 +2,9 @@
   <header>
     <div class="wrap-top">
       <div class="wrap">
-        <div class="item item-name">
+        <router-link class="item item-name" to="/">
           Система генерации документов для получения электронных подписей в ГБУЗ "МИАЦ"
-        </div>
+        </router-link>
         <!-- <div class="item">
           ШАГ: 1
         </div> -->
@@ -102,6 +102,8 @@ header {
 }
 
 .item-name {
+  color: rgb(60, 64, 67);
+  text-decoration: none;
   padding-left: 15px;
   margin-right: 25px;
 }

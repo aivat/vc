@@ -713,7 +713,7 @@ li:hover:not(.active) {
 }
 
 .in {
-    border-radius: 4px;
+    border-radius: 6px;
     outline: 0;
     border: 1px solid rgb(212, 212, 212);
     font-size: 14px;

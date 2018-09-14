@@ -5,6 +5,7 @@ const state = {
         surname: null,
         name: null,
         patronymic: null,
+        patronymicTr: null,
         sex: null,
         series: null,
         number: null,
@@ -31,6 +32,9 @@ const actions = {
   },
   setPatronymic({ commit },  input) {
     commit('setPatronymic', input)
+  },
+  setPatronymicTr({ commit },  input) {
+    commit('setPatronymicTr', input)
   },
   setSex({ commit },  input) {
     commit('setSex', input)
@@ -81,6 +85,7 @@ const mutations = {
         state.individual.surname = null
         state.individual.name = null
         state.individual.patronymic = null
+        state.individual.patronymicTr = null
         state.individual.sex = null
         state.individual.series = null
         state.individual.number = null
@@ -104,6 +109,10 @@ const mutations = {
     },
     setPatronymic (state, input) {
         state.individual.patronymic = input
+        localStorage.setItem('individual', JSON.stringify(state.individual))
+    },
+    setPatronymicTr (state, input) {
+        state.individual.patronymicTr = input
         localStorage.setItem('individual', JSON.stringify(state.individual))
     },
     setSex (state, input) {

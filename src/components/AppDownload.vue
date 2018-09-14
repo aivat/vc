@@ -140,6 +140,11 @@ export default {
            
     },
     methods: {
+        getPatronymicTr() {
+            if ( this.ind.patronymicTr != null ) {
+                return this.ind.patronymicTr
+            } else return ''
+        },
         editNameGenitive(name) {
             let nameArray = name.split(' ')
             let nameObject = {
@@ -210,7 +215,7 @@ export default {
                         text: [
                             'Я, ',
                             {
-                                text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
+                                text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(),
                                 style: 'usersBold',
                             },{
                                 text: ', паспорт: '
@@ -394,7 +399,7 @@ export default {
                 }
             }
             var docDefinition = {
-                title:'Тестовый документ PDF',
+                title:'Заявление на изготовление сертификата ключа проверки электронной подписи',
                 pageSize:'A4',
                 pageMargins:[30, 30],
                 defaultStyle: {
@@ -483,7 +488,7 @@ export default {
                     //     style: 'body'
                     }, {
                         // text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
-                        text: this.editNameGenitive(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic),
+                        text: this.editNameGenitive(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic) + ' ' + this.getPatronymicTr(),
                         alignment: 'center',
                         margin: [0, 7, 0, 7],
                         style: 'usersBold'
@@ -638,7 +643,7 @@ export default {
                             widths: [ 120, 'auto', '*'],
 
                             body: [
-                                [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic ],
+                                [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr() ],
                                 [ 'Contry', 'RU', 'Россия' ],
                                 [ 'State', 'Область', '56 Оренбургская область' ],
                                 [ 'Locality', 'Город', this.mo.locality ],
@@ -739,7 +744,7 @@ export default {
             }
           }
             var docDefinition = {
-                title:'Согласие работника',
+                title:'Доверенность работника от организации',
                 pageSize:'A4',
                 pageMargins:[30, 30],
                 defaultStyle: {
@@ -824,7 +829,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center'} ],
+                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
                                 [ 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
                             ]
                         }                     
@@ -874,7 +879,7 @@ export default {
                             alignment: 'center',
                             body: [ 
                                 [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
-                                [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center' },'']
+                                [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
                             ]
                         } 
                     // }, {
@@ -999,7 +1004,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center'} ],
+                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
                                 [ 'паспорт: серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
                             ]
                         }                     

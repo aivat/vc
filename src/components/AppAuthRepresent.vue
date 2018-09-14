@@ -229,139 +229,116 @@ export default {
     },
     methods: {
         checkForm(value, index) {
-            let regex = /^[a-zA-Zа-яА-Я']+[a-zA-Zа-яА-Я']?$/
-            value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
+            let regex = /^[a-zA-Zа-яёА-ЯЁ']+[a-zA-Zа-яёА-ЯЁ']?$/
+            if ( value != null ) {
+                value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
+            } else {
+                this.error[index] = null
+            }
         },
         chekSeries(value) {
             let regex = /^[0-9]{4}?$/
-
-            if ( value.length != 4 ) {
-                this.error.series = 'Серия паспорта состоит из 4 цифр'
-            } 
-            else if ( value.match(regex) === null ) {
-                this.error.series = 'Серия паспорта должно состоять только из цифр'
-            } 
-            else {
-                this.error.series = false    
-            }
-                
+            if ( value != null ) {
+                if ( value.length != 4 ) {
+                    this.error.series = 'Серия паспорта состоит из 4 цифр'
+                } 
+                else if ( value.match(regex) === null ) {
+                    this.error.series = 'Серия паспорта должно состоять только из цифр'
+                } 
+                else {
+                    this.error.series = false    
+                }
+            } else {
+                this.error.series = null
+            }     
         },
         chekNumber(value) {
             let regex = /^[0-9]{6}?$/
-
-            if ( value.length != 6 ) {
-                this.error.number = 'Номер паспорта состоит из 6 цифр'
-            }
-            else if ( value.match(regex) === null ) {
-                this.error.number = 'Номер паспорта должна состоять только из цифр'
-            }
-            else {
-                this.error.number = false
-            }       
+            if ( value != null ) {
+                if ( value.length != 6 ) {
+                    this.error.number = 'Номер паспорта состоит из 6 цифр'
+                }
+                else if ( value.match(regex) === null ) {
+                    this.error.number = 'Номер паспорта должна состоять только из цифр'
+                }
+                else {
+                    this.error.number = false
+                } 
+            } else {
+                this.error.number = null
+            }         
         },
         chekIssuedBy(value, index) {
-            let err = false
-            let arr = value.toUpperCase().split(' ')
-            let arrFilter = arr.filter(function(item) {
-                console.log(item );
-                if (item == 'Р-ОН' ) {
-                    console.log(item, 'Р-ОН');
+            if ( value != null ) {
+                let err = false
+                let arr = value.toUpperCase().split(' ')
+                let arrFilter = arr.filter(function(item) {
+                    console.log(item );
+                    if (item == 'Р-ОН' ) {
+                        console.log(item, 'Р-ОН');
+                    }
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                })
+                let newArr = arrFilter.map( (item, i) => {
+                    console.log( i + ": " + item )
+                    if (~item.indexOf(".")) {
+                        err = true
+                        return '<span style="text-decoration: underline; color: red">' + item + '</span>'
+                    } 
+                    if (~item.indexOf("-")) {
+                        err = true
+                        return '<span style="text-decoration: underline; color: green">' + item + '</span>'
+                    }  else {
+                        console.log( 'совпадение нет' );
+                    }
+                });
+                if (err) {
+                    this.error[index] = true
+                    this.errorHTML[index] = newArr.join(' ')
+                } else {
+                    this.error[index] = false
+                    this.errorHTML[index] = null
                 }
-                return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
-            })
-            let newArr = arrFilter.map( (item, i) => {
-                console.log( i + ": " + item )
-                if (~item.indexOf(".")) {
-                    err = true
-                    return '<span style="text-decoration: underline; color: red">' + item + '</span>'
-                } 
-                if (~item.indexOf("-")) {
-                    err = true
-                    return '<span style="text-decoration: underline; color: green">' + item + '</span>'
-                }  else {
-                    console.log( 'совпадение нет' );
-                }
-            });
-            if (err) {
-                this.error[index] = true
-                this.errorHTML[index] = newArr.join(' ')
             } else {
-                this.error[index] = false
-                this.errorHTML[index] = null
-            }
+                this.error[index] = null
+            }    
         },
         chekCode(value) {
-            let regex = /^[0-9]{3}-[0-9]{3}?$/
+            if ( value != null ) {
+                let regex = /^[0-9]{3}-[0-9]{3}?$/
 
-            if ( value.match(regex) === null ) {
-                this.error.code = 'Номер паспорта в формате 123-456'
-            } else {
-                this.error.code = false
-            }          
-        },
-        chekDate(value, index) {
-            let regex = /^[0-3][0-9].[0-1][0-9].[0-9]{4}?$/
-
-            if ( value.match(regex) === null ) {
-                this.error[index] = 'Дата в формате "06.08.1991"'
-            } else {
-                this.error[index] = false
-            }   
-        },
-        chekSnils(value) {
-
-            let regex = /^[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}?$/
-
-            if ( value.match(regex) === null ) { 
-                this.error.snils.is = true
-                this.error.snils.text = 'СНИЛС формата 111-111-111-11'   
-            }
-            else  {
-                let regex3 = /\d{1,}/g
-                let as = value.match(regex3).join('')
-                if ( !this.chekSnilsSum(as) ) {
-      
-                    this.error.snils.is = true
-                    this.error.snils.text = 'В СНИЛСе контрольная сумма неверна'
+                if ( value.match(regex) === null ) {
+                    this.error.code = 'Номер паспорта в формате 123-456'
                 } else {
-                    this.error.snils.is = false
-                    this.error.snils.text = null
+                    this.error.code = false
                 }
-            } 
-        },
-        chekPosition(value) {
-            if (value != '') {
-                 this.error.position = false
             } else {
-                 this.error.position = 'Укажите должность'
+                this.error.code = null
             }           
         },
-        chekSnilsSum(value) {
-            console.log('value=',value)
-            let sum = 0
-            let chekSum = '00'
-            for (let i = 0; i < 9; i++ ) {
-                sum = sum + (value[i] * (9 - i))
-            }
-            console.log('sum=',sum)
-            if ( sum < 100 ) {
-                chekSum = sum
-            }
-            if ( sum == 100 || sum == 101) {
-                chekSum = '00'
-            }
-            if ( sum > 101 ) {
-                chekSum = sum % 101
-                if ( chekSum == 100 || chekSum == 101) {
-                    chekSum = '00'
-                }                
-            }
-            let chekSumValue = value.substring(9,11)
-            console.log('chekSumValue=',chekSumValue)
-            console.log('chekSum=',chekSum)
-            if ( chekSumValue ==  chekSum) {
-                return true
-            } return false
+        chekDate(value, index) {
+            if ( value != null ) {
+                let regex = /^[0-3][0-9].[0-1][0-9].[0-9]{4}?$/
+
+                if ( value.match(regex) === null ) {
+                    this.error[index] = 'Дата в формате "06.08.1991"'
+                } else {
+                    this.error[index] = false
+                } 
+            } else {
+                this.error[index] = null
+            }   
+        },
+        chekPosition(value) {
+            if ( value != null ) {
+                if (value != '') {
+                    this.error.position = false
+                } else {
+                    this.error.position = 'Укажите должность'
+                }
+            } else {
+                this.error.position = null
+            }             
         },
         onward() {
 
@@ -377,7 +354,6 @@ export default {
     },
     created () {
         this.$store.dispatch('setProgressValue', 82)
-        console.log('Nfnmzyf')
         this.$store.dispatch('initialiseStoreAuthRepresent')
         this.checkForm(this.surname, 'surname')
         this.checkForm(this.name, 'name')
@@ -385,15 +361,8 @@ export default {
         this.chekSeries(this.series)
         this.chekNumber(this.number)
         this.chekIssuedBy(this.issued_by, 'issued_by')
-        // this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
-        // this.chekCode(this.code)
-        // this.chekDate(this.date_of_birth, 'date_of_birth')
         this.chekDate(this.date_of_issue, 'date_of_issue')
-        // this.chekSnils(this.snils)
-        // this.chekSex(this.sex)
         this.chekPosition(this.position)
-
-        // this.surname.set(this.surname)
     }
 }
 </script>
@@ -579,7 +548,7 @@ li:hover:not(.active) {
 }
 
 .in {
-    border-radius: 4px;
+    border-radius: 6px;
     outline: 0;
     border: 1px solid rgb(212, 212, 212);
     font-size: 14px;
@@ -632,6 +601,14 @@ li:hover:not(.active) {
 }
 .btn-link>svg {
     fill: currentColor;
+}
+fieldset {
+    font-weight: 600;
+    border: 1px solid rgb(218, 220, 224);
+    border-radius: 8px;
+}
+fieldset p {
+    font-weight: 400;
 }
 @media (min-width: 1280px) {
     .mo {
