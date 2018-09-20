@@ -2,30 +2,57 @@
     <div class="mo">
         <div class="container">
             <div class="mo-wrap">
-                <div class="mo-h2" >
-                    В строке поиска найдите и выберите свою медицинскую организацию
-                </div>
-                <div class="mo-body">
-                    <div class="mo-body-search">
-                        <input class="in-search" v-model="message" placeholder="Поиск медицинской организации">
-                        <button @click="search(message)">Поиск</button>
-                            <ul class="wrap" v-for="item in listMO" :key="item.id">
-                                <li class="" v-bind:class="{ 'active': item.shortname == picked2 ?  true : false }">
-                                    <input class="radio" type="radio" :id="item.id" :value="item.shortname" v-model="picked2" name="dzen">
-                                    <label :for="item.id">{{ item.shortname }}</label>
-                                    <!-- <div class="circle" v-bind:class="{ 'circle-active': item.shortname == picked2 ?  true : false }"></div> -->
-                                </li>
-                            </ul>
+                <header>
+                    <div class="mo-body-link">
+                        <!-- <router-link to="/" class="btn-link">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="48px" height="48px" viewBox="1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                            <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6l6,6L15.41,16.59z"/>
+                            <path fill="none" d="M0,0h24v24H0V0z"/>
+                            </svg>
+                        </router-link> -->
+                    </div>
+                    <div class="mo-h2" >
+                         В строке поиска найдите и выберите свою медицинскую организацию
                     </div>
                     <div class="mo-body-link">
-                        <!-- <router-link to="/two" class="btn-link"> -->
                         <span @click="onward()" class="btn-link">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="48px" height="48px" viewBox="-1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                            <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"/>
+                            <path fill="none" d="M0,0h24v24H0V0z"/>
+                            </svg>                                
+                        </span>
+                    </div>
+                </header>
+                <div class="mo-body">
+                    <div class="mo-body-search">
+                        <input class="in-search" v-model="message" placeholder="Введите название медицинской организации">
+                        <button @click="search(message)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                            Поиск
+                        </button>
+
+                    </div>
+                    <ul class="wrap" >
+                        <li class="" v-bind:class="{ 'active': item.shortname == picked2 ?  true : false }" v-for="item in listMO" :key="item.id">
+                            <input class="radio" type="radio" :id="item.id" :value="item.shortname" v-model="picked2" name="dzen">
+                            <label :for="item.id">{{ item.shortname }}</label>
+                            <!-- <div class="circle" v-bind:class="{ 'circle-active': item.shortname == picked2 ?  true : false }"></div> -->
+                        </li>
+                    </ul>
+                    <div class="mo-body-link">
+                        <!-- <router-link to="/two" class="btn-link"> -->
+                        <!-- <span @click="onward()" class="btn-link">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="48px" height="48px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
                             <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z"/>
                             <path fill="none" d="M0,0h24v24H0V0z"/>
                             </svg>
-                        </span>
+                        </span> -->
                         <!-- </router-link> -->
                     </div>
                 </div>           
@@ -117,6 +144,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     padding: 0 25px;
+    padding-top: 15px;
     /* background-color: rgb(242, 245, 248); */
     /* padding: 10px; */
     /* margin-bottom: 15px; */
@@ -138,39 +166,67 @@ export default {
 
 .mo-body {
     display: flex;
-    justify-content: space-between;
-
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* justify-content: center;
+    align-items: center; */
+    flex-direction: column;
+    width: 710px;
+    align-self: center;
+    margin-top: 20px;
 }
 
 .in-search {
-    width: 400px;
+    width: 560px;
     outline: 0;
-    border-radius: 2px;
+    border-radius: 22px;
     /* border: 1px solid rgb(34, 34, 34); */
     border: 0;
     font-size: 16px;
     font-weight: 500;
-    height: 32px;
-    padding: 5px 15px;
+    height: 44px;
+    padding-left: 20px;
+    /* padding: 5px 15px; */
     color: rgb(34, 34, 34);
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    background-color: rgb(241, 243, 244);
+    /* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08); */
     margin-right: 15px;
+    border: 1px solid rgba(0,0,0,.0);
     /* line-height: 40px; */
 }
-
+.in-search:hover {
+    background-color: rgb(232,234,237);
+}
+.in-search:focus {
+    border: 1px solid rgba(66, 133, 244, .9);
+}
 button {
     font-size: 16px;
     padding: 10px 15px;
     border-radius: 2px;
     border: 0;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    /* box-shadow: 0 4px 4px 0 rgba(0,0,0,.14);  */
     outline: 0;
     color: rgb(34, 34, 34);
+    color: white;
     cursor: pointer;
+    border-radius: 24px;
+    width: 110px;
+    background-color: rgba(66, 133, 244, 1);
+    /* justify-content: space-between; */
 }
-
+button svg {
+    margin-right: 5px;
+    fill: currentColor;
+}
+button:hover {
+    background-color: rgba(66, 133, 244, .9);
+}
 button:active {
-    background-color: rgba(0,0,0,0.08)
+    background-color: rgba(0,0,0,0.08);
+    background-color: rgba(66, 133, 244, .8);
 }
 .button-link {
     background-color: rgb(138, 200, 88);
@@ -184,20 +240,29 @@ button:active {
 .button-link:hover {
     background-color: rgba(138, 200, 88, .85);
 }
-
-ul {
-     margin: 0;
-    padding: 0;   
+.mo-body-search {
+    display: flex;
 }
-
+ul {
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 0px rgba(0,0,0,0.08);
+}
+li:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 li {
     list-style-type: none;
     display: flex;
-    background-color: white;
-    border-radius: 4px;
-    margin-top: 10px;
-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    /* background-color: white; */
+    /* border-radius: 4px; */
+    /* margin-top: 10px; */
+/* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+box-shadow: 0 1px 4px 0 rgba(0,0,0,.14); */
     cursor: pointer;
     transition: all .15s ease-out;
 }
@@ -234,6 +299,17 @@ label {
 }
 .btn-link>svg {
     fill: currentColor;
+}
+header {
+    display: flex;
+    justify-content: space-between;   
+}
+.mo-h2 {
+    /* text-align: center; */
+    padding: 10px 0;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
 }
 @media (min-width: 1280px) {
     .mo {
