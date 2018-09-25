@@ -474,6 +474,7 @@ export default {
         chekIssuedBy(value, index) {
             if ( value != null ) {
                 let err = false
+                let errT = false
                 let arr = value.toUpperCase().split(' ')
                 let arrFilter = arr.filter(function(item) {
                     console.log(item );
@@ -489,7 +490,7 @@ export default {
                         return '<span style="text-decoration: underline; color: red">' + item + '</span>'
                     } 
                     if (~item.indexOf("-")) {
-                        err = true
+                        errT = true
                         return '<span style="text-decoration: underline; color: green">' + item + '</span>'
                     }  else {
                         console.log( 'совпадение нет' );
@@ -501,6 +502,9 @@ export default {
                 } else {
                     this.error[index] = false
                     this.errorHTML[index] = null
+                }
+                if (errT) {
+                    this.errorHTML[index] = newArr.join(' ')
                 }
             } else {
                 this.error[index] = null
