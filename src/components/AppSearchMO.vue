@@ -39,8 +39,8 @@
                     </div>
                     <ul class="wrap" >
                         <li class="" v-bind:class="{ 'active': item.shortname == picked2 ?  true : false }" v-for="item in listMO" :key="item.id">
-                            <input class="radio" type="radio" :id="item.id" :value="item.shortname" v-model="picked2" name="dzen">
-                            <label :for="item.id">{{ item.shortname }}</label>
+                            <input class="radio" type="radio" :id="item.id" :value="item" v-model="picked2" name="dzen">
+                            <label :for="item.id" v-html="item.shortname"></label>
                             <!-- <div class="circle" v-bind:class="{ 'circle-active': item.shortname == picked2 ?  true : false }"></div> -->
                         </li>
                     </ul>

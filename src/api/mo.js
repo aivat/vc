@@ -11,57 +11,49 @@ const _mo = [{"id":0,"shortname":"\"Адамовская РБ\"","shortname_2":"
               if ( it != 'id' ) {
                 item[it] = item[it].toUpperCase()
               }
-              // if ( it == 'shortname' ) {
-              //   // item['shortname'] = item['shortname'][lpu].toLowerCase()
-                
-              //   let len = item.shortname.length
-              //   let nameTempStart = item.shortname.substring(0, lpu).toUpperCase()
-              //   console.log(' nameTempStart=',  nameTempStart)
-              //   let nameTemp = item.shortname.substring(lpu, lpu+mo.length).toLowerCase()
-              //   console.log(' nameTemp=',  nameTemp)
-              //   let nameTempEnd = item.shortname.substring(lpu+mo.length, len).toUpperCase()
-              //   console.log(' nameTempEnd=',  nameTempEnd)
-                
-              //   let shortnameSearch = nameTempStart + nameTemp + nameTempEnd
-              //   console.log(' mo.length=',  mo.length)
-              //   console.log(' shortnameSearch=',  shortnameSearch)
-              //   // item[it] = nameTempStart + nameTemp + nameTempEnd
-              //   item[it] = nameTempStart + '<em>' + nameTemp + '</em>' + nameTempEnd
-              // }
             })
             return item
         }
       
       })
       console.log('qwe=', qwe)
-      let asd = qwe.filter(function(item) {
+      
+      let arrt = []
+      qwe.forEach(function(item, i) {
+        let clone = {}
+        for (let key in item) {
+          // let clone = {}
+          clone[key] = item[key];
+        }
+        // console.log('i=', i)
+        arrt[i] = clone      
+      })
+      console.log('arrt=', arrt)
+      let asd = arrt.filter(function(item) {
         let lpu = item.shortname.toLowerCase().indexOf(mo.toLowerCase())
-        if ( lpu >=0 ) {
+        // if ( lpu >=0 ) {
           console.log('Нашел в позиции lpu=', lpu)
           Object.keys(item).forEach(it => {
-            if ( it != 'id' ) {
-              item[it] = item[it].toUpperCase()
-            }
             if ( it == 'shortname' ) {
               // item['shortname'] = item['shortname'][lpu].toLowerCase()
               
               let len = item.shortname.length
-              let nameTempStart = item.shortname.substring(0, lpu).toUpperCase()
+              let nameTempStart = item.shortname.substring(0, lpu)
               console.log(' nameTempStart=',  nameTempStart)
-              let nameTemp = item.shortname.substring(lpu, lpu+mo.length).toLowerCase()
+              let nameTemp = item.shortname.substring(lpu, lpu+mo.length)
               console.log(' nameTemp=',  nameTemp)
-              let nameTempEnd = item.shortname.substring(lpu+mo.length, len).toUpperCase()
+              let nameTempEnd = item.shortname.substring(lpu+mo.length, len)
               console.log(' nameTempEnd=',  nameTempEnd)
               
               let shortnameSearch = nameTempStart + nameTemp + nameTempEnd
               console.log(' mo.length=',  mo.length)
               console.log(' shortnameSearch=',  shortnameSearch)
               // item[it] = nameTempStart + nameTemp + nameTempEnd
-              item[it] = nameTempStart + '<em>' + nameTemp + '</em>' + nameTempEnd
+              item[it] = nameTempStart + '<b>' + nameTemp + '</b>' + nameTempEnd
             }
           })
           return item
-      }        
+        // }        
       })
       console.log('asd=', asd)      
       setTimeout(() => {

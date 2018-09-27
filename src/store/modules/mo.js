@@ -23,48 +23,24 @@ const actions = {
             commit('setListMO', list)
             // commit('editSearchMo',  { listLpu: list, inputMO: inputMO })
         }
-    )
-    // let list = state.listMO
-    // list.forEach(function(item, i, arr) {
-    //     let lpu = item.shortname.toLowerCase().indexOf(inputMO.toLowerCase())
-    //     if ( lpu >=0 ) {
-    //         Object.keys(item).forEach(it => {
-    //             if ( it == 'shortname' ) {
-    //                 // item['shortname'] = item['shortname'][lpu].toLowerCase()
-                    
-    //                 let len = item.shortname.length
-    //                 let nameTempStart = item.shortname.substring(0, lpu).toUpperCase()
-    //                 console.log(' nameTempStart=',  nameTempStart)
-    //                 let nameTemp = item.shortname.substring(lpu, lpu+inputMO.length).toLowerCase()
-    //                 console.log(' nameTemp=',  nameTemp)
-    //                 let nameTempEnd = item.shortname.substring(lpu+inputMO.length, len).toUpperCase()
-    //                 console.log(' nameTempEnd=',  nameTempEnd)
-                    
-    //                 let shortnameSearch = nameTempStart + nameTemp + nameTempEnd
-    //                 console.log(' mo.length=',  inputMO.length)
-    //                 console.log(' shortnameSearch=',  shortnameSearch)
-    //                 commit('editSearchMo',  { index: i, val: shortnameSearch })
-    //                 // item[it] = nameTempStart + nameTemp + nameTempEnd
-    //               }                
-    //         })
-    //     }
-    // })
-    // console.log('list2=', list)
-    // commit('setListMO', list)
-    
+    )   
   },
   setMO({ commit },  inputMO) {
     console.log('inputMO=', inputMO)
-    shopMO.searchMO(
-        inputMO,
-        list => {
-            commit('setMO', inputMO)
-            let oneMO = list[0]
-            oneMO.data_power_of_attorney = ''
-            oneMO.email = ''
-            commit('setMyMOInfo', oneMO)
-        }
-    )
+    commit('setMO', inputMO.shortname_2)
+    inputMO.data_power_of_attorney = ''
+    inputMO.email = ''
+    commit('setMyMOInfo', inputMO)
+    // shopMO.searchMO(
+    //     inputMO,
+    //     list => {
+    //         commit('setMO', inputMO)
+    //         let oneMO = list[0]
+    //         oneMO.data_power_of_attorney = ''
+    //         oneMO.email = ''
+    //         commit('setMyMOInfo', oneMO)
+    //     }
+    // )
   },
   setRole({ commit },  inputRole) {
     commit('setRole', inputRole)
