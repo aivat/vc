@@ -2,23 +2,70 @@ const _mo = [{"id":0,"shortname":"\"Адамовская РБ\"","shortname_2":"
   
   export default {
     searchMO (mo, cb) {
-      setTimeout(() => {
-        cb( _mo.filter(function(item) {
-            // return item.name.indexOf(mo.toLowerCase)
-            // console.log('item.name=', item.name)
-            let lpu = item.shortname.toLowerCase().indexOf(mo.toLowerCase())
-            if ( lpu >=0 ) {
-                // console.log('Нашел', item.name)
-                Object.keys(item).forEach(it => {
-                  if ( it != 'id' ) {
-                    item[it] = item[it].toUpperCase()
-                  }
-                  
-                })
-                return item
+      console.log('_mo=', _mo)
+      let qwe = _mo.filter(function(item) {
+        let lpu = item.shortname.toLowerCase().indexOf(mo.toLowerCase())
+        if ( lpu >=0 ) {
+            console.log('Нашел в позиции lpu=', lpu)
+            Object.keys(item).forEach(it => {
+              if ( it != 'id' ) {
+                item[it] = item[it].toUpperCase()
+              }
+              // if ( it == 'shortname' ) {
+              //   // item['shortname'] = item['shortname'][lpu].toLowerCase()
+                
+              //   let len = item.shortname.length
+              //   let nameTempStart = item.shortname.substring(0, lpu).toUpperCase()
+              //   console.log(' nameTempStart=',  nameTempStart)
+              //   let nameTemp = item.shortname.substring(lpu, lpu+mo.length).toLowerCase()
+              //   console.log(' nameTemp=',  nameTemp)
+              //   let nameTempEnd = item.shortname.substring(lpu+mo.length, len).toUpperCase()
+              //   console.log(' nameTempEnd=',  nameTempEnd)
+                
+              //   let shortnameSearch = nameTempStart + nameTemp + nameTempEnd
+              //   console.log(' mo.length=',  mo.length)
+              //   console.log(' shortnameSearch=',  shortnameSearch)
+              //   // item[it] = nameTempStart + nameTemp + nameTempEnd
+              //   item[it] = nameTempStart + '<em>' + nameTemp + '</em>' + nameTempEnd
+              // }
+            })
+            return item
+        }
+      
+      })
+      console.log('qwe=', qwe)
+      let asd = qwe.filter(function(item) {
+        let lpu = item.shortname.toLowerCase().indexOf(mo.toLowerCase())
+        if ( lpu >=0 ) {
+          console.log('Нашел в позиции lpu=', lpu)
+          Object.keys(item).forEach(it => {
+            if ( it != 'id' ) {
+              item[it] = item[it].toUpperCase()
             }
-            
-          }))
+            if ( it == 'shortname' ) {
+              // item['shortname'] = item['shortname'][lpu].toLowerCase()
+              
+              let len = item.shortname.length
+              let nameTempStart = item.shortname.substring(0, lpu).toUpperCase()
+              console.log(' nameTempStart=',  nameTempStart)
+              let nameTemp = item.shortname.substring(lpu, lpu+mo.length).toLowerCase()
+              console.log(' nameTemp=',  nameTemp)
+              let nameTempEnd = item.shortname.substring(lpu+mo.length, len).toUpperCase()
+              console.log(' nameTempEnd=',  nameTempEnd)
+              
+              let shortnameSearch = nameTempStart + nameTemp + nameTempEnd
+              console.log(' mo.length=',  mo.length)
+              console.log(' shortnameSearch=',  shortnameSearch)
+              // item[it] = nameTempStart + nameTemp + nameTempEnd
+              item[it] = nameTempStart + '<em>' + nameTemp + '</em>' + nameTempEnd
+            }
+          })
+          return item
+      }        
+      })
+      console.log('asd=', asd)      
+      setTimeout(() => {
+        cb(asd)
         }, 100)
       },
     chooseMO (mo, cb) {
