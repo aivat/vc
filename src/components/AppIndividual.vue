@@ -43,19 +43,19 @@
                         <div class="individual-wrap">
                             <div class="wrap-item">
                                 <label for="surname" class="label-name" >Фамилия:</label>
-                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
+                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР" v-bind:class="{ 'input-err': error.surname }">
                                 <label class="label-show"> {{ surname }} </label>
                                 <label class="label-error" v-show="error.surname">{{ error.surname }} </label>
                             </div>
                             <div class="wrap-item">
                                 <label for="name" class="label-name" >Имя:</label>
-                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
+                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ" v-bind:class="{ 'input-err': error.name }">
                                 <label class="label-show"> {{ name }} </label>
                                 <label class="label-error" v-show="error.name">{{ error.name }} </label>
                             </div>
                             <div class="wrap-item">
                                 <label for="patronymic" class="label-name" >Отчество:</label>
-                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ">
+                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ" v-bind:class="{ 'input-err': error.patronymic }">
                                 <label class="label-show"> {{ patronymic }} </label>
                                 <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
                             </div>
@@ -839,10 +839,12 @@ li:hover:not(.active) {
     font-weight: 400;
 }
 
-.in:focus {
+.in:focus:not(.input-err) {
     border: 1px solid rgb(117, 116, 116);
 }
-
+.input-err {
+    border-color: rgb(241, 2, 2);
+}
 .label-error {
     color: red;
     margin-left: 10px;

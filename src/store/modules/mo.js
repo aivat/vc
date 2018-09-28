@@ -27,7 +27,7 @@ const actions = {
   },
   setMO({ commit },  inputMO) {
     console.log('inputMO=', inputMO)
-    commit('setMO', inputMO.shortname_2)
+    commit('setMO', inputMO.shortname)
     inputMO.data_power_of_attorney = ''
     inputMO.email = ''
     commit('setMyMOInfo', inputMO)

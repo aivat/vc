@@ -94,7 +94,8 @@ header {
 .wrap-top {
   display: flex;
   justify-content: space-between; 
-  height: 50px;;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .wrap {
   display: flex;
@@ -148,7 +149,7 @@ progress {
   outline: 0;
   /* border: 1px solid red; */
   transition: all .5s ease-out;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 progress::-webkit-progress-bar {
    background-color: rgb(255, 255, 255);

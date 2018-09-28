@@ -27,7 +27,7 @@
                 </header>
                 <div class="mo-body">
                     <div class="mo-body-search">
-                        <input class="in-search" v-model="message" placeholder="Введите название медицинской организации">
+                        <input class="in-search" v-bind:class="{ 'search-err': searchErr }" v-model="message" placeholder="Введите название медицинской организации">
                         <button @click="search(message)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -37,10 +37,10 @@
                         </button>
 
                     </div>
-                    <ul class="wrap" >
+                    <ul class="wrap" v-bind:class="{ 'active-list': isList }">
                         <li class="" v-bind:class="{ 'active': item.shortname == picked2 ?  true : false }" v-for="item in listMO" :key="item.id">
                             <input class="radio" type="radio" :id="item.id" :value="item" v-model="picked2" name="dzen">
-                            <label :for="item.id" v-html="item.shortname"></label>
+                            <label :for="item.id" v-html="item.shortname_1"></label>
                             <!-- <div class="circle" v-bind:class="{ 'circle-active': item.shortname == picked2 ?  true : false }"></div> -->
                         </li>
                     </ul>
@@ -67,13 +67,17 @@ export default {
     data () {
         return {
             message: '',
-            picked: ''
+            picked: '',
+            isList: false,
+            isPress: false,
+            searchErr: false
         }
     },
     watch: {
         message(after, before) {
             if ( this.message.length > 1 ) {
-                this.search(this.message);
+                this.search(this.message)
+                
             } 
             
         }
@@ -86,6 +90,10 @@ export default {
             set (value) {
                 console.log('value=', value)
                 this.$store.dispatch('setMO', value)
+                this.message = value.shortname
+                this.isList = false
+                this.isPress = true
+                this.searchErr = false
             }
         },
         listMO() {
@@ -103,6 +111,11 @@ export default {
         search(nameMO) {
             console.log('message=', nameMO)
             this.$store.dispatch('searchMO', nameMO)
+            // if (this.isPress) {
+            //     this.isList = true
+            // }
+            this.isPress ? ( this.isList = false ) : ( this.isList = true )
+            this.isPress = false
         },
         qwe() {
             // this.$store.dispatch('setMO', this.picked)
@@ -111,7 +124,9 @@ export default {
         onward() {
             if ( this.picked2 != '' ) {
                 this.$router.push('/two')
+                this.searchErr = false
             } else {
+                this.searchErr = true
                 // this.rules = 'Выберите роль!'
                 // console.log('this.error=',this.error)
                 // console.log('this.errorTrue=',this.errorFalse)
@@ -310,6 +325,15 @@ header {
     font-weight: 700;
     font-size: 20px;
     text-align: center;
+}
+.wrap {
+    display: none;
+}
+.active-list {
+    display: block;
+}
+.search-err {
+    border-color: rgba(189, 3, 3, 1);
 }
 @media (min-width: 1280px) {
     .mo {

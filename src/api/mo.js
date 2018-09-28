@@ -49,7 +49,7 @@ const _mo = [{"id":0,"shortname":"\"Адамовская РБ\"","shortname_2":"
               console.log(' mo.length=',  mo.length)
               console.log(' shortnameSearch=',  shortnameSearch)
               // item[it] = nameTempStart + nameTemp + nameTempEnd
-              item[it] = nameTempStart + '<b>' + nameTemp + '</b>' + nameTempEnd
+              item['shortname_1'] = nameTempStart + '<b>' + nameTemp + '</b>' + nameTempEnd
             }
           })
           return item
