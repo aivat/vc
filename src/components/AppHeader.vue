@@ -3,7 +3,7 @@
     <div class="wrap-top">
       <div class="wrap">
         <router-link class="item item-name" to="/">
-          Система генерации документов для получения электронных подписей в ГБУЗ "МИАЦ"
+          Генерация документов для получения электронных подписей в ГБУЗ "МИАЦ"
         </router-link>
         <!-- <div class="item">
           ШАГ: 1
@@ -95,7 +95,7 @@ header {
   display: flex;
   justify-content: space-between; 
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, .9);
 }
 .wrap {
   display: flex;
