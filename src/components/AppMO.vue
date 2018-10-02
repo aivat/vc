@@ -31,15 +31,9 @@
                 <div class="mo-body">
 
                     <div class="individual">
-                        <div class="individual-h2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                <circle cx="12" cy="19" r="2"/>
-                                <path d="M10 3h4v12h-4z"/>
-                                <path fill="none" d="M0 0h24v24H0z"/>
-                            </svg>
-                            <div class="rules-logo">Подсказка:&nbsp;</div>
-                            <div class="rules">{{ rules }}</div>
-                        </div>
+                        <AppRules>
+                            {{ rules }}
+                        </AppRules>
                         <div class="individual-wrap">
                             <div>
                                 <label for="fullname" class="label-name label-name-fullname" >Наименование организации:</label>
@@ -120,7 +114,12 @@
 </template>
 
 <script>
+import AppRules from './AppRules'
+
 export default {
+    components: {
+        AppRules
+    },
     data () {
         return {
             readonly: {

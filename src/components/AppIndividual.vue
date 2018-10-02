@@ -29,19 +29,10 @@
                 </header>
 
                 <div class="mo-body">
-
                     <div class="individual">
-                        <div class="individual-h2">
-                            <div class="rules-left">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="19" r="2"/>
-                                    <path d="M10 3h4v12h-4z"/>
-                                    <path fill="none" d="M0 0h24v24H0z"/>
-                                </svg>
-                                <div class="rules-logo">Подсказка:&nbsp;</div>
-                            </div>
-                            <div class="rules">{{ rules }}</div>
-                        </div>
+                        <AppRules>
+                            {{ rules }}
+                        </AppRules>
                         <div class="individual-wrap">
                             <div class="wrap-item">
                                 <label for="surname" class="label-name" >Фамилия:</label>
@@ -167,7 +158,12 @@
 
 <script>
 // import { mapState, mapActions } from 'vuex'
+import AppRules from './AppRules'
+
 export default {
+    components: {
+        AppRules
+    },
     data () {
         return {
             role: {
@@ -244,6 +240,7 @@ export default {
             }
         }
     },
+
     computed: {
         surname: {
             get () {
@@ -874,6 +871,9 @@ li:hover:not(.active) {
 .individual {
     width: 100%;
 }
+.individual-h2-wrap {
+height: 58px;
+}
 .individual-h2 {
     position: relative;
     padding: 10px 0;
@@ -888,6 +888,7 @@ li:hover:not(.active) {
     /* border-bottom: 1px solid;  */
     align-items: flex-start;
     transition: all 1s ease-in; 
+    /* height: 38px; */
 }
 .individual-h2:before {
     bottom: 0;
@@ -913,6 +914,7 @@ li:hover:not(.active) {
 }
 .rules {
     transition: all 1s ease-in; 
+    /* height: 38px; */
 }
 .rules-left {
     color: inherit;
@@ -925,6 +927,7 @@ li:hover:not(.active) {
 .rules-logo {
     color: rgba(189, 3, 3, 1);
     color: black;
+    height: 20px;
 }
 .individual-wrap>p {
     margin: 0;
@@ -1045,6 +1048,9 @@ fieldset {
 fieldset p {
     font-weight: 400;
 }
+/* .rul {
+    margin-top: 20px;
+} */
 @media (min-width: 1280px) {
     .mo {
         justify-content: center;

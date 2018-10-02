@@ -16,24 +16,16 @@
                        Скачайте документы
                     </div>
                     <div class="mo-body-link">
-                            <!-- <span @click="onward()" class="button-link">Сгенерировать документы на другого работника</span> -->
-
                     </div>
                 </header>
 
                 <div class="mo-body">
 
                     <div class="individual">
-                        <div class="individual-h2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                <circle cx="12" cy="19" r="2"/>
-                                <path d="M10 3h4v12h-4z"/>
-                                <path fill="none" d="M0 0h24v24H0z"/>
-                            </svg>
-                            <div class="rules-logo">Подсказка:&nbsp;</div>
-                            <div class="rules">{{ rules }}</div>
-                        </div>
-                            <div class="individual-wrap">                                            <button @click="consentRepresent()" class="consent-represent">Скачать согласие уполномоченного представителя</button>
+                            <AppRules>
+                                {{ rules }}
+                            </AppRules>
+                            <div class="individual-wrap">                         <button @click="consentRepresent()" class="consent-represent">Скачать согласие уполномоченного представителя</button>
                                 <p>Документы для скачивания на заявителя:</p>
                                 <button @click="statement()">Скачать заявление</button>
                                 <button @click="powerAttorneyOrganization()">Скачать доверенность от организации</button>
@@ -69,8 +61,11 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import petrovich from 'petrovich'
-
+import AppRules from './AppRules'
 export default {
+    components: {
+        AppRules
+    },
     data () {
         return {
             error: {
@@ -425,7 +420,7 @@ export default {
                     {
                         text: 'Заявление на изготовление сертификата ключа проверки электронной подписи',
                         alignment: 'center',
-                        margin: [0, 0, 0, 25],
+                        margin: [0, 0, 0, 20],
                         style: {
                             bold: true
                         }
@@ -486,7 +481,7 @@ export default {
                         // text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
                         text: this.editNameGenitive(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic) + ' ' + this.getPatronymicTr(),
                         alignment: 'center',
-                        margin: [0, 7, 0, 7],
+                        margin: [0, 5, 0, 5],
                         style: 'usersBold'
                     }, {
                         columns: [
@@ -654,17 +649,17 @@ export default {
                         }
                     }, {
                         text: 'Руководитель организации:',
-                        margin: [0, 25, 0, 0]
+                        margin: [0, 20, 0, 0]
                     }, {
                         columns: [
                             {
-                                width: 120,
+                                width: 150,
                                 
                                 text: this.mo.position_nominative.toLowerCase()
                             }, {
-                                width: 130,
+                                width: 100,
                                 fontSize: 8,
-                                text: '__________________________ (подпись)',
+                                text: '________________________ (подпись)',
                                 alignment: 'center'
                             }, {
                                 width: '*',
@@ -675,7 +670,7 @@ export default {
                     }, {
                         text: 'М.П.',
                         fontSize: 8,
-                        margin: [350, 0, 0, 0]
+                        margin: [360, 0, 0, 0]
 
                     }, {
                         text: this.getDateNow(),
@@ -686,12 +681,12 @@ export default {
                     }, {
                         columns: [
                             {
-                                width: 120,
+                                width: 150,
                                 text: this.ind.position
                             }, {
-                                width: 130,
+                                width: 100,
                                 fontSize: 8,
-                                text: '__________________________          (подпись)',
+                                text: '________________________ (подпись)',
                                 alignment: 'center',
                             }, {
                                 width: '*',
@@ -705,7 +700,7 @@ export default {
                         margin: [0, 5, 0, 0],
                     }, {
                         canvas: [
-                            { type: 'line', x1: 0, y1: 40, x2: 535, y2: 40, dash: {length: 4, space: 4} }
+                            { type: 'line', x1: 0, y1: 25, x2: 535, y2: 25, dash: {length: 4, space: 4} }
                         ]
                     }, {
                         text: '(заполняется уполномоченным лицом ГБУЗ «МИАЦ»)',
@@ -723,7 +718,7 @@ export default {
                         text: 'М.П.',
                         fontSize: 8,
                         alignment: 'right',
-                        margin: [0, 10, 40, 0]
+                        margin: [0, 5, 40, 0]
                     }
                 ]
             }

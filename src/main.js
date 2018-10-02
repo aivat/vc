@@ -6,6 +6,7 @@ import router from './router'
 // import Vuex from 'vuex'
 import store from './store'
 // import ProgressBar from 'vue-progressbar-component'
+// import AppRules from './components/AppRules'
 
 Vue.config.productionTip = false
 // Vue.component('progress-bar', ProgressBar)
