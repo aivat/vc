@@ -142,6 +142,7 @@
                     
 
                 </div>
+                <AppEmployees/>
                 <!-- <div class="mo-body-search">
                         <ul class="wrap" v-for="item in role" :key="item.id">
                             <li class="">tgtg
@@ -159,23 +160,15 @@
 <script>
 // import { mapState, mapActions } from 'vuex'
 import AppRules from './AppRules'
+import AppEmployees from './AppEmployees'
 
 export default {
     components: {
-        AppRules
+        AppRules,
+        AppEmployees
     },
     data () {
         return {
-            role: {
-                0: {
-                    id: "0",
-                    name: "Медицинский работник"
-                },
-                1: {
-                    id: "1",
-                    name: "Программист"
-                }
-            },
             readOnlyPatronymicTr: true,
             errorText: {
                 surname: null,
@@ -247,14 +240,7 @@ export default {
                 return this.$store.state.individual.individual.surname
             },
             set (value) {
-                // this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                this.checkForm(value, 'surname')
-                // if ( this.checkFormTest(value, 'surname') ) {
-                //     this.error.surname = false
-                //     // this.$store.dispatch('setSurname', value.toUpperCase())
-                // }  else {
-                //     this.error.surname = 'Недопустимые символы, например, лишние пробелы и знаки ".,/"  и т.п.'
-                // }       
+                this.checkForm(value, 'surname')     
                 this.$store.dispatch('setSurname', value.toUpperCase())
             }
         },
@@ -263,7 +249,6 @@ export default {
                 return this.$store.state.individual.individual.name
             },
             set (value) {
-                // this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 this.checkForm(value, 'name')    
                 this.$store.dispatch('setName', value.toUpperCase())    
             }
@@ -273,7 +258,6 @@ export default {
                 return this.$store.state.individual.individual.patronymic 
             },
             set (value) {
-                // this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 this.checkForm(value, 'patronymic')
                 this.$store.dispatch('setPatronymic', value.toUpperCase())  
             }
@@ -283,13 +267,8 @@ export default {
                 return this.$store.state.individual.individual.patronymicTr 
             },
             set (value) {
-                // this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
-                // if (!this.readOnlyPatronymicTr) {
-                    this.checkForm(value, 'patronymicTr')
-                    this.$store.dispatch('setPatronymicTr', value.toUpperCase())  
-                // }
-                
-                // this.$store.dispatch('setPatronymic', value.toUpperCase())  
+                this.checkForm(value, 'patronymicTr')
+                this.$store.dispatch('setPatronymicTr', value.toUpperCase())
             }            
         },
         series: {
@@ -297,7 +276,6 @@ export default {
                 return this.$store.state.individual.individual.series 
             },
             set (value) {
-                // this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 this.chekSeries(value)
                 this.$store.dispatch('setSeries', value.toUpperCase())
             }
@@ -307,7 +285,6 @@ export default {
                 return this.$store.state.individual.individual.number 
             },
             set (value) {
-                // this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 this.chekNumber(value)
                 this.$store.dispatch('setNumber', value.toUpperCase())
             }            
@@ -317,7 +294,6 @@ export default {
                 return this.$store.state.individual.individual.issued_by 
             },
             set (value) {
-                // this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                 this.chekIssuedBy(value, 'issued_by')
                 this.$store.dispatch('setIssuedBy', value.toUpperCase())
             }            
@@ -327,21 +303,8 @@ export default {
                 return this.$store.state.individual.individual.place_of_birth 
             },
             set (value) {
-                // this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
-                // let qwe
                 this.chekIssuedBy(value, 'place_of_birth')
-                this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                // ошибок нет придет false, ошибки есть придет true
-                // if ( qwe = this.chekIssuedBy(value) ) {
-                //     this.error.place_of_birth = true
-                //     this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                //     this.errorHTML_place_of_birth = qwe
-                // } else {
-                //    this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())
-                //    this.error.place_of_birth = false
-                //    this.errorHTML_place_of_birth = null
-                // }  
-                  
+                this.$store.dispatch('setPlaceOfBirth', value.toUpperCase())  
             }            
         },
         code: {
@@ -404,10 +367,6 @@ export default {
                 return this.$store.state.individual.individual.snils
             },
             set (value) {
-                // let snilsChek = this.chekSnils(value)
-                
-                // console.log('snilsChek=', snilsChek)
-                
                 if ( ( value.length == 3 ) || (value.length == 7)) {
                     value = value + '-'
                 }
@@ -416,7 +375,6 @@ export default {
                 }
                 this.chekSnils(value)
                 this.$store.dispatch('setSnils', value)
-
             }              
         }        
     },
@@ -464,7 +422,7 @@ export default {
                     this.rules = 'СНИЛС'
                     break
                 default:
-                    alert( 'Я таких значений не знаю' );
+                    this.rules = 'Я таких значений не знаю'
             } 
 
         },
@@ -497,8 +455,6 @@ export default {
         checkForm(value, index) {
             let regex = /^[a-zA-Zа-яёА-ЯЁ']+-? ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,}$/
             if ( value != null ) {
-                // value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
-                
                 if ( value.match(regex) === null ) {
                     this.errorText[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.'
                     this.error[index] = true
@@ -558,7 +514,7 @@ export default {
                     if (item == 'Р-ОН' ) {
                         console.log(item, 'Р-ОН');
                     }
-                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'СТ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
                 })
                 newArr = arrFilter.map( (item, i) => {
                     console.log( i + ": " + item )

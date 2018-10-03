@@ -16,7 +16,6 @@
                         Введите данные уполномоченного представителя
                     </div>
                     <div class="mo-body-link">
-                        <!-- <router-link to="/four" > -->
                             <span @click="onward()" class="btn-link">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="48px" height="48px" viewBox="-1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
@@ -24,67 +23,57 @@
                                 <path fill="none" d="M0,0h24v24H0V0z"/>
                                 </svg>                                
                             </span>
-                        <!-- </router-link> -->
                     </div>
                 </header>
-
                 <div class="mo-body">
-
                     <div class="individual">
-                        <!-- <div class="individual-h2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                <circle cx="12" cy="19" r="2"/>
-                                <path d="M10 3h4v12h-4z"/>
-                                <path fill="none" d="M0 0h24v24H0z"/>
-                            </svg>
-                            <div class="rules-logo">Подсказка:&nbsp;</div>
-                            <div class="rules">{{ rules }}</div>
-                        </div> -->
                         <AppRules>
                             {{ rules }}
                         </AppRules>
                         <div class="individual-wrap">
-                            <p>
+                            <div class="wrap-item">
                                 <label for="surname" class="label-name" >Фамилия:</label>
-                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
+                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР" v-bind:class="{ 'input-err': error.surname }" @focus="onFocus('surname')" >
                                 <label class="label-show"> {{ surname }} </label>
-                                <label class="label-error" v-show="error.surname">{{ error.surname }} </label>
-                            </p>
-                            <p>
+                                <label class="label-error" v-show="error.surname">{{ errorText.surname }} </label>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="name" class="label-name" >Имя:</label>
-                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ">
+                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ" v-bind:class="{ 'input-err': error.name }" @focus="onFocus('name')">
                                 <label class="label-show"> {{ name }} </label>
-                                <label class="label-error" v-show="error.name">{{ error.name }} </label>
-                            </p>
-                            <p>
+                                <label class="label-error" v-show="error.name">{{ errorText.name }} </label>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="patronymic" class="label-name" >Отчество:</label>
-                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ">
+                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ФЁДОРОВИЧ" v-bind:class="{ 'input-err': error.patronymic }" @focus="onFocus('patronymic')">
                                 <label class="label-show"> {{ patronymic }} </label>
-                                <label class="label-error" v-show="error.patronymic">{{ error.patronymic }} </label>
-                            </p>
-                            <p>
+                                <label class="label-error" v-show="error.patronymic">{{ errorText.patronymic }} </label>
+                            </div>
+                            <div class="wrap-item">
                                 <label for="position" class="label-name">Должность:</label>
-                                <input class="in position" type="text" id="position" v-model="position">  
+                                <input class="in position" type="text" id="position" v-model="position" v-bind:class="{ 'input-err': error.position }" @focus="onFocus('position')">  
                                 <label class="label-show"> {{ position }} </label>
-                                <label class="label-error" v-show="error.position">{{ error.position }} </label>
-                            </p> 
+                                <label class="label-error" v-show="error.position">{{ errorText.position }} </label>
+                            </div>
                             <fieldset>
                                 <legend>Паспорт</legend>
                                 <p>
                                     <label for="series" class="label-name">Серия:</label>
-                                    <input class="in series" id="series" v-model.lazy="series" maxlength="4" placeholder="1234"> 
+                                    <input class="in series" id="series" v-model.lazy="series" maxlength="4" placeholder="1234" @focus="onFocus('series')" v-bind:class="{ 'input-err': error.series }"> 
                                     <label v-show="!error.series" class="label-show">{{ series }} </label>
-                                    <label v-show="error.series" class="label-error">{{ error.series }} </label>
+                                    <label v-show="error.series" class="label-error">{{ errorText.series }} </label>
                                 </p>
                                 <p>
                                     <label for="number" class="label-name">Номер:</label>
-                                    <input class="in number" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456">
+                                    <input class="in number" type="text" v-model.lazy="number" id="number" maxlength="6" placeholder="123456" @focus="onFocus('number')" v-bind:class="{ 'input-err': error.number }">
                                     <label class="label-show" v-show="!error.number">{{ number }}</label>
-                                    <label v-show="error.number" class="label-error">{{ error.number }} </label>
+                                    <label v-show="error.number" class="label-error">{{ errorText.number }} </label>
                                 </p>
                                 <p>
                                     <label for="issued_by" class="label-name">Кем выдан:</label>
-                                    <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" > 
+                                    <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" @focus="onFocus('issued_by')" v-bind:class="{ 'input-err': error.issued_by }"> 
+                                    <!-- <label v-show="!error.issued_by">{{ issued_by }}</label> -->
+                                    <!-- <label v-show="error.issued_by">{{ error.issued_by }} </label> -->
                                     <label v-html="errorHTML.issued_by"> </label>
                                 </p>
                                 <p>
@@ -93,25 +82,14 @@
                                 </p>
                                 <p>
                                     <label for="date_of_issue" class="label-name">Дата выдачи:</label>
-                                    <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018">
+                                    <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018" @focus="onFocus('date_of_issue')" v-bind:class="{ 'input-err': error.date_of_issue }">
                                     <label class="label-show" v-show="!error.date_of_issue">{{ date_of_issue }}</label>
-                                    <label class="label-error" v-show="error.date_of_issue">{{ error.date_of_issue }} </label>
+                                    <label class="label-error" v-show="error.date_of_issue">{{ errorText.date_of_issue }} </label>
                                 </p>
                             </fieldset>                                                                   
                         </div>
                     </div>
-
-
                 </div>
-                <!-- <div class="mo-body-search">
-                        <ul class="wrap" v-for="item in role" :key="item.id">
-                            <li class="">tgtg
-                                <input type="radio" :id="item.id" :value="item.name" v-model="picked">
-                                <label :for="item.id">{{ item.name }} {{picked}}</label>
-                                <div class="circle" v-bind:class="{ 'circle-active': item.name == picked ?  true : false }"></div>
-                            </li>
-                        </ul>
-                </div>           -->
             </div>
         </div>
     </div>
@@ -125,6 +103,16 @@ export default {
     },
     data () {
         return {
+            errorText: {
+                surname: null,
+                name: null,
+                patronymic: null,
+                series: null,
+                number: null,
+                issued_by: null,
+                date_of_issue: null,
+                position: null
+            },
             error: {
                 surname: null,
                 name: null,
@@ -157,7 +145,6 @@ export default {
                 return this.$store.state.authrepresent.authrepresent.surname
             },
             set (value) {
-                this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 this.checkForm(value, 'surname')  
                 this.$store.dispatch('setAuthRepresentSurname', value.toUpperCase())
             }
@@ -167,7 +154,6 @@ export default {
                 return this.$store.state.authrepresent.authrepresent.name
             },
             set (value) {
-                this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 this.checkForm(value, 'name') 
                 this.$store.dispatch('setAuthRepresentName', value.toUpperCase()) 
             }
@@ -177,7 +163,6 @@ export default {
                 return this.$store.state.authrepresent.authrepresent.patronymic 
             },
             set (value) {
-                this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                 this.checkForm(value, 'patronymic')  
                 this.$store.dispatch('setAuthRepresentPatronymic', value.toUpperCase())  
             }
@@ -187,7 +172,6 @@ export default {
                 return this.$store.state.authrepresent.authrepresent.series 
             },
             set (value) {
-                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 this.chekSeries(value)
                 this.$store.dispatch('setAuthRepresentSeries', value.toUpperCase())
             }
@@ -197,7 +181,6 @@ export default {
                 return this.$store.state.authrepresent.authrepresent.number 
             },
             set (value) {
-                this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                 this.chekNumber(value)
                 this.$store.dispatch('setAuthRepresentNumber', value.toUpperCase())
             }            
@@ -207,7 +190,6 @@ export default {
                 return this.$store.state.authrepresent.authrepresent.issued_by 
             },
             set (value) {
-                this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                 this.chekIssuedBy(value, 'issued_by')
                 this.$store.dispatch('setAuthRepresentIssuedBy', value.toUpperCase())
             }            
@@ -235,10 +217,46 @@ export default {
         }    
     },
     methods: {
+        onFocus(value) {
+            switch (value) {
+                case 'surname':
+                    this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                    break
+                case 'name':
+                    this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                    break;
+                case 'patronymic':
+                    this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
+                    break
+                case 'series':
+                    this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
+                    break
+                case 'number':
+                    this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
+                    break
+                case 'issued_by':
+                    this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
+                    break
+                case 'date_of_issue':
+                    this.rules = 'дата выдачи паспорта'
+                    break
+                case 'position':
+                    this.rules = 'должность согласно штатному расписанию'
+                    break
+                default:
+                    this.rules = 'Я таких значений не знаю'
+            } 
+        },
         checkForm(value, index) {
-            let regex = /^[a-zA-Zа-яёА-ЯЁ']+[a-zA-Zа-яёА-ЯЁ']?$/
+            let regex = /^[a-zA-Zа-яёА-ЯЁ']+-? ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,}$/
             if ( value != null ) {
-                value.match(regex) === null ? this.error[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.' : this.error[index] = false
+                if ( value.match(regex) === null ) {
+                    this.errorText[index] = 'Недопустимые символы: лишние пробелы и символы ".,/"  и т.п.'
+                    this.error[index] = true
+                } else {
+                    this.errorText[index] = null
+                    this.error[index] = false
+                }
             } else {
                 this.error[index] = null
             }
@@ -247,10 +265,12 @@ export default {
             let regex = /^[0-9]{4}?$/
             if ( value != null ) {
                 if ( value.length != 4 ) {
-                    this.error.series = 'Серия паспорта состоит из 4 цифр'
+                    this.errorText.series = 'Серия паспорта состоит из 4 цифр'
+                    this.error.series = true   
                 } 
                 else if ( value.match(regex) === null ) {
-                    this.error.series = 'Серия паспорта должно состоять только из цифр'
+                    this.errorText.series = 'Серия паспорта должно состоять только из цифр'
+                    this.error.series = true   
                 } 
                 else {
                     this.error.series = false    
@@ -263,39 +283,46 @@ export default {
             let regex = /^[0-9]{6}?$/
             if ( value != null ) {
                 if ( value.length != 6 ) {
-                    this.error.number = 'Номер паспорта состоит из 6 цифр'
+                    this.errorText.number = 'Номер паспорта состоит из 6 цифр'
+                    this.error.number = true
                 }
                 else if ( value.match(regex) === null ) {
-                    this.error.number = 'Номер паспорта должна состоять только из цифр'
+                    this.errorText.number = 'Номер паспорта должна состоять только из цифр'
+                    this.error.number = true
                 }
                 else {
                     this.error.number = false
                 } 
             } else {
                 this.error.number = null
-            }         
+            }    
         },
         chekIssuedBy(value, index) {
             if ( value != null ) {
                 let err = false
                 let errT = false
+                let newArr = []
+                console.log('newArr',newArr );
                 let arr = value.toUpperCase().split(' ')
                 let arrFilter = arr.filter(function(item) {
                     console.log(item );
                     if (item == 'Р-ОН' ) {
                         console.log(item, 'Р-ОН');
                     }
-                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'СТ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
                 })
-                let newArr = arrFilter.map( (item, i) => {
+                newArr = arrFilter.map( (item, i) => {
                     console.log( i + ": " + item )
+                    if ( value == '' ) {
+                        err = true
+                        return '<span style="text-decoration: underline; color: red"> Заполните поле</span>'
+                    }
                     if (~item.indexOf(".")) {
                         err = true
                         return '<span style="text-decoration: underline; color: red">' + item + '</span>'
                     } 
                     if (~item.indexOf("-")) {
                         errT = true
-                        err = true
                         return '<span style="text-decoration: underline; color: green">' + item + '</span>'
                     }  else {
                         console.log( 'совпадение нет' );
@@ -320,21 +347,24 @@ export default {
                 let regex = /^[0-9]{3}-[0-9]{3}?$/
 
                 if ( value.match(regex) === null ) {
-                    this.error.code = 'Номер паспорта в формате 123-456'
+                    this.errorText.code = 'Номер паспорта в формате 123-456'
+                    this.error.code = true
                 } else {
                     this.error.code = false
+                    this.errorText.code = null
                 }
             } else {
                 this.error.code = null
-            }           
+            }              
         },
         chekDate(value, index) {
             if ( value != null ) {
                 let regex = /^[0-3][0-9].[0-1][0-9].[0-9]{4}?$/
-
                 if ( value.match(regex) === null ) {
-                    this.error[index] = 'Дата в формате "06.08.1991"'
+                    this.errorText[index] = 'Дата в формате "06.08.1991"'
+                    this.error[index] = true
                 } else {
+                    this.errorText[index] = null
                     this.error[index] = false
                 } 
             } else {
@@ -343,24 +373,32 @@ export default {
         },
         chekPosition(value) {
             if ( value != null ) {
-                if (value != '') {
-                    this.error.position = false
+                console.log('value=',value)
+                if (value == '') {
+                    console.log('pfikn=',value)
+                    this.error.position = true
+                    this.errorText.position = 'Укажите должность'                    
                 } else {
-                    this.error.position = 'Укажите должность'
+                    this.error.position = false
+                    this.errorText.position = null
+
                 }
             } else {
                 this.error.position = null
             }             
         },
         onward() {
-
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
                 this.$router.push('/six')
             } else {
+                for ( let key in this.error) {
+                    if (this.error[key] != false)
+                        this.error[key] = true
+                }
                 this.rules = 'исправьте все ошибки'
                 console.log('this.error=',this.error)
                 console.log('this.errorTrue=',this.errorFalse)
-                console.log('ошибка исправьте все ошибки')
+                // console.log('ошибка исправьте все ошибки')
             }
         }
     },
@@ -382,10 +420,7 @@ export default {
 <style scoped>
 
 .mo {
-    /* margin-top: 25px; */
     display: flex;
-    /* background-color: rgb(242, 245, 248);
-    background-color:#edeef0; */
 }
 
 .container {
@@ -398,13 +433,9 @@ export default {
     justify-content: space-between;
     padding: 0 25px;
     padding-top: 15px;
-    /* background-color: rgb(242, 245, 248); */
-    /* padding: 10px; */
-    /* margin-bottom: 15px; */
 }
 
 .mo-h2 {
-    /* text-align: center; */
     padding: 10px 0;
     font-weight: 700;
     font-size: 20px;
@@ -422,7 +453,6 @@ export default {
 
 .mo-body {
     display: flex;
-    /* justify-content: space-between; */
 
 }
 header {
@@ -483,8 +513,8 @@ li {
     background-color: white;
     border-radius: 4px;
     margin-top: 10px;
-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
     cursor: pointer;
     transition: all .15s ease-out;
 }
@@ -497,14 +527,7 @@ li:hover:not(.active) {
     background-color: rgb(138, 200, 88);
     color: white;
 }
-.radio {
-    /* display: none; */
-}
-/* label {
-    width: 100%;
-    cursor: pointer;
-        padding: 15px;
-} */
+
 .individual {
     width: 100%;
 }
@@ -568,8 +591,11 @@ li:hover:not(.active) {
     font-weight: 400;
 }
 
-.in:focus {
+.in:focus:not(.input-err) {
     border: 1px solid rgb(117, 116, 116);
+}
+.input-err {
+    border-color: rgb(241, 2, 2);
 }
 
 .label-error {
@@ -577,7 +603,7 @@ li:hover:not(.active) {
 }
 .label-show {
     font-weight: 700;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 .snils {
     width: 100px;
@@ -621,6 +647,14 @@ fieldset {
 }
 fieldset p {
     font-weight: 400;
+}
+.wrap-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.wrap-item input {
+    margin-right: 10px;
 }
 @media (min-width: 1280px) {
     .mo {
