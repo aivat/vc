@@ -2,6 +2,7 @@
 
 const state = {
     individual: {
+        id: null,
         surname: null,
         name: null,
         patronymic: null,
@@ -24,6 +25,9 @@ const getters = {
 }
 
 const actions = {
+  setId({ commit },  input) {
+    commit('setId', input)
+  },
   setSurname({ commit },  input) {
     commit('setSurname', input)
   },
@@ -82,6 +86,7 @@ const mutations = {
         // if(localStorage.getItem('individual')) {
         //     localStorage.removeItem('individual');
         // }
+        // state.individual.id = null
         state.individual.surname = null
         state.individual.name = null
         state.individual.patronymic = null
@@ -96,6 +101,11 @@ const mutations = {
         state.individual.place_of_birth = null
         state.individual.position = null
         state.individual.snils = null
+        localStorage.setItem('individual', JSON.stringify(state.individual))
+    },
+    setId (state, input) {
+        state.individual.id = input
+        console.log('ind')
         localStorage.setItem('individual', JSON.stringify(state.individual))
     },
     setSurname (state, input) {

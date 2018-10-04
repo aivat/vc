@@ -9,7 +9,9 @@
         <div class="main">
             <ul>
                 <li v-for="employee in employees" :key="employee.id">
-                    {{ employee.surname }}
+                    <span>{{ employee.surname }}</span>
+                    <button>Выбрать</button>
+                    <button>Удалить</button>
                 </li>
             </ul>
         </div>
@@ -71,9 +73,12 @@ export default {
                     place_of_birth: null,
                     position: null,
                     snils: null
-                },
+                }
             }
         }
+    },
+    created () {
+        this.$store.dispatch('initialiseStoreCountEmployees')
     }
 }
 </script>

@@ -660,6 +660,8 @@ export default {
         onward() {
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
                 this.$router.push('/five')
+                this.$store.dispatch('addEmployeeslocalStorage')
+                
             } else {
                 for ( let key in this.error) {
                     if (this.error[key] != false)
