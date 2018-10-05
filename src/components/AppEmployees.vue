@@ -5,15 +5,22 @@
         </header>
         <div class="search">
             <input placeholder="Начните вводить имя работника">
+            <!-- <router-link to="/employees/new">
+            Добавить сотрудника
+            </router-link> -->
+            <router-link :to="{ name: 'new' }">Добавить работника</router-link>
         </div>
         <div class="main">
             <ul>
                 <li v-for="employee in employees" :key="employee.id">
                     <span>{{ employee.surname }}</span>
                     <button>Выбрать</button>
+                
+                    <router-link :to="{ name: 'edit', params: { id: employee.id }}">Изменить</router-link>
                     <button>Удалить</button>
                 </li>
             </ul>
+            <router-view></router-view>
         </div>
     </div>
 </template>

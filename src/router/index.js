@@ -8,6 +8,10 @@ import AppPersonInCharge from '@/components/AppPersonInCharge'
 import AppAuthRepresent from '@/components/AppAuthRepresent'
 import AppDownload from '@/components/AppDownload'
 import AppMO from '@/components/AppMO'
+import AppEmployees from '@/components/AppEmployees'
+import AppEmployeesNew from '@/components/AppEmployeesNew'
+import AppEdit from '@/components/AppEdit'
+
 Vue.use(Router)
 
 export default new Router({
@@ -42,6 +46,20 @@ export default new Router({
       path: '/six',
       name: 'six',
       component: AppDownload
-    }
+    },
+    {
+      path: '/employees',
+      component: AppEmployees,
+    },
+    {
+      path: '/employees/:id/edit',
+      name: 'edit',
+      component: AppEmployeesNew
+    },
+    {
+      path: '/employees/new',
+      name: 'new',
+      component: AppEmployeesNew
+    }    
   ]
 })
