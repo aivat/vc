@@ -29,7 +29,7 @@
 export default {
     data () {
         return {
-            employees: {
+            employees2: {
                 0: {
                     id: '0',
                     surname: 'БАЙМЕШОВ',
@@ -84,8 +84,15 @@ export default {
             }
         }
     },
+    computed: {
+        employees() {
+            return this.$store.state.employees.employees
+        } 
+    },
     created () {
         this.$store.dispatch('initialiseStoreCountEmployees')
+        this.$store.dispatch('initialiseStoreEmployeesFromlocalStorage')
+        
     }
 }
 </script>

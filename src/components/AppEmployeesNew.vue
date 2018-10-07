@@ -142,7 +142,6 @@
                     
 
                 </div>
-                <AppEmployees/>
                 <!-- <div class="mo-body-search">
                         <ul class="wrap" v-for="item in role" :key="item.id">
                             <li class="">tgtg
@@ -187,20 +186,20 @@ export default {
                 snils: null
             },
             error: {
-                surname: null,
-                name: null,
-                patronymic: null,
+                surname: false,
+                name: false,
+                patronymic: false,
                 patronymicTr: false,
-                sex: null,
-                series: null,
-                number: null,
-                issued_by: null,
-                date_of_issue: null,
-                code: null,
-                date_of_birth: null,
-                place_of_birth: null,
-                position: null,
-                snils: null
+                sex: false,
+                series: false,
+                number: false,
+                issued_by: false,
+                date_of_issue: false,
+                code: false,
+                date_of_birth: false,
+                place_of_birth: false,
+                position: false,
+                snils: false
             },
             errorFalse: {
                 surname: false ,
@@ -660,8 +659,13 @@ export default {
         onward() {
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
                 if ( this.$route.path == '/employees/new') {
-                    this.$store.dispatch('addEmployeeslocalStorage')
-                } 
+                    this.$store.dispatch('addEmployee')
+                     console.log(' ДОБАВИЛИ В ЛОКАЛСТОРАДЖ')
+                }
+                if ( this.$route.name == 'edit') {
+                    this.$store.dispatch('editEmployee', this.$route.params.id)
+                     console.log(' пытаемся сохрнаиться ')
+                }
                 console.log(' $route.params.id =', this.$route )
                 console.log(' $route.params =', this.$route.params )
                 this.$router.push('/employees')
@@ -678,25 +682,32 @@ export default {
         }
     },
     created () {
+        if ( this.$route.path == '/employees/new') {
+            this.$store.dispatch('initialiseStoreCountEmployees')
+            console.log(' зашли в нового пользователь иниициализация количества')
+        }
         this.$store.dispatch('setProgressValue', 65)
-        this.$store.dispatch('initialiseStoreIndividual')
-        this.checkForm(this.surname, 'surname')
-        this.checkForm(this.name, 'name')
-        this.checkForm(this.patronymic, 'patronymic')
-        // this.checkForm(this.patronymicTr, 'patronymicTr')
+        
+        this.$store.dispatch('initialiseStoreEmployees', this.$route.params.id)
+        
+        // this.$store.dispatch('initialiseStoreIndividual')
+        
+        // this.checkForm(this.surname, 'surname')
+        // this.checkForm(this.name, 'name')
+        // this.checkForm(this.patronymic, 'patronymic')
           
-        this.chekSeries(this.series)
-        this.chekNumber(this.number)
-        this.chekIssuedBy(this.issued_by, 'issued_by')
-        this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
-        this.chekCode(this.code)
-        this.chekDate(this.date_of_birth, 'date_of_birth')
-        this.chekDate(this.date_of_issue, 'date_of_issue')
-        this.chekSnils(this.snils)
-        this.chekSex(this.sex)
-        this.chekPosition(this.position)
+        // this.chekSeries(this.series)
+        // this.chekNumber(this.number)
+        // this.chekIssuedBy(this.issued_by, 'issued_by')
+        // this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
+        // this.chekCode(this.code)
+        // this.chekDate(this.date_of_birth, 'date_of_birth')
+        // this.chekDate(this.date_of_issue, 'date_of_issue')
+        // this.chekSnils(this.snils)
+        // this.chekSex(this.sex)
+        // this.chekPosition(this.position)
 
-        this.$store.dispatch('setPatronymicTr', null)
+        // this.$store.dispatch('setPatronymicTr', null)
 
         // this.surname.set(this.surname)
     }
