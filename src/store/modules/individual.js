@@ -75,15 +75,7 @@ const actions = {
       commit ('setIndividualFromLocalStorage', JSON.parse(localStorage.getItem('individual')))
     }
   },
-  initialiseStoreEmployees({ commit }, id) {
-      console.log('id=', id)
-      let asd = 'Employees'+id
-     
-      console.log('asd=', asd)
-    if(localStorage.getItem('Employees'+id)) {
-      commit ('setIndividualFromLocalStorage', JSON.parse(localStorage.getItem('Employees'+id)))
-    }
-  },
+
   setClearIndividual({ commit }) {
     commit('setClearIndividual')
   }
@@ -174,9 +166,7 @@ const mutations = {
         state.individual.snils = input
         localStorage.setItem('individual', JSON.stringify(state.individual))
     },
-    setIndividualFromLocalStorage (state, storeIndividualFromLocalStorage) {
-        state.individual = storeIndividualFromLocalStorage
-    }
+
 }
 
 export default {

@@ -35,14 +35,14 @@
                         <div class="individual-wrap">
                             <div class="wrap-item">
                                 <label for="surname" class="label-name" >Фамилия:</label>
-                                <input class="in" type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР" v-bind:class="{ 'input-err': error.surname }" @focus="onFocus('surname')" >
-                                <label class="label-show"> {{ surname }} </label>
+                                <input class="in" type="text" id="surname" v-model.trim="employee.surname" placeholder="КУПЕР" v-bind:class="{ 'input-err': error.surname }" @focus="onFocus('surname')" @input="checkForm(employee.surname, 'surname')">
+                                <label class="label-show"> {{ employee.surname }} </label>
                                 <label class="label-error" v-show="error.surname">{{ errorText.surname }} </label>
                             </div>
                             <div class="wrap-item">
                                 <label for="name" class="label-name" >Имя:</label>
-                                <input class="in" type="text" id="name" v-model.trim="name" placeholder="ДЕЙЛ" v-bind:class="{ 'input-err': error.name }" @focus="onFocus('name')">
-                                <label class="label-show"> {{ name }} </label>
+                                <input class="in" type="text" id="name" v-model.trim="employee.name" placeholder="ДЕЙЛ" v-bind:class="{ 'input-err': error.name }" @focus="onFocus('name')" @input="checkForm(employee.name, 'name')">
+                                <label class="label-show"> {{ employee.name }} </label>
                                 <label class="label-error" v-show="error.name">{{ errorText.name }} </label>
                             </div>
                             <div class="wrap-item">
@@ -221,7 +221,12 @@ export default {
                 issued_by: '',
                 place_of_birth: ''
             },
-            rules: ' все поля форм заполняются строго как в документах. '
+            rules: ' все поля форм заполняются строго как в документах. ',
+            employee: {
+                id: null,
+                surname: '',
+                name: ''
+            }
         }
     },
     directives: {
@@ -234,15 +239,16 @@ export default {
     },
 
     computed: {
-        surname: {
-            get () {
-                return this.$store.state.individual.individual.surname
-            },
-            set (value) {
-                this.checkForm(value, 'surname')     
-                this.$store.dispatch('setSurname', value.toUpperCase())
-            }
-        },
+        // surname: {
+        //     get () {
+        //         return this.$store.state.individual.individual.surname
+        //         // return value
+        //     },
+        //     set (value) {
+        //         this.checkForm(value, 'surname')     
+        //         this.$store.dispatch('setSurname', value.toUpperCase())
+        //     }
+        // },
         name: {
             get () {
                 return this.$store.state.individual.individual.name
@@ -452,6 +458,7 @@ export default {
             this.error.snils = null
         },
         checkForm(value, index) {
+            console.log('значени с формы=', value)
             let regex = /^[a-zA-Zа-яёА-ЯЁ']+-? ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,} ?[a-zA-Zа-яёА-ЯЁ']{0,}$/
             if ( value != null ) {
                 if ( value.match(regex) === null ) {
@@ -659,11 +666,11 @@ export default {
         onward() {
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
                 if ( this.$route.path == '/employees/new') {
-                    this.$store.dispatch('addEmployee')
+                    this.$store.dispatch('addEmployee', this.employee)
                      console.log(' ДОБАВИЛИ В ЛОКАЛСТОРАДЖ')
                 }
                 if ( this.$route.name == 'edit') {
-                    this.$store.dispatch('editEmployee', this.$route.params.id)
+                    this.$store.dispatch('editEmployee', this.employee)
                      console.log(' пытаемся сохрнаиться ')
                 }
                 console.log(' $route.params.id =', this.$route )

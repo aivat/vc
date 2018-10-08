@@ -77,7 +77,16 @@ export default {
 
 
 <style scoped>
+/* .blur {
+  position: absolute;
+  top: 0;
+  height: 50px;
+  width: 100%;
+ 
+} */
 header {
+   -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px); 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
