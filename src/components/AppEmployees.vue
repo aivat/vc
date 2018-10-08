@@ -12,12 +12,12 @@
         </div>
         <div class="main">
             <ul>
-                <li v-for="employee in employees" :key="employee.id">
+                <li v-for="(employee, index) in employees" :key="employee.id">
                     <span>{{ employee.surname }}</span>
                     <button>Выбрать</button>
                 
-                    <router-link :to="{ name: 'edit', params: { id: employee.id }}">Изменить</router-link>
-                    <button>Удалить</button>
+                    <router-link :to="{ name: 'edit', params: { id: index }}">Изменить</router-link>
+                    <button @click="removeEmployee(index)">Удалить</button>
                 </li>
             </ul>
             <router-view></router-view>
@@ -90,9 +90,14 @@ export default {
         } 
     },
     created () {
-        this.$store.dispatch('initialiseStoreCountEmployees')
-        this.$store.dispatch('initialiseStoreEmployeesFromlocalStorage')
+        // this.$store.dispatch('initialiseStoreCountEmployees')
+        // this.$store.dispatch('initialiseStoreEmployeesFromlocalStorage')
         
+    },
+    methods: {
+        removeEmployee(id) {
+            this.$store.dispatch('removeEmployee',  id)
+        }
     }
 }
 </script>

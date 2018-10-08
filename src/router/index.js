@@ -54,7 +54,7 @@ export default new Router({
     {
       path: '/employees/:id/edit',
       name: 'edit',
-      component: AppEmployeesNew
+      component: AppEdit
     },
     {
       path: '/employees/new',

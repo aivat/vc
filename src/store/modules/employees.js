@@ -70,31 +70,63 @@ const actions = {
     //     commit ('setIndividualFromLocalStorage', JSON.parse(localStorage.getItem('Employees'+id)))
     //   }
     // }
-    getEmployee({ commit }, employee){
+    getEmployee({ commit }, employee) {
         commit('GET_EMPLOYEE', employee)
     },
-    addEmployee({ commit }){
+    addEmployee({ commit }) {
         commit('ADD_EMPLOYEE')
+        commit('INCREMENT_COUNT')
     },
-    setEmployeeSurname({ commit }, surname){
+    editEmployee({ commit }, id) {
+        commit('EDIT_EMPLOYEE', id)
+        
+    },
+    removeEmployee({ commit }, id) {
+        commit('REMOVE_EMPLOYEE', id)
+        commit('DECREMENT_COUNT')
+    },
+    setEmployeeSurname({ commit }, surname) {
         commit('SET_EMPLOYEE_SURNAME', surname)
-    },    
+    },   
+    getEditEmployee({ commit }, id){
+        commit('GET_EDIT_EMPLOYEE', id)
+    }
 }
 
 const mutations = {
-    GET_EMPLOYEE(state, employee){
+    GET_EDIT_EMPLOYEE(state, id) {
+        state.surname =  state.employees[id].surname
+    },
+    GET_EMPLOYEE(state, employee) {
         state.newEmployee =  employee
     },
-    ADD_EMPLOYEE(state){
+    ADD_EMPLOYEE(state) {
         state.employees.push({
+            id: state.employees.length,
             surname: state.surname,
             name: state.name,
             completed: false
         })
+        state.surname = null
     },
-    SET_EMPLOYEE_SURNAME(state, surname){
+    EDIT_EMPLOYEE(state, id) {
+        state.employees[id].surname = state.surname
+        state.surname = null
+    },
+    REMOVE_EMPLOYEE(state, id) {
+        let employees = state.employees
+        employees.splice(id, 1)
+        // state.employees[id].splice(id, 1)
+    },
+    SET_EMPLOYEE_SURNAME(state, surname) {
         state.surname = surname
-    }
+    },
+    INCREMENT_COUNT(state) {
+        state.countEmployees++
+    },
+    DECREMENT_COUNT(state) {
+        state.countEmployees--
+    },    
     // setIndividualFromLocalStorage (state, storeIndividualFromLocalStorage) {
     //     state.individual = storeIndividualFromLocalStorage
     // },
