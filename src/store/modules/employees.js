@@ -5,9 +5,35 @@ const state = {
     newEmployee: '',
     id: null,
     surname: null,
-    name: 'fdf'
+    name: null,
+    surnameHTML: null,
+    nameHTML: null,
+    completed: false  
 }
-
+const getters = {
+    getEmployees: state => (searchEmployee) => state.employees.filter((employee, i) => {
+        let FIO = employee.surname + ' ' + employee.name
+        // let FIO = clone.surname + ' ' + clone.name
+        let item = FIO.toLowerCase().indexOf(searchEmployee.toLowerCase())
+        let clone = {}
+        // for (let key in employee) {
+        //     clone[key] = employee[key]
+        //     if ( key == 'surname') {
+        //         // employee.surname = '<b>' + employee.surname + '<b>'
+        //         clone[key] = '<b>' + clone[key] + '<b>'
+        //         console.log('clone[key]=', clone[key])
+        //     }
+        // }
+        if ( item >= 0 ) {
+            // this.$store.dispatch('getSearchEmployee', i)
+   
+            // console.log('Нашел в позиции item=', clone)
+            return employee
+            // return
+        }
+        // employees
+    })
+}
 const actions = {
     // initialiseStoreCountEmployees({ commit, state }) {
     //     if (state.countEmployees === 0) {
@@ -70,6 +96,9 @@ const actions = {
     //     commit ('setIndividualFromLocalStorage', JSON.parse(localStorage.getItem('Employees'+id)))
     //   }
     // }
+    getSearchEmployee({ commit }, idEmployee) {
+        commit('GET_SEARCH_EMPLOYEE', idEmployee)
+    },
     getEmployee({ commit }, employee) {
         commit('GET_EMPLOYEE', employee)
     },
@@ -79,23 +108,39 @@ const actions = {
     },
     editEmployee({ commit }, id) {
         commit('EDIT_EMPLOYEE', id)
-        
     },
     removeEmployee({ commit }, id) {
         commit('REMOVE_EMPLOYEE', id)
         commit('DECREMENT_COUNT')
     },
+    completeEmployee({ commit }, id) {
+        commit('COMPLETE_EMPLOYEE', id)
+    },
+    getEditEmployee({ commit }, id){
+        // сохраняям в текущий стейт ранее внесеннго работника, чтобы открыть
+        // для редактирования
+            commit('GET_EDIT_EMPLOYEE', id)
+    },
     setEmployeeSurname({ commit }, surname) {
         commit('SET_EMPLOYEE_SURNAME', surname)
-    },   
-    getEditEmployee({ commit }, id){
-        commit('GET_EDIT_EMPLOYEE', id)
+    },
+    setEmployeeName({ commit }, name) {
+        commit('SET_EMPLOYEE_NAME', name)
+    },
+    initialiseStoreEmployeesFromLocalStorage({ commit }) {
+        if (localStorage.getItem('employees')) {
+            commit ('INITIALISE_STORE_EMPLOYEES_FROM_LOCAL_STORAGE', JSON.parse(localStorage.getItem('employees')))
+        }
     }
 }
 
 const mutations = {
+    GET_SEARCH_EMPLOYEE(state, id) {
+        state.employees[id].surname = '<b>' + surnameHTML + '<b>'
+    },
     GET_EDIT_EMPLOYEE(state, id) {
         state.surname =  state.employees[id].surname
+        state.name = state.employees[id].name
     },
     GET_EMPLOYEE(state, employee) {
         state.newEmployee =  employee
@@ -105,28 +150,47 @@ const mutations = {
             id: state.employees.length,
             surname: state.surname,
             name: state.name,
-            completed: false
+            surnameHTML: state.surname,
+            nameHTML: state.name,
+            completed: state.completed
         })
+        localStorage.setItem('employees', JSON.stringify(state.employees))
         state.surname = null
+        state.name = null
     },
     EDIT_EMPLOYEE(state, id) {
         state.employees[id].surname = state.surname
+        state.employees[id].name = state.name,
+        state.employees[id].surnameHTML = state.surname,
+        state.employees[id].nameHTML = state.name,
+        localStorage.setItem('employees', JSON.stringify(state.employees))
         state.surname = null
+        state.name = null
     },
     REMOVE_EMPLOYEE(state, id) {
         let employees = state.employees
         employees.splice(id, 1)
-        // state.employees[id].splice(id, 1)
+        localStorage.setItem('employees', JSON.stringify(state.employees))
+    },
+    COMPLETE_EMPLOYEE(state, id) {
+        state.employees[id].completed = !state.employees[id].completed
+        localStorage.setItem('employees', JSON.stringify(state.employees))
     },
     SET_EMPLOYEE_SURNAME(state, surname) {
         state.surname = surname
+    },
+    SET_EMPLOYEE_NAME(state, name) {
+        state.name = name
     },
     INCREMENT_COUNT(state) {
         state.countEmployees++
     },
     DECREMENT_COUNT(state) {
         state.countEmployees--
-    },    
+    },
+    INITIALISE_STORE_EMPLOYEES_FROM_LOCAL_STORAGE(state, employees) {
+        state.employees = employees
+    }
     // setIndividualFromLocalStorage (state, storeIndividualFromLocalStorage) {
     //     state.individual = storeIndividualFromLocalStorage
     // },
@@ -165,6 +229,7 @@ const mutations = {
 
 export default {
     state,
+    getters,
     actions,
     mutations
   }

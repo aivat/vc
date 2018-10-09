@@ -25,6 +25,10 @@ const getters = {
 }
 
 const actions = {
+  setIndividual({ commit, rootState },  id ) {
+    commit('setSurname', rootState.employees.employees[id].surname)
+    commit('setName', rootState.employees.employees[id].name)
+  },
   setId({ commit },  input) {
     commit('setId', input)
   },

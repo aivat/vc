@@ -18,6 +18,10 @@ export default {
   components: {
     AppHeader
     // AppSearchMO
+  },
+  created () {
+    console.log('сборка приложения')
+      this.$store.dispatch('initialiseStoreEmployeesFromLocalStorage')
   }
 }
 </script>

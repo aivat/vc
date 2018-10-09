@@ -1,8 +1,9 @@
 <template>
     <div class="mo">
         <input type="text" id="surname" v-model.trim="surname" placeholder="КУПЕР">
-        <button @click="add">Добавить</button>
-        <button @click="edit">Сохранить</button>
+        <input type="text" id="name" v-model.trim="name" placeholder="ДЕЛЛ">
+        <button @click="add" v-if="!isEdit">Добавить</button>
+        <button @click="edit" v-if="isEdit">Сохранить</button>
     </div>
 </template>
 
@@ -11,6 +12,9 @@
 
 export default {
     computed: {
+        isEdit() {
+            return (this.$route.name == 'edit') ? true : false 
+        },
         surname: {
             get () {
                 return this.$store.state.employees.surname
@@ -19,14 +23,25 @@ export default {
                 // this.checkForm(value, 'surname')     
                 this.$store.dispatch('setEmployeeSurname', value.toUpperCase())
             }
-        }
+        },
+        name: {
+            get () {
+                return this.$store.state.employees.name
+            },
+            set (value) {
+                // this.checkForm(value, 'surname')     
+                this.$store.dispatch('setEmployeeName', value.toUpperCase())
+            }
+        },        
     },
     methods: {
             add(){
                 this.$store.dispatch('addEmployee')
+                this.$router.push('/employees')
             },
             edit(){
                 this.$store.dispatch('editEmployee', this.$route.params.id)
+                this.$router.push('/employees')
             }
     },
     created() {
