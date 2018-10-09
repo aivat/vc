@@ -22,6 +22,7 @@ export default {
   created () {
     console.log('сборка приложения')
       this.$store.dispatch('initialiseStoreEmployeesFromLocalStorage')
+      this.$store.dispatch('initialiseStoreCountFromLocalStorage')
   }
 }
 </script>

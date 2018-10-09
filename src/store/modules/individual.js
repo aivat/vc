@@ -25,9 +25,13 @@ const getters = {
 }
 
 const actions = {
-  setIndividual({ commit, rootState },  id ) {
-    commit('setSurname', rootState.employees.employees[id].surname)
-    commit('setName', rootState.employees.employees[id].name)
+  setIndividual({ commit, rootState },  idEm ) {
+    let employees = rootState.employees.employees
+    let idEdit = employees.findIndex((employee) => {
+        return employee.id == idEm
+    })
+    commit('setSurname', rootState.employees.employees[idEdit].surname)
+    commit('setName', rootState.employees.employees[idEdit].name)
   },
   setId({ commit },  input) {
     commit('setId', input)

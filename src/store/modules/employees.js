@@ -32,7 +32,13 @@ const getters = {
             // return
         }
         // employees
-    })
+    }),
+    countCompleted: state => state.employees.reduce((count, employee) => {
+        if ( employee.completed ) {
+            count++
+        }
+        return count
+    }, 0)
 }
 const actions = {
     // initialiseStoreCountEmployees({ commit, state }) {
@@ -111,7 +117,7 @@ const actions = {
     },
     removeEmployee({ commit }, id) {
         commit('REMOVE_EMPLOYEE', id)
-        commit('DECREMENT_COUNT')
+        // commit('DECREMENT_COUNT')
     },
     completeEmployee({ commit }, id) {
         commit('COMPLETE_EMPLOYEE', id)
@@ -131,6 +137,14 @@ const actions = {
         if (localStorage.getItem('employees')) {
             commit ('INITIALISE_STORE_EMPLOYEES_FROM_LOCAL_STORAGE', JSON.parse(localStorage.getItem('employees')))
         }
+    },
+    initialiseStoreCountFromLocalStorage({ commit }) {
+        if (localStorage.getItem('countEmployees')) {
+            commit ('INITIALISE_STORE_COUNT_FROM_LOCAL_STORAGE', localStorage.getItem('countEmployees'))
+        }
+    },
+    resetComplete({ commit }) {
+        commit('RESET_COMPLETE')
     }
 }
 
@@ -138,16 +152,33 @@ const mutations = {
     GET_SEARCH_EMPLOYEE(state, id) {
         state.employees[id].surname = '<b>' + surnameHTML + '<b>'
     },
-    GET_EDIT_EMPLOYEE(state, id) {
-        state.surname =  state.employees[id].surname
-        state.name = state.employees[id].name
+    GET_EDIT_EMPLOYEE(state, idEm) {
+        // let employees = state.employees
+        // employees.forEach((employee) => {
+        //     if ( employee.id == idEm ) {
+        //         state.surname = employee.surname
+        //         state.name = employee.name
+        //     }
+        // })
+        let employees = state.employees
+        let idEdit = employees.findIndex((employee) => {
+            return employee.id == idEm
+        })
+        state.surname = state.employees[idEdit].surname
+        state.name = state.employees[idEdit].name
+        // let idArr = employees.indexOf(idEm)
+        // console.log('idArr=', idArr)
+        // state.surname = state.employees[idArr].surname
+        // state.name = state.employees[idArr].name
+        // state.surname =  state.employees[id].surname
+        // state.name = state.employees[id].name
     },
     GET_EMPLOYEE(state, employee) {
         state.newEmployee =  employee
     },
     ADD_EMPLOYEE(state) {
         state.employees.push({
-            id: state.employees.length,
+            id: state.countEmployees,
             surname: state.surname,
             name: state.name,
             surnameHTML: state.surname,
@@ -158,22 +189,33 @@ const mutations = {
         state.surname = null
         state.name = null
     },
-    EDIT_EMPLOYEE(state, id) {
-        state.employees[id].surname = state.surname
-        state.employees[id].name = state.name,
-        state.employees[id].surnameHTML = state.surname,
-        state.employees[id].nameHTML = state.name,
+    EDIT_EMPLOYEE(state, idEm) {
+        let employees = state.employees
+        let idEdit = employees.findIndex((employee) => {
+            return employee.id == idEm
+        })
+        state.employees[idEdit].surname = state.surname
+        state.employees[idEdit].name = state.name
+        // state.employees[id].surnameHTML = state.surname,
+        // state.employees[id].nameHTML = state.name,
         localStorage.setItem('employees', JSON.stringify(state.employees))
         state.surname = null
         state.name = null
     },
-    REMOVE_EMPLOYEE(state, id) {
+    REMOVE_EMPLOYEE(state, idEm) {
         let employees = state.employees
-        employees.splice(id, 1)
+        let idRemove = employees.findIndex((employee) => {
+            return employee.id == idEm
+        })
+        employees.splice(idRemove, 1)
         localStorage.setItem('employees', JSON.stringify(state.employees))
     },
-    COMPLETE_EMPLOYEE(state, id) {
-        state.employees[id].completed = !state.employees[id].completed
+    COMPLETE_EMPLOYEE(state, idEm) {
+        let employees = state.employees
+        let idComplete = employees.findIndex((employee) => {
+            return employee.id == idEm
+        })
+        state.employees[idComplete].completed = !state.employees[idComplete].completed
         localStorage.setItem('employees', JSON.stringify(state.employees))
     },
     SET_EMPLOYEE_SURNAME(state, surname) {
@@ -184,12 +226,24 @@ const mutations = {
     },
     INCREMENT_COUNT(state) {
         state.countEmployees++
+        localStorage.setItem('countEmployees', state.countEmployees)
     },
     DECREMENT_COUNT(state) {
         state.countEmployees--
     },
     INITIALISE_STORE_EMPLOYEES_FROM_LOCAL_STORAGE(state, employees) {
         state.employees = employees
+    },
+    INITIALISE_STORE_COUNT_FROM_LOCAL_STORAGE(state, count) {
+        state.countEmployees = +count
+    },
+    RESET_COMPLETE() {
+        state.employees.forEach((employee) => {
+            if ( employee.completed ) {
+                employee.completed = false
+            }
+        })
+        localStorage.setItem('employees', JSON.stringify(state.employees))
     }
     // setIndividualFromLocalStorage (state, storeIndividualFromLocalStorage) {
     //     state.individual = storeIndividualFromLocalStorage
