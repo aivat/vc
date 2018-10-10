@@ -49,7 +49,7 @@ body {
 }
 
 main {
-    top: 61px;
+    top: 52px;
     position: relative;  
 }
 .fade-enter-active, .fade-leave-active {

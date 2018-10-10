@@ -2,17 +2,20 @@
   <header>
     <div class="wrap-top">
       <div class="wrap">
-        <router-link class="item item-name" to="/">
+        <router-link class="item item-name item-name-desctop" to="/">
           Генерация документов для получения электронных подписей в ГБУЗ "МИАЦ"
+        </router-link>
+        <router-link class="item item-name item-name-mobile" to="/">
+          Генерация документов
         </router-link>
         <!-- <div class="item">
           ШАГ: 1
         </div> -->
       </div>
       <div class="wrap">
-        <div class="item">
+        <!-- <div class="item">
            {{ role }}
-        </div>
+        </div> -->
         <div class="item item-mo">
           {{ mo }}
         </div>
@@ -84,7 +87,12 @@ export default {
   width: 100%;
  
 } */
+
+.item-name-desctop {
+  display: none;
+}
 header {
+  font-size: 14px;
    -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px); 
   display: flex;
@@ -176,5 +184,16 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   transition: all .5s ease-out;
   background-color: #4285f4;
+}
+@media (min-width: 1280px) {
+    header {
+      font-size: 16px;
+    }
+    .item-name-desctop {
+      display: block;
+    }
+    .item-name-mobile {
+      display: none;
+    }
 }
 </style>

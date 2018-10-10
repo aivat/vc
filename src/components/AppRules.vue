@@ -25,10 +25,10 @@ export default {
 
 <style scoped>
 .rules {
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 span {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     font-weight: 600;
 }
@@ -80,6 +80,9 @@ svg {
 @media (min-width: 1280px) {
     .rules-wrap {
         height: 50px;
+    }
+    span {
+        font-size: 16px;
     }
 }
 </style>

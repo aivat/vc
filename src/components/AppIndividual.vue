@@ -30,7 +30,7 @@
 
                 <div class="mo-body">
                     <div class="individual">
-                        <AppRules>
+                        <AppRules class='rules'>
                             {{ rules }}
                         </AppRules>
                         <div class="individual-wrap">
@@ -701,7 +701,9 @@ export default {
 </script>
 
 <style scoped>
-
+.rules {
+    margin-top: 20px;
+}
 .mo {
     /* margin-top: 25px; */
     display: flex;

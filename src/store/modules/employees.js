@@ -6,6 +6,18 @@ const state = {
     id: null,
     surname: null,
     name: null,
+    patronymic: null,
+    patronymicTr: null,
+    sex: null,
+    position: null,
+    snils: null,
+    series: null,
+    number: null,
+    issued_by: null,
+    date_of_issue: null,
+    code: null,
+    date_of_birth: null,
+    place_of_birth: null,
     surnameHTML: null,
     nameHTML: null,
     completed: false  
@@ -125,14 +137,23 @@ const actions = {
     getEditEmployee({ commit }, id){
         // сохраняям в текущий стейт ранее внесеннго работника, чтобы открыть
         // для редактирования
-            commit('GET_EDIT_EMPLOYEE', id)
+        commit('GET_EDIT_EMPLOYEE', id)
     },
-    setEmployeeSurname({ commit }, surname) {
-        commit('SET_EMPLOYEE_SURNAME', surname)
+    setEmployee({ commit }, employee) {
+        commit('SET_EMPLOYEE', { val: employee.value, ind: employee.index})
     },
-    setEmployeeName({ commit }, name) {
-        commit('SET_EMPLOYEE_NAME', name)
-    },
+    // setEmployeeSurname({ commit }, surname) {
+    //     commit('SET_EMPLOYEE_SURNAME', surname)
+    // },
+    // setEmployeeName({ commit }, name) {
+    //     commit('SET_EMPLOYEE_NAME', name)
+    // },
+    // setEmployeePatronymic({ commit }, name) {
+    //     commit('SET_EMPLOYEE_PATRONYMIC', name)
+    // },
+    // setEmployeePatronymicTr({ commit }, name) {
+    //     commit('SET_EMPLOYEE_PATRONYMICTR', name)
+    // },
     initialiseStoreEmployeesFromLocalStorage({ commit }) {
         if (localStorage.getItem('employees')) {
             commit ('INITIALISE_STORE_EMPLOYEES_FROM_LOCAL_STORAGE', JSON.parse(localStorage.getItem('employees')))
@@ -149,6 +170,7 @@ const actions = {
 }
 
 const mutations = {
+
     GET_SEARCH_EMPLOYEE(state, id) {
         state.employees[id].surname = '<b>' + surnameHTML + '<b>'
     },
@@ -218,12 +240,21 @@ const mutations = {
         state.employees[idComplete].completed = !state.employees[idComplete].completed
         localStorage.setItem('employees', JSON.stringify(state.employees))
     },
-    SET_EMPLOYEE_SURNAME(state, surname) {
-        state.surname = surname
+    SET_EMPLOYEE(state, employee) {
+        state[employee.ind] = employee.val
     },
-    SET_EMPLOYEE_NAME(state, name) {
-        state.name = name
-    },
+    // SET_EMPLOYEE_SURNAME(state, surname) {
+    //     state.surname = surname
+    // },
+    // SET_EMPLOYEE_NAME(state, name) {
+    //     state.name = name
+    // },
+    // SET_EMPLOYEE_PATRONYMIC(state, name) {
+    //     state.Patronymic = name
+    // },
+    // SET_EMPLOYEE_PATRONYMICTR(state, name) {
+    //     state.PatronymicTr = name
+    // },
     INCREMENT_COUNT(state) {
         state.countEmployees++
         localStorage.setItem('countEmployees', state.countEmployees)
