@@ -186,14 +186,24 @@ const mutations = {
         let idEdit = employees.findIndex((employee) => {
             return employee.id == idEm
         })
+        state.id = state.employees[idEdit].id
         state.surname = state.employees[idEdit].surname
         state.name = state.employees[idEdit].name
-        // let idArr = employees.indexOf(idEm)
-        // console.log('idArr=', idArr)
-        // state.surname = state.employees[idArr].surname
-        // state.name = state.employees[idArr].name
-        // state.surname =  state.employees[id].surname
-        // state.name = state.employees[id].name
+        state.patronymic = state.employees[idEdit].patronymic
+        state.patronymicTr = state.employees[idEdit].patronymicTr
+        state.sex = state.employees[idEdit].sex
+        state.position = state.employees[idEdit].position
+        state.snils = state.employees[idEdit].snils
+        state.series = state.employees[idEdit].series
+        state.number = state.employees[idEdit].number
+        state.issued_by = state.employees[idEdit].issued_by
+        state.date_of_issue = state.employees[idEdit].date_of_issue
+        state.code = state.employees[idEdit].code
+        state.date_of_birth = state.employees[idEdit].date_of_birth
+        state.place_of_birth = state.employees[idEdit].place_of_birth
+        state.surname = state.employees[idEdit].surnameHTML
+        state.name = state.employees[idEdit].nameHTML
+        state.completed = state.employees[idEdit].completed
     },
     GET_EMPLOYEE(state, employee) {
         state.newEmployee =  employee
@@ -203,26 +213,85 @@ const mutations = {
             id: state.countEmployees,
             surname: state.surname,
             name: state.name,
+            patronymic: state.patronymic,
+            patronymicTr: state.patronymicTr,
+            sex: state.sex,
+            position: state.position,
+            snils: state.snils,
+            series: state.series,
+            number: state.number,
+            issued_by: state.issued_by,
+            date_of_issue: state.date_of_issue,
+            code: state.code,
+            date_of_birth: state.date_of_birth,
+            place_of_birth: state.place_of_birth,
             surnameHTML: state.surname,
             nameHTML: state.name,
             completed: state.completed
         })
         localStorage.setItem('employees', JSON.stringify(state.employees))
+        state.id = null
         state.surname = null
         state.name = null
+        state.patronymic = null
+        state.patronymicTr = null
+        state.sex = null
+        state.position = null
+        state.snils = null
+        state.series = null
+        state.number = null
+        state.issued_by = null
+        state.date_of_issue = null
+        state.code = null
+        state.date_of_birth = null
+        state.place_of_birth = null
+        state.surname = null
+        state.name = null
+        state.completed = false
     },
     EDIT_EMPLOYEE(state, idEm) {
         let employees = state.employees
         let idEdit = employees.findIndex((employee) => {
             return employee.id == idEm
         })
+        state.employees[idEdit].id = state.id
         state.employees[idEdit].surname = state.surname
         state.employees[idEdit].name = state.name
+        state.employees[idEdit].patronymic = state.patronymic
+        state.employees[idEdit].patronymicTr = state.patronymicTr
+        state.employees[idEdit].sex = state.sex
+        state.employees[idEdit].position = state.position
+        state.employees[idEdit].snils = state.snils
+        state.employees[idEdit].series = state.series
+        state.employees[idEdit].number = state.number
+        state.employees[idEdit].issued_by = state.issued_by
+        state.employees[idEdit].date_of_issue = state.date_of_issue
+        state.employees[idEdit].code = state.code
+        state.employees[idEdit].date_of_birth = state.date_of_birth
+        state.employees[idEdit].place_of_birth = state.place_of_birth
+        state.employees[idEdit].surnameHTML = state.surname
+        state.employees[idEdit].nameHTML = state.name
+        state.employees[idEdit].completed = state.complete
         // state.employees[id].surnameHTML = state.surname,
         // state.employees[id].nameHTML = state.name,
         localStorage.setItem('employees', JSON.stringify(state.employees))
         state.surname = null
         state.name = null
+        state.patronymic = null
+        state.patronymicTr = null
+        state.sex = null
+        state.position = null
+        state.snils = null
+        state.series = null
+        state.number = null
+        state.issued_by = null
+        state.date_of_issue = null
+        state.code = null
+        state.date_of_birth = null
+        state.place_of_birth = null
+        state.surname = null
+        state.name = null
+        state.completed = false
     },
     REMOVE_EMPLOYEE(state, idEm) {
         let employees = state.employees

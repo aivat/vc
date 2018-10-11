@@ -101,42 +101,42 @@
                             <label for="issued_by" class="label-name">Кем выдан</label>
                             <div class="item-wrap">
                                 <input class="in issued_by" type="text" id="issued_by" v-model="issued_by" @focus="onFocus('issued_by')" v-bind:class="{ 'input-err': error.issued_by }"> 
-                                <label v-html="errorHTML.issued_by"> </label>
+                                <label class="label-error-issued" v-html="errorHTML.issued_by"> </label>
                             </div>
                         </div>
-                        <div class="item item-flex">
+                        <!-- <div class="item item-flex">
                             <label for="issued_by2" class="label-name"></label>
                             <label class="label-show">{{ issued_by }}</label>     
-                        </div>
+                        </div> -->
                         <div class="item item-flex">
-                            <label for="date_of_issue" class="label-name">Дата выдачи:</label>
+                            <label for="date_of_issue" class="label-name">Дата выдачи</label>
                             <div class="item-wrap">
-                                <input class="in" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018" @focus="onFocus('date_of_issue')" v-bind:class="{ 'input-err': error.date_of_issue }">
+                                <input class="in date" type="text" id="date_of_issue" v-model="date_of_issue" maxlength="10" placeholder="31.12.2018" @focus="onFocus('date_of_issue')" v-bind:class="{ 'input-err': error.date_of_issue }">
                                 <label class="label-show" v-show="!error.date_of_issue">{{ date_of_issue }}</label>
                                 <label class="label-error" v-show="error.date_of_issue">{{ errorText.date_of_issue }} </label>
                             </div>
                         </div>
                         <div class="item item-flex">
-                            <label for="code" class="label-name">Код подразделения:</label>
+                            <label for="code" class="label-name">Код подразделения</label>
                             <div class="item-wrap">
-                                <input class="in" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123" @focus="onFocus('code')" v-bind:class="{ 'input-err': error.code }">
+                                <input class="in code" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123" @focus="onFocus('code')" v-bind:class="{ 'input-err': error.code }">
                                 <label class="label-show" v-show="!error.code">{{ code }}</label>
                                 <label class="label-error" v-show="error.code">{{ errorText.code }} </label> 
                             </div>                           
                         </div>
                         <div class="item item-flex">
-                            <label for="date_of_birth" class="label-name">Дата рождения:</label>
+                            <label for="date_of_birth" class="label-name">Дата рождения</label>
                             <div class="item-wrap">
-                                <input class="in" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991" @focus="onFocus('date_of_birth')" v-bind:class="{ 'input-err': error.date_of_birth }">
+                                <input class="in date" type="text" id="date_of_birth" v-model="date_of_birth" maxlength="10" placeholder="31.12.1991" @focus="onFocus('date_of_birth')" v-bind:class="{ 'input-err': error.date_of_birth }">
                                 <label class="label-show" v-show="!error.date_of_birth">{{ date_of_birth }}</label>
                                 <label class="label-error" v-show="error.date_of_birth">{{ errorText.date_of_birth }} </label> 
                             </div>      
                         </div>
                         <div class="item item-flex">
-                            <label for="place_of_birth" class="label-name">Место рождения:</label>
+                            <label for="place_of_birth" class="label-name">Место рождения</label>
                             <div class="item-wrap">
                                 <input class="in issued_by" type="text" id="place_of_birth" v-model="place_of_birth" @focus="onFocus('place_of_birth')" v-bind:class="{ 'input-err': error.place_of_birth }">
-                                <label v-html="errorHTML.place_of_birth"> </label>
+                                <label class="label-error-issued" v-html="errorHTML.place_of_birth"> </label>
                             </div> 
                         </div>
                         <div class="item item-flex">
@@ -144,8 +144,12 @@
                             <label class="label-show">{{ place_of_birth }}</label> 
                         </div>
                     </div>
-                    <button @click="add" v-if="!isEdit">Добавить</button>
-                    <button @click="edit" v-if="isEdit">Сохранить</button>
+                    <div class="btn-wrap">
+                        <button class="btn-clear" @click="add" v-if="!isEdit">Добавить</button>
+                        <button class="btn-clear" @click="edit" v-if="isEdit">Сохранить</button>
+                    </div>   
+                    <!-- <button @click="add" v-if="!isEdit">Добавить</button> -->
+                    
                 </div>
             </div>
         </div>
@@ -548,7 +552,7 @@ export default {
 
                 if ( value.match(regex) === null ) { 
                     this.error.snils = true
-                    this.errorText.snils = 'СНИЛС формата 111-111-111-11'   
+                    this.errorText.snils = 'Формат СНИЛСа 111-111-111-11'   
                 }
                 else  {
                     let regex3 = /\d{1,}/g
@@ -556,7 +560,7 @@ export default {
                     if ( !this.chekSnilsSum(as) ) {
         
                         this.error.snils = true
-                        this.errorText.snils = 'В СНИЛСе контрольная сумма неверна'
+                        this.errorText.snils = 'Неверная контрольная сумма'
                     } else {
                         this.error.snils = false
                         this.errorText.snils = null
@@ -692,9 +696,13 @@ h1 {
 .label-show {
     display: none;
 }
-.label-error{
+.label-error {
     padding: 4px 0 4px;
     color: rgba(217, 48, 37, 2); 
+    font-size: 12px;
+}
+.label-error-issued {
+    margin-top: 4px;
 }
 .in {
     outline: 0;
@@ -703,11 +711,18 @@ h1 {
     border: 1px solid #caced4;
     font-size: 15px;
     color: #2c3e50;
-    font-weight: 500;
+    font-weight: 600;
     /* border-color: #caced4; */
 }
-.in:focus {
-    /* font-weight: 700; */
+.in::placeholder {
+    font-weight: 400;
+    color: #909499;
+}
+.in:focus:not(.input-err) {
+    border: 1px solid rgb(117, 116, 116);
+}
+.input-err {
+    border-color: rgb(241, 2, 2);
 }
 .activeInput {
     background-color: rgba(212, 212, 212, .5);
@@ -736,7 +751,7 @@ svg {
     cursor: pointer;
 }
 .line {
-    margin: 45px 0 35px;
+    margin: 25px 0 15px;
     border-top: 1px solid #caced4;
 }
 .snils {
@@ -748,6 +763,40 @@ svg {
 
 .number {
     width: 50px;
+}
+.date {
+    width: 75px;
+    /* size: 10; */
+}
+
+.code {
+    width: 55px;
+}
+
+.btn-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 30px 0;
+}
+.btn-clear {
+    border-radius: 19px;
+    background-color: rgba(189, 3, 3, .1);
+    color: rgba(189, 3, 3, 1);
+    font-weight: 600;
+    border: 1px solid rgba(189, 3, 3, 1);
+    transition: all 0.15s ease-out;
+    padding: 10px 15px;
+    cursor: pointer;
+    outline: 0;
+    font-size: 15px;
+    /* align-self: center; */
+    /* margin: auto; */
+
+}
+.btn-clear:hover {
+    background-color: rgba(189, 3, 3, 1);
+    color: white;
 }
 @media (min-width: 1280px) {
     .mo {
@@ -789,7 +838,11 @@ svg {
     }
     .item-top-check svg {
         position: relative;
-        top: 7px;
+        top: 9px;
+    }
+    .line {
+        margin: 45px 0 35px;
+        border-top: 1px solid #caced4;
     }
 }
 </style>
