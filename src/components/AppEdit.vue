@@ -3,8 +3,8 @@
         <div class="container">
             <div class="mo-wrap">
                 <div class="employee">
-                    <h1>{{ isEdit ? 'Редактирование сотрудника ' + surname + ' ' + name: 'Добавление сотрудника' }}</h1>
-                    <AppRules>
+                    <h1>{{ isEdit ? 'Редактирование работника ' + surname + ' ' + name + ' ' + patronymic: 'Добавление работника' }}</h1>
+                    <AppRules v-bind:class="{ 'max': isMax }" >
                         {{ rules }}
                     </AppRules>
                     <div class="employee-wrap">
@@ -165,6 +165,7 @@ export default {
     },
     data() {
         return {
+            isMax: false,
             rules: ' все поля форм заполняются строго как в документах. ',
             readOnlyPatronymicTr: true,
             errorText: {
@@ -350,9 +351,7 @@ export default {
                 this.chekDate(value, 'date_of_issue')
                 this.$store.dispatch('setEmployee', { value: value.toUpperCase(), index: 'date_of_issue' })
             }             
-        },
-
-    
+        }
     },
     methods: {
         toggleSex() {
@@ -370,42 +369,55 @@ export default {
             console.log('edfefrf')
             switch (value) {
                 case 'surname':
+                    this.isMax = false
                     this.rules = 'если в паспорте в фамилии присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                     break
                 case 'name':
+                    this.isMax = false
                     this.rules = 'если в паспорте в имени присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                     break;
                 case 'patronymic':
+                    this.isMax = false
                     this.rules = 'если в паспорте в отчестве присутствует буква "Ё", то необходимо писать именно букву "Ё"'
                     break
                 case 'sex':
+                    this.isMax = false
                     this.rules = ''
                     break
                 case 'series':
+                    this.isMax = false
                     this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                     break
                 case 'number':
+                    this.isMax = false
                     this.rules = 'серию и номер паспорта необходимо проверить на сайте МВД по списку недействительных российских паспортов'
                     break
+
                 case 'issued_by':
+                    this.isMax = true
                     this.rules = 'пишите кем выдан паспорт без сокращений имен собственных. Обращаем внимание, что "отдел" и "отделением" разные слова. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка. '
                     break
                 case 'date_of_issue':
+                    this.isMax = false  
                     this.rules = 'дата выдачи паспорта'
                     break
                 case 'code':
                     this.rules = 'код подразделения'
                     break
                 case 'date_of_birth':
+                    this.isMax = false
                     this.rules = 'дата рождения'
                     break
                 case 'place_of_birth':
-                    this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка.'
+                    this.isMax = true
+                    this.rules = 'пишите место рождения без сокращений имен собственных. Если слово подчеркнуто красным - значит ошибка в слове, зеленым - возможно ошибка.'   
                     break
                 case 'position':
+                    this.isMax = false
                     this.rules = 'должность согласно штатному расписанию'
                     break
                 case 'snils':
+                    this.isMax = false
                     this.rules = 'СНИЛС'
                     break
                 default:
@@ -490,11 +502,11 @@ export default {
                     console.log( i + ": " + item )
                     if ( value == '' ) {
                         err = true
-                        return '<span style="text-decoration: underline; color: red"> Заполните поле</span>'
+                        return '<span style="text-decoration: underline; color: rgba(217, 48, 37, 1)"> Заполните поле</span>'
                     }
                     if (~item.indexOf(".")) {
                         err = true
-                        return '<span style="text-decoration: underline; color: red">' + item + '</span>'
+                        return '<span style="text-decoration: underline; color: rgba(217, 48, 37, 1)">' + item + '</span>'
                     } 
                     if (~item.indexOf("-")) {
                         errT = true
@@ -659,7 +671,7 @@ h1 {
 
 .employee-wrap {
     font-size: 15px;
-    
+    /* margin-top: 25px; */
 }
 .item {
     display: flex;
@@ -698,7 +710,7 @@ h1 {
 }
 .label-error {
     padding: 4px 0 4px;
-    color: rgba(217, 48, 37, 2); 
+    color: rgba(217, 48, 37, 1); 
     font-size: 12px;
 }
 .label-error-issued {
@@ -777,7 +789,7 @@ svg {
     display: flex;
     width: 100%;
     justify-content: center;
-    margin: 30px 0;
+    margin: 0 0 25px;
 }
 .btn-clear {
     border-radius: 19px;
@@ -809,6 +821,10 @@ svg {
     .mo-wrap {
         padding: 0 25px;
         /* padding-top: 15px; */
+    }
+    
+    .employee-wrap {
+        margin-top: 25px;
     }
     h1 {
         font-size: 20px;
@@ -843,6 +859,9 @@ svg {
     .line {
         margin: 45px 0 35px;
         border-top: 1px solid #caced4;
+    }
+    .btn-wrap {
+        margin: 20px 0 50px;
     }
 }
 </style>

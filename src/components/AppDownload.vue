@@ -151,8 +151,7 @@ export default {
             let nameStr = temp.last.toUpperCase() + ' ' + temp.first.toUpperCase() + ' ' + temp.middle.toUpperCase()
             // console.log('nameObject=', nameObject)
             return nameStr
-        },
-        
+        },  
         brevisNameHeadPhysician(name) {
             let brevis = name.split(' ')
             return brevis[1].charAt(0) + '.' + brevis[2].charAt(0) + '. ' + brevis[0]

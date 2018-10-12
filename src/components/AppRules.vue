@@ -25,7 +25,9 @@ export default {
 
 <style scoped>
 .rules {
-    /* margin-top: 20px; */
+    backdrop-filter: blur(2px);
+    background-color: white;
+    z-index: 10;
 }
 span {
     font-size: 14px;
@@ -47,12 +49,12 @@ svg {
     fill: rgba(217, 48, 37, 1);
 }
 .rules-text {
-    color: rgba(217, 48, 37, 1);
-    transition: all .5s ease;
+    color: rgb(241, 35, 21);
+    min-height: 0;
 }
 .rules-wrap-two {
     position: relative;
-    padding: 5px 0;
+    padding: 7px 0;
 }
 .rules-wrap-two:before {
     bottom: 0;
@@ -78,11 +80,28 @@ svg {
 }
 
 @media (min-width: 1280px) {
-    .rules-wrap {
-        height: 50px;
+    .rules {
+        position: sticky;
+        top: 52px;    
+        transition: height .2s ease-in;
+        height: 34px;
+        /* box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 3px -1px; */
+    }
+    .max {
+        /* transition: height .15s ease-in; */
+        height: 54px;
+        /* animation-name: lineInserted; */
     }
     span {
         font-size: 16px;
+    }
+    @keyframes lineInserted {
+    from {
+        height: 30px;
+    }
+    to {
+        height: 50px;
+    }
     }
 }
 </style>

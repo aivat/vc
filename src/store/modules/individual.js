@@ -30,7 +30,24 @@ const actions = {
     let idEdit = employees.findIndex((employee) => {
         return employee.id == idEm
     })
+    commit('setId', rootState.employees.employees[idEdit].id)
     commit('setSurname', rootState.employees.employees[idEdit].surname)
+    commit('setName', rootState.employees.employees[idEdit].name)
+
+    commit('setName', rootState.employees.employees[idEdit].name)
+    commit('setPatronymic', rootState.employees.employees[idEdit].patronymic)
+    commit('setPatronymicTr', rootState.employees.employees[idEdit].patronymicTr)
+    commit('setPosition', rootState.employees.employees[idEdit].position)
+    commit('setSnils', rootState.employees.employees[idEdit].snils)
+
+    commit('setSex', rootState.employees.employees[idEdit].sex)
+    commit('setSeries', rootState.employees.employees[idEdit].series)
+    commit('setNumber', rootState.employees.employees[idEdit].number)
+    commit('setIssuedBy', rootState.employees.employees[idEdit].issued_by)
+    commit('setDateOfIssue', rootState.employees.employees[idEdit].date_of_issue)
+    commit('setCode', rootState.employees.employees[idEdit].code)
+    commit('setDateOfBirth', rootState.employees.employees[idEdit].date_of_birth)
+    commit('setPlaceOfBirth', rootState.employees.employees[idEdit].place_of_birth)
     commit('setName', rootState.employees.employees[idEdit].name)
   },
   setId({ commit },  input) {
@@ -91,6 +108,9 @@ const actions = {
 
 // mutations
 const mutations = {
+    setIndividualFromLocalStorage(state, ind) {
+      state.individual = ind
+    },
     setClearIndividual(state) {
         // if(localStorage.getItem('individual')) {
         //     localStorage.removeItem('individual');
