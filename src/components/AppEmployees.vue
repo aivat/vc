@@ -18,7 +18,7 @@
                     <div class="mo-body-link" style="width:48px;">
                     </div>
                 </header>
-                <AppRules>
+                <AppRules class="rul">
                     {{ rules }}
                 </AppRules>
                 <div class="mo-body">
@@ -30,35 +30,85 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                             </div>
                         </div>
+                        <div class="line"></div>
                         <div class="collective-item">
-                            <button class="btn-clear" @click="reset">Сбросить</button>
+                            <div class="btn" @click="reset">
+                                <div class="btn-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>
+                                </div>
+                                <div class="btn-text">Обнулить</div>
+                            </div>
+                            <!-- <button class="btn-clear">Сбросить</button> -->
                             <div class="collective-item-svg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                             </div>
                         </div>
                         <div class="collective-item">
+                            <div class="btn" @click="reset">
+                                <div class="btn-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13v5c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-5c0-.55-.45-1-1-1s-1 .45-1 1v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6c0-.55-.45-1-1-1s-1 .45-1 1zm-6-.33l1.88-1.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-3.59 3.59c-.39.39-1.02.39-1.41 0L7.7 12.2c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L11 12.67V4c0-.55.45-1 1-1s1 .45 1 1v8.67z"/></svg>
+                                </div>
+                                <div class="btn-text">Скачать</div>
+                            </div>
+                            <div class="collective-item-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                            </div>
+                        </div>
+                        <!-- <div class="collective-item">
                             <button class="btn-clear" >Скачать</button>
                             <div class="collective-item-svg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="main-wrap">
-                        <div class="search">
-                            <input v-model="search" placeholder="Начните вводить имя работника">
-                            <router-link :to="{ name: 'new' }">Добавить работника</router-link>
+                        <div class="search" id="search" v-bind:style="styleObject">
+                            <div class="search-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                            </div>
+                            <input class="search-input" v-model="search" placeholder="Начните вводить имя работника" autocomplete="off" spellcheck="false" autofocus>
+                            <div class="add-wrap" @click="newEm">
+                                <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                <span  class="add-wrap-text">Добавить работника</span>
+                            </div>
                         </div>
                         <div class="main">
                             <ul>
-                                <li v-for="(employee, index) in employeesDouble" :key="index">
-                                    <label :for="index" v-html="employee.surname + ' ' + employee.name" @click="picked(employee.id)"></label>
-                                    <button @click="complete(employee.id)">{{ employee.completed == true ? 'Убрать' : 'Выбрать' }}</button>
-                                    <router-link :to="{ name: 'edit', params: { id: employee.id }}">Изменить</router-link>
-                                    <button @click="removeEmployee(employee.id)">Удалить</button>
+                                <li class="main-item" v-for="(employee, index) in employeesDouble" :key="index">
+                                    <div class="main-item-top" :class="{ 'active-check': employee.completed }">
+                                        <div class="main-item-name" @click="picked(employee.id)">
+                                            <div class="main-item-top-wrap-svg" v-bind:class="{ 'active-svg-down': employee.id == ispicked ?  true : false }">
+                                                <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z"/></svg>
+                                            </div>
+                                            <label :for="index" v-html="employee.surname + ' ' + employee.name + ' ' + employee.patronymic"></label>
+                                        </div>
+                                        <div class="main-item-action">
+                                            <div class="main-item-top-wrap">
+                                                <div class="main-item-top-wrap-svg" @click="editEm(employee.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                                </div>
+                                                <router-link class="main-item-top-wrap-text" :to="{ name: 'edit', params: { id: employee.id }}">Изменить</router-link>
+                                            </div>
+                                            <div class="main-item-top-wrap">
+                                                <div class="main-item-top-wrap-svg"  @click="removeEmployee(employee.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
+                                                </div>
+                                                <span  class="main-item-top-wrap-text" @click="removeEmployee(employee.id)">Удалить</span>
+                                            </div>
+                                            <div class="main-item-top-wrap">
+                                                <div class="main-item-top-wrap-svg" @click="complete(employee.id)">
+                                                    <svg v-show="employee.completed == false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.88-11.71L10 14.17l-1.88-1.88c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7c.39-.39.39-1.02 0-1.41-.39-.39-1.03-.39-1.42 0z"/></svg>
+                                                    <svg class="svg-check" v-show="employee.completed == true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29L5.7 12.7c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 14.17l6.88-6.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-7.59 7.59c-.38.39-1.02.39-1.41 0z"/></svg>
+                                                </div>
+                                                <span class="main-item-top-wrap-text" @click="complete(employee.id)">{{ employee.completed == true ? 'Убрать' : 'Выбрать' }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
                                     <div class="no-active" v-bind:class="{ 'active': employee.id == ispicked ?  true : false }">
                                         <button @click="statement()">Скачать заявление</button>
-                                        <button @click="powerAttorneyOrganization()">Скачать дов-ть от орг-и</button>
-                                        <button @click="powerAttorneyEmployee()">Скачать дов-ть от заявителя</button>
+                                        <button @click="powerAttorneyOrganization()">Скачать доверенность от орг-и</button>
+                                        <button @click="powerAttorneyEmployee()">Скачать доверенность от заявителя</button>
                                         <button @click="consentInd()">Скачать согласие</button>
                                     </div>
                                 </li>
@@ -90,6 +140,11 @@ export default {
             search: '',
             ispicked: null,
             rules: ' все поля форм заполняются строго как в документах. ',
+            styleObject: {
+                boxShadow: 'none',
+                // top: '360px',
+                // position: 'static'
+            }
         }
     },
     computed: {
@@ -126,8 +181,37 @@ export default {
         this.$store.dispatch('initialiseStoreMyMOInfo')
         this.$store.dispatch('initialiseStoreIndividual')
         this.$store.dispatch('initialiseStoreAuthRepresent')
+        window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
+        handleScroll (event) {
+            let hTop = 360
+            let search = document.getElementById('search')
+            console.log('window.pageYOffset=', window.pageYOffset)
+            console.log('search.scrollTop=', search.scrollTop)
+            let h = 0
+            if (window.innerWidth>=1200) {
+                h = 72
+            } else h = 307
+            if (window.pageYOffset>=h) { 
+                // this.styleObject.top ="53px";
+                this.styleObject.boxShadow = "0 2px 3px -1px rgba(0,0,0,0.12)";
+                // this.styleObject.position = "fixed"
+            }  else {
+                    // this.styleObject.top = (hTop - window.pageYOffset)+"px";
+                    this.styleObject.boxShadow = "none";
+                    // this.styleObject.position = "static"
+                }  
+        },
+        editEm(id) {
+            this.$router.push('/employees/'+id+'/edit')
+        },
+        newEm() {
+            this.$router.push('/employees/new')
+        },
         removeEmployee(id) {
             this.$store.dispatch('removeEmployee',  id)
         },
@@ -1153,7 +1237,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0 12px;
+    /* padding: 0 12px; */
     font-size: 15px;
 }
 h1 {
@@ -1163,14 +1247,21 @@ h1 {
 header {
     display: flex;
     justify-content: space-between;
-    padding: 7px 0;
+    padding: 7px 12px;
 }
-
+.rul {
+    padding: 0 12px;
+}
 .no-active {
     display: none;
+    flex-direction: column;
+    opacity: 0;
+    transition: all .25s ease-in;
+    /* justify-content:  */
 }
 .active {
-    display: block;
+    display: flex;
+    opacity: 1;
 }
 .btn-link {
     display: block;
@@ -1179,7 +1270,7 @@ header {
     color: rgba(66, 133, 244, 1);
     border-radius: 50%;
     background-color: rgba(66, 133, 244, .15);
-    transition: all .15s ease-out;
+    transition: all .15s ease-in;
     cursor: pointer;
 }
 .btn-link:hover {
@@ -1197,7 +1288,10 @@ header {
     text-align: center;
 }
 .collective {
-    padding: 10px 0 25px;
+    padding: 15px 15px 15px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    border-radius: 8px;
+    margin: 10px 12px;
 }
 .collective-item {
     display: flex;
@@ -1226,6 +1320,10 @@ header {
     border-radius: 8px;
     margin: 0 5px;
 }
+.line {
+    border-top: 1px solid rgba(66, 133, 244, .1);
+    margin: 10px 0;
+}
 .btn-clear {
     border-radius: 19px;
     background-color: rgba(189, 3, 3, .1);
@@ -1245,6 +1343,143 @@ header {
 .btn-clear:hover {
     background-color: rgba(189, 3, 3, 1);
     color: white;
+}
+.btn {
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.btn:hover {
+    color: rgba(66, 133, 244, 1);
+}
+.btn-icon {
+    height: 24px;
+    margin-right: 5px;
+    fill: currentColor;
+}
+.btn-text{
+    padding: 8px 0;
+}
+.search {
+    display: flex;
+    border-top: 1px solid rgb(231, 232, 236);
+    border-bottom: 1px solid rgb(231, 232, 236);
+    padding: 7px 4px;
+    background-color: white;
+    /* border-radius: 4px; */
+    /* position: fixed; */
+    position: sticky;
+    top: 51px;
+    /* width: 100vw; */
+}
+.add-wrap {
+    display: flex;
+    fill: rgba(66, 133, 244, 1);
+    width: 48px;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-wrap-text {
+    display: none;
+}
+.search-input {
+   outline: none;
+   flex-grow: 1;
+   border: none;
+}
+.search-svg {
+    display: flex;
+    fill: #909499;
+    width: 32px;
+    justify-content: center;
+    align-items: center;
+}
+.main {
+    /* margin-top: 50px; */
+    margin-top: 10px;
+    min-height: 100vh;
+    padding: 0 4px;
+}
+li {
+    list-style-type: none;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+.main-item {
+    
+}
+.main-item-top {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    margin-top: 5px;
+}
+
+.main-item-top-wrap-text {
+    display: none;
+}
+.main-item-top-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    cursor: pointer;
+    color: rgb(144, 148, 153);
+}
+.main-item-top-wrap:hover {
+    color: rgba(66, 133, 244, 1);
+}
+.main-item-name, .main-item-action {
+    display: flex;
+    align-items: center;
+}
+.main-item-name {
+    /* align-items: flex-start; */
+    cursor: pointer;
+}
+.main-item-top-wrap-svg {
+    height: 24px;
+    fill: currentColor;
+    transition: all .15s ease-in;
+}
+.main-item-name>label {
+    border-bottom: 1px dashed red;
+    cursor: pointer;
+}
+.svg-check {
+    fill: rgba(66, 133, 244, 1);
+}
+.active-check {
+    background-color: rgba(0,0,0,0.14);
+    border-radius: 4px;
+}
+.active-svg-down {
+    transform: rotate(90deg)
+}
+button {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 19px;
+    border: 0;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    outline: 0;
+    color: rgb(34, 34, 34);
+    cursor: pointer;
+    margin-bottom: 7px;
+    /* background-color: white; */
+    /* background-color: rgba(217, 48, 37, .05);  */
+    /* color: rgba(217, 48, 37, 1);  */
+    /* font-weight: 600; */
+}
+button:hover {
+    background-color: rgba(0,0,0,0.25)
+}
+button:active {
+    background-color: rgba(0,0,0,0.08)
 }
 @media (min-width: 1280px) {
     .mo {
@@ -1270,12 +1505,53 @@ header {
     .mo-body {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
+        justify-content: center;
     }
     .collective {
         order: 2;
     }
     .main-wrap {
         order: 1;
+        width: 800px;
+        margin-right: 40px;
+    }
+    .add-wrap {
+        /* display: none; */
+        width: auto;
+        cursor: pointer;
+    }
+    .add-wrap-text {
+        display: block;
+        color: rgb(144, 148, 153);
+    }
+    .search {
+        border: 1px solid rgb(231, 232, 236);
+        border-radius: 8px;
+        margin-top: 10px;
+        padding-right: 10px;
+        top: 86px;
+    }
+    .main-item-top-wrap-text {
+        display: block;
+        color: rgb(144, 148, 153);
+        text-decoration: none;
+    }
+    .main-item-top-wrap-text:hover {
+        color: rgba(66, 133, 244, 1);
+    }
+    .main-item-top-wrap {
+        width: auto;
+        justify-content: flex-start;
+    }
+    .main-item-top-wrap:nth-child(2) {
+        margin: 0 5px;
+    }
+    .main-item-top-wrap:last-child{
+        width: 92px;
+    }
+    .main-item-top-wrap-svg {
+        margin-right: 5px;
     }
 }
 </style>

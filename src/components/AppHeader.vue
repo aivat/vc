@@ -106,13 +106,13 @@ header {
   font-weight: 500;
   color: rgb(60, 64, 67);
   /* color: rgb(32, 33, 36); */
-  z-index: 10;
+  z-index: 999;
 }
 .wrap-top {
   display: flex;
   justify-content: space-between; 
   height: 50px;
-  background-color: rgba(255, 255, 255, .9);
+  background-color: rgba(255, 255, 255, 1);
 }
 .wrap {
   display: flex;

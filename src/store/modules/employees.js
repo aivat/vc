@@ -271,7 +271,7 @@ const mutations = {
         state.employees[idEdit].place_of_birth = state.place_of_birth
         state.employees[idEdit].surnameHTML = state.surname
         state.employees[idEdit].nameHTML = state.name
-        state.employees[idEdit].completed = state.complete
+        state.employees[idEdit].completed = state.completed
         // state.employees[id].surnameHTML = state.surname,
         // state.employees[id].nameHTML = state.name,
         localStorage.setItem('employees', JSON.stringify(state.employees))
