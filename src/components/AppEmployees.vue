@@ -144,10 +144,14 @@ export default {
                 boxShadow: 'none',
                 // top: '360px',
                 // position: 'static'
-            }
+            },
+            arr: []
         }
     },
     computed: {
+        employeesCompleted() {
+            return this.$store.getters.getEmployeesCompleted
+        },
         countCompleted() {
             return this.$store.getters.countCompleted
         },
@@ -182,11 +186,33 @@ export default {
         this.$store.dispatch('initialiseStoreIndividual')
         this.$store.dispatch('initialiseStoreAuthRepresent')
         window.addEventListener('scroll', this.handleScroll)
+        
     },
     destroyed () {
         window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
+        generationListEmp() {
+            this.employeesCompleted.forEach((item, i) => {
+                this.arr.push([{
+                    rowSpan: 2,
+                    text: i
+                    }, {
+                    text: this.toLowerCaseStr(item.position) + '\n' + item.surname + ' ' + item.name + ' ' + item.patronymic + ' ' + this.getPatronymicTr(), alignment: 'left' 
+                    }],[{
+                    text: ''
+                    }, {
+                        text: 'паспорт серия ' + item.series + ' № ' + item.number + ', выдан ' + item.date_of_issue + ' г. ' + item.issued_by
+                    }
+                ])
+            })
+
+            return this.arr
+        },
+        toLowerCaseStr(text) {
+            let textTemp = text[0] + text.substring(1).toLowerCase()
+            return textTemp
+        },
         handleScroll (event) {
             let hTop = 360
             let search = document.getElementById('search')
@@ -228,6 +254,7 @@ export default {
             this.$store.dispatch('setIndividual', value)
             // this.$store.dispatch('setId', value)
             this.ispicked = value
+            // console.log('qwe=',this.generationListEmp())
         },
        getPatronymicTr() {
             if ( this.ind.patronymicTr != null ) {
@@ -909,13 +936,24 @@ export default {
                         table: {
                             // headers are automatically repeated if the table spans over multiple pages
                             // you can declare how many rows should be treated as headers
-                            headerRows: 1,
-                            widths: ['*'],
+                            headerRows: 2,
+                            widths: [30, '*'],
 
-                            body: [   
-                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
-                                [ 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
-                            ]
+                            body:      this.generationListEmp()
+                            // this.arr
+                                // [ {
+                                //     rowSpan: 2, 
+                                //     text: '1.'
+                                //     }, { 
+                                //     text: this.toLowerCaseStr(this.ind.position) + '\n' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'left'
+                                //     } ],
+                                // [ {
+                                //     text: ''
+                                //     }, {
+                                //         text: 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by
+                                //     }
+                                // ]
+                            
                         }                     
                     }, {
                         text: 'совершать следующие действия:',

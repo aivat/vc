@@ -50,7 +50,10 @@ const getters = {
             count++
         }
         return count
-    }, 0)
+    }, 0),
+    getEmployeesCompleted: state => state.employees.filter((employee, i) => {
+        return  employee.completed
+    })
 }
 const actions = {
     // initialiseStoreCountEmployees({ commit, state }) {
