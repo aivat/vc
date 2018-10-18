@@ -641,9 +641,13 @@ export default {
         }
     },
     created() {
-        if ( this.$route.name == 'edit') {
+        if ( this.$route.name == 'edit') {     
             this.$store.dispatch('getEditEmployee', this.$route.params.id)
-                console.log(' пытаемся сохрнаиться ')
+            console.log(' пытаемся сохрнаиться ')
+        }
+        if ( this.$route.name == 'new') {
+            this.$store.dispatch('clearEmployee')
+            console.log(' пытаемся создать нового ')
         }
     }
 }

@@ -169,6 +169,9 @@ const actions = {
     },
     resetComplete({ commit }) {
         commit('RESET_COMPLETE')
+    },
+    clearEmployee({ commit }) {
+        commit('CLEAR_EMPLOYEE')
     }
 }
 
@@ -251,6 +254,25 @@ const mutations = {
         state.surname = null
         state.name = null
         state.completed = false
+    },
+    CLEAR_EMPLOYEE(state) {
+        state.surname = null
+        state.name = null
+        state.patronymic = null
+        state.patronymicTr = null
+        state.sex = null
+        state.position = null
+        state.snils = null
+        state.series = null
+        state.number = null
+        state.issued_by = null
+        state.date_of_issue = null
+        state.code = null
+        state.date_of_birth = null
+        state.place_of_birth = null
+        state.surname = null
+        state.name = null
+        state.completed = false        
     },
     EDIT_EMPLOYEE(state, idEm) {
         let employees = state.employees

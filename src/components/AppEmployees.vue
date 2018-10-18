@@ -38,13 +38,12 @@
                                 </div>
                                 <div class="btn-text">Обнулить</div>
                             </div>
-                            <!-- <button class="btn-clear">Сбросить</button> -->
                             <div class="collective-item-svg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                             </div>
                         </div>
                         <div class="collective-item">
-                            <div class="btn" @click="reset">
+                            <div class="btn" @click="downloadGenericPowerAttorneyOrganization">
                                 <div class="btn-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13v5c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-5c0-.55-.45-1-1-1s-1 .45-1 1v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6c0-.55-.45-1-1-1s-1 .45-1 1zm-6-.33l1.88-1.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-3.59 3.59c-.39.39-1.02.39-1.41 0L7.7 12.2c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L11 12.67V4c0-.55.45-1 1-1s1 .45 1 1v8.67z"/></svg>
                                 </div>
@@ -54,12 +53,6 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                             </div>
                         </div>
-                        <!-- <div class="collective-item">
-                            <button class="btn-clear" >Скачать</button>
-                            <div class="collective-item-svg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="main-wrap">
                         <div class="search" id="search" v-bind:style="styleObject">
@@ -90,18 +83,31 @@
                                                 <router-link class="main-item-top-wrap-text" :to="{ name: 'edit', params: { id: employee.id }}">Изменить</router-link>
                                             </div>
                                             <div class="main-item-top-wrap">
-                                                <div class="main-item-top-wrap-svg"  @click="removeEmployee(employee.id)">
+                                                <div class="main-item-top-wrap-svg"  @click="showModal = true">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
                                                 </div>
-                                                <span  class="main-item-top-wrap-text" @click="removeEmployee(employee.id)">Удалить</span>
+                                                <span  class="main-item-top-wrap-text" @click="showModal = employee.id">Удалить</span>
+                                                <div v-if="showModal == employee.id" class="modal-mask" @click.self="showModal = false">
+                                                    <div class="modal-container">
+                                                        <div class="modal-wrapper">
+                                                            <div class="modal-actions">
+                                                                <h2 class="modal-h2">Вы действительно хотите удалить?</h2>
+                                                                <div class="modal-wrap-action">
+                                                                    <button @click="removeEmployee(employee.id)" class="modal-wrap-action-button">Удалить</button>
+                                                                    <button @click="showModal = false" class="modal-wrap-action-button button-cancel">Отмена</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
                                             </div>
-                                            <div class="main-item-top-wrap">
+                                            <!-- <div class="main-item-top-wrap">
                                                 <div class="main-item-top-wrap-svg" @click="complete(employee.id)">
                                                     <svg v-show="employee.completed == false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.88-11.71L10 14.17l-1.88-1.88c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7c.39-.39.39-1.02 0-1.41-.39-.39-1.03-.39-1.42 0z"/></svg>
                                                     <svg class="svg-check" v-show="employee.completed == true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29L5.7 12.7c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 14.17l6.88-6.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-7.59 7.59c-.38.39-1.02.39-1.41 0z"/></svg>
                                                 </div>
                                                 <span class="main-item-top-wrap-text" @click="complete(employee.id)">{{ employee.completed == true ? 'Убрать' : 'Выбрать' }}</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         
                                     </div>
@@ -117,7 +123,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>       
     </div>
 </template>
 
@@ -145,7 +151,9 @@ export default {
                 // top: '360px',
                 // position: 'static'
             },
-            arr: []
+            arrEmp: [],
+            arrSign: [],
+            showModal: false
         }
     },
     computed: {
@@ -192,11 +200,32 @@ export default {
         window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
-        generationListEmp() {
+        // pickedDown(id) {
+        //     if ( id == this.pickedEmployee ) {
+        //         return true
+        //     } else return false
+        // },
+        generationListEmpSign() {
+            this.arrSign = []
+            this.arrSign.push([{ text: '№ п/п', alignment: 'center' }, { text: 'Должность и Ф.И.О.', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }]) 
             this.employeesCompleted.forEach((item, i) => {
-                this.arr.push([{
+                this.arrSign.push([{
+                    text: i+1
+                    }, {
+                    text: this.toLowerCaseStr(item.position) + '\n' + item.surname + ' ' + item.name + ' ' + item.patronymic + ' ' + this.getPatronymicTr(), alignment: 'left' 
+                    },  ''
+                    ])
+            })
+
+            return this.arrSign
+
+        },
+        generationListEmp() {
+            this.arrEmp = []
+            this.employeesCompleted.forEach((item, i) => {
+                this.arrEmp.push([{
                     rowSpan: 2,
-                    text: i
+                    text: i+1
                     }, {
                     text: this.toLowerCaseStr(item.position) + '\n' + item.surname + ' ' + item.name + ' ' + item.patronymic + ' ' + this.getPatronymicTr(), alignment: 'left' 
                     }],[{
@@ -207,7 +236,7 @@ export default {
                 ])
             })
 
-            return this.arr
+            return this.arrEmp
         },
         toLowerCaseStr(text) {
             let textTemp = text[0] + text.substring(1).toLowerCase()
@@ -239,6 +268,7 @@ export default {
             this.$router.push('/employees/new')
         },
         removeEmployee(id) {
+            this.showModal = false
             this.$store.dispatch('removeEmployee',  id)
         },
         searchEmployee(req) {
@@ -845,7 +875,7 @@ export default {
             let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_заявление.pdf'
             pdfMake.createPdf(docDefinition).download(name)
         },
-        powerAttorneyOrganization() {
+        downloadGenericPowerAttorneyOrganization() {
             pdfMake.fonts = {
             myFont: {
                 normal: 'TimesNewRoman.ttf',
@@ -937,7 +967,7 @@ export default {
                             // headers are automatically repeated if the table spans over multiple pages
                             // you can declare how many rows should be treated as headers
                             headerRows: 2,
-                            widths: [30, '*'],
+                            widths: [20, '*'],
 
                             body:      this.generationListEmp()
                             // this.arr
@@ -992,32 +1022,19 @@ export default {
                         ],
                         margin: [0, 20]
                     }, {
-                        text: 'Собственноручную подпись уполномоченного представителя:',
+                        text: 'Собственноручную подпись уполномоченного представителя:', pageBreak: 'before',
                         margin: [0, 5]
                     }, {
                         table: {
                             headerRows: 1,
-                            widths: ['auto', '*', 100],
+                            widths: [20, '*', 100],
                             alignment: 'center',
-                            body: [ 
-                                [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
-                                [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
-                            ]
+                            body: this.generationListEmpSign()
+                            // [ 
+                            //     [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
+                            //     [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
+                            // ]
                         } 
-                    // }, {
-                    //     columns: [
-                    //         {
-                    //             width: 'auto',
-                    //             text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic
-                    //         }, {
-                    //             width: 130,
-                    //             fontSize: 8,
-                    //             text: '__________________________          (подпись)',
-                    //             alignment: 'center',
-                    //         }                            
-                    //     ],
-                    //     columnGap: 180,
-                    //     alignment: 'right'
                     }, {
                         text: 'удостоверяю.'
                     }, {
@@ -1256,6 +1273,186 @@ export default {
             }
             let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_сотрудник.pdf'
             pdfMake.createPdf(docDefinition).download(name)            
+        },
+        powerAttorneyOrganization() {
+            pdfMake.fonts = {
+            myFont: {
+                normal: 'TimesNewRoman.ttf',
+                bold: 'TimesNewRomanBold.ttf',
+                italics: 'TimesNewRoman.ttf',
+                bolditalics: 'TimesNewRoman.ttf'
+            }
+          }
+            var docDefinition = {
+                title:'Доверенность работника от организации',
+                pageSize:'A4',
+                pageMargins:[30, 30],
+                defaultStyle: {
+                    font: 'myFont',
+                    fontSize: 11
+                },              
+                
+                styles: {
+                    body: {
+                        leadingIndent: 25,
+                        alignment: 'justify',
+                    },
+                    users: {
+                        decoration: 'underline'
+                    },
+                    usersBold: {
+                        decoration: 'underline',
+                        bold: true
+                    },
+                    data: {
+                       leadingIndent: 25
+                    },
+                    signature: {
+
+                    }
+                },
+                content: [{
+                    text:'ДОВЕРЕННОСТЬ',
+                        margin: [0, 0 , 0, 0],
+                        alignment: 'center',
+                        style: {
+                            bold: true
+                        }
+                    }, {
+                        text:'на выполнение действий от лица организации',
+                        alignment: 'center',
+                        // style:'body',
+                        margin: [0, 0 , 0, 25]
+                    }, {
+                        text: this.mo.locality
+                    }, {
+                        text: this.getDateNow(),
+                        margin: [0, -12, 0, 0],
+                        alignment: 'right'
+                    }, {
+                        text: [
+                            {
+                                text: 'Настоящей доверенностью ' + this.mo.fullname
+                            }, {
+                                text: ' ИНН ' + this.mo.INN + ','
+                            }, {
+                                text: ' ОГРН ' + this.mo.OGRN
+                            }, {
+                                text: ' в лице '
+                            }, {
+                                text: this.mo.position.toLowerCase(),
+                                style: 'users'                                
+                            }, {
+                                text: ' '
+                            }, {
+                                text: this.editNameGenitive(this.mo.head_physician),
+                                style: {
+                                    bold: true,
+                                    decoration: 'underline'
+                                }                                    
+                            }, {
+                                 text: ', действующего на основании '
+                            }, {
+                                text: this.mo.basis.toLowerCase(),
+                                style: 'users'                                
+                            }, {
+                                text: ', уполномочивает'
+                            }
+                        ],
+                        margin: [0, 25, 0, 10],
+                        style: 'body'
+                    }, {
+                        table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            widths: ['*'],
+
+                            body: [   
+                                [ { text: this.toLowerCaseStr(this.ind.position) + '\n' + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
+                                [ 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
+                            ]
+                        }                     
+                    }, {
+                        text: 'совершать следующие действия:',
+                        margin: [0, 15]
+                    }, {
+                        text: '1. Передавать в Удостоверяющий центр ГБУЗ «МИАЦ» комплекты документов, предусмотренных Регламентом Удостоверяющего центра ГБУЗ «МИАЦ» для регистрации, генерации ключа электронной подписи, создания сертификатов ключей проверки электронной подписи на свое имя;',
+                        style:'body'
+                    }, {
+                        text: '2. Выступать в роли Пользователя УЦ ГБУЗ «МИАЦ»;',
+                        style:'body'
+                    }, {
+                        text: '3. Получать в Удостоверяющем центре ГБУЗ «МИАЦ» ключи электронной подписи, сертификаты ключей проверки электронной подписи на свое имя;',
+                        style:'body'
+                    }, {
+                        text: '4. Ознакомиться с информацией, содержащейся в заявлениях, запросах на изготовление, аннулирование (отзыв), приостановку сертификатов и информацией содержащейся в получаемых сертификатах ключей проверки электронных подписей включая кодовые, парольные фразы;',
+                        style:'body'
+                    }, {
+                        text: '5. Получать руководства по обеспечению безопасности использования электронной подписи и средств электронной подписи;',
+                        style:'body'
+                    }, {
+                        text: '6. Передавать в Удостоверяющий центр ГБУЗ «МИАЦ» заявления на аннулирование сертификатов ключей проверки электронных подписей;',
+                        style:'body'
+                    }, {
+                        text: '7. Расписываться в соответствующих учетных формах, предназначенных для исполнения поручений определенных настоящей доверенностью, в том числе на сертификатах ключей проверки электронной подписи на бумажном носителе. ',
+                        style:'body'
+                    }, {
+                        text: [
+                            {
+                                text: 'Настоящая доверенность действительна по '
+                            }, {
+                                text: this.mo.data_power_of_attorney,
+                                style: 'usersBold'
+                            }, {
+                                text: ' г. Без права передоверия.'
+                            }
+                        ],
+                        margin: [0, 20]
+                    }, {
+                        text: 'Собственноручную подпись уполномоченного представителя:',
+                        margin: [0, 5]
+                    }, {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', '*', 100],
+                            alignment: 'center',
+                            body: [ 
+                                [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
+                                [this.toLowerCaseStr(this.ind.position), { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
+                            ]
+                        } 
+                    }, {
+                        text: 'удостоверяю.'
+                    }, {
+                        text: 'Руководитель организации:',
+                        margin: [0, 35, 0, 0]
+                    }, {
+                        columns: [
+                            {
+                                width: 120,
+                                
+                                text: this.mo.position_nominative.toLowerCase()
+                            }, {
+                                width: 130,
+                                fontSize: 8,
+                                text: '__________________________ (подпись)',
+                                alignment: 'center'
+                            }, {
+                                width: '*',
+                                text: this.brevisNameHeadPhysician(this.mo.head_physician)    
+                            }
+                        ],
+                        columnGap: 80
+                    }, {
+                        text: 'М.П.',
+                        fontSize: 8,
+                        margin: [350, 0, 0, 0]
+                    }
+                ]
+            }
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_организация.pdf'
+            pdfMake.createPdf(docDefinition).download(name)          
         }
     }
 }
@@ -1503,21 +1700,82 @@ button {
     padding: 10px 15px;
     border-radius: 19px;
     border: 0;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    /* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08); */
     outline: 0;
     color: rgb(34, 34, 34);
     cursor: pointer;
     margin-bottom: 7px;
+    border: 2px solid #d32f2f;
+    background-color: #fff;
+    color: #d32f2f;
+    font-weight: 600;
+    transition: box-shadow .15s ease-in-out;
+     -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-tap-highlight-color: transparent; 
     /* background-color: white; */
     /* background-color: rgba(217, 48, 37, .05);  */
     /* color: rgba(217, 48, 37, 1);  */
     /* font-weight: 600; */
 }
 button:hover {
-    background-color: rgba(0,0,0,0.25)
+    background-color: #d32f2f;
+    color: #fff;
 }
 button:active {
-    background-color: rgba(0,0,0,0.08)
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px rgb(211, 47, 47);
+}
+button:focus {
+    /* border-color: transparent; */
+    /* box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #99D6D6; */
+}
+.button-cancel {
+    border-color: rgba(66, 133, 244, 1);
+    color: rgba(66, 133, 244, 1);
+}
+.button-cancel:hover {
+    background-color: rgba(66, 133, 244, 1);
+}
+
+.button-cancel:active {
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px rgba(66, 133, 244, 1);
+}
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .2);
+    display: table;
+    transition: opacity .3s ease;
+    display: flex;
+    justify-content: center;
+   align-items: center;
+}
+.modal-wrapper {
+    display: flex;
+    justify-content: center;
+    /* margin-bottom: 50px; */
+    /* align-items: flex-end; */
+}
+.modal-container {
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .43);
+    transition: all .3s ease;
+    padding: 15px 25px;
+}
+.modal-wrap-action {
+    display: flex;
+    justify-content: flex-end;
+}
+.modal-wrap-action>button:first-child {
+    margin-right: 20px;
+}
+.modal-h2 {
+    font-size: 18px;
+    color: rgb(144, 148, 153);
+    margin: 10px 0 30px;
 }
 @media (min-width: 1280px) {
     .mo {
@@ -1562,6 +1820,13 @@ button:active {
     .add-wrap-text {
         display: block;
         color: rgb(144, 148, 153);
+    }
+    .no-active {
+        align-items: center;
+        padding: 15px 0;
+    }
+    .no-active>button {
+        width: 340px;
     }
     .search {
         border: 1px solid rgb(231, 232, 236);
