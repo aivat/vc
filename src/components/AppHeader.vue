@@ -6,7 +6,7 @@
           Генерация документов для получения электронных подписей в ГБУЗ "МИАЦ"
         </router-link>
         <router-link class="item item-name item-name-mobile" to="/">
-          Генерация документов
+          Генерация док-в
         </router-link>
         <!-- <div class="item">
           ШАГ: 1
@@ -123,10 +123,10 @@ header {
   color: rgb(60, 64, 67);
   text-decoration: none;
   padding-left: 15px;
-  margin-right: 25px;
+  margin-right: 15px;
 }
 .item-mo {
-  margin: 0 25px;
+  margin-right:15px;
 }
 .item-logout{
   padding-right: 15px;

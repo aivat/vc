@@ -520,17 +520,17 @@ export default {
                     if (item == 'Р-ОН' ) {
                         console.log(item, 'Р-ОН');
                     }
-                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'СТ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'ДЕТ.') && (item != 'СТ.') && (item != 'РЕСПУБ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
                 })
                 newArr = arrFilter.map( (item, i) => {
                     console.log( i + ": " + item )
                     if ( value == '' ) {
                         err = true
-                        return '<span style="text-decoration: underline; color: red"> Заполните поле</span>'
+                        return '<span style="text-decoration: underline; color: rgba(217, 48, 37, 1)"> Заполните поле</span>'
                     }
                     if (~item.indexOf(".")) {
                         err = true
-                        return '<span style="text-decoration: underline; color: red">' + item + '</span>'
+                        return '<span style="text-decoration: underline; color: rgba(217, 48, 37, 1)">' + item + '</span>'
                     } 
                     if (~item.indexOf("-")) {
                         errT = true

@@ -25,28 +25,28 @@ export default new Router({
     {
       path: '/two',
       name: 'two',
-      component: AppChooseRole
+      component: AppMO
     },
     {
       path: '/three',
       name: 'three',
-      component: AppMO
-    },
-    {
-      path: '/four',
-      name: 'four',
-      component: AppIndividual
-    },
-    {
-      path: '/five',
-      name: 'five',
       component: AppAuthRepresent
     },
-    {
-      path: '/six',
-      name: 'six',
-      component: AppDownload
-    },
+    // {
+    //   path: '/four',
+    //   name: 'four',
+    //   component: AppIndividual
+    // },
+    // {
+    //   path: '/five',
+    //   name: 'five',
+    //   component: AppAuthRepresent
+    // },
+    // {
+    //   path: '/six',
+    //   name: 'six',
+    //   component: AppDownload
+    // },
     {
       path: '/employees',
       component: AppEmployees,

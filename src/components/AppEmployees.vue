@@ -4,7 +4,7 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/five" class="btn-link">
+                        <router-link to="/three" class="btn-link">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="48px" height="48px" viewBox="1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
                             <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6l6,6L15.41,16.59z"/>
@@ -23,7 +23,7 @@
                 </AppRules>
                 <div class="mo-body">
                     <div class="collective">
-                        <div class="collective-item">
+                        <!-- <div class="collective-item">
                             <span>Общая доверенность</span>
                             <span  class="collective-item-count">{{ countCompleted }}</span>
                             <div class="collective-item-svg">
@@ -52,6 +52,21 @@
                             <div class="collective-item-svg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                             </div>
+                        </div> -->
+                        <div class="collective-item">
+                            <span>Согласие представителя</span>
+                        </div>
+                        <div class="line"></div>
+                        <div class="collective-item">
+                            <div class="btn" @click="consentRepresent">
+                                <div class="btn-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13v5c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-5c0-.55-.45-1-1-1s-1 .45-1 1v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6c0-.55-.45-1-1-1s-1 .45-1 1zm-6-.33l1.88-1.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-3.59 3.59c-.39.39-1.02.39-1.41 0L7.7 12.2c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L11 12.67V4c0-.55.45-1 1-1s1 .45 1 1v8.67z"/></svg>
+                                </div>
+                                <div class="btn-text">Скачать</div>
+                            </div>
+                            <!-- <div class="collective-item-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                            </div> -->
                         </div>
                     </div>
                     <div class="main-wrap">
@@ -83,11 +98,11 @@
                                                 <router-link class="main-item-top-wrap-text" :to="{ name: 'edit', params: { id: employee.id }}">Изменить</router-link>
                                             </div>
                                             <div class="main-item-top-wrap">
-                                                <div class="main-item-top-wrap-svg"  @click="showModal = true">
+                                                <div class="main-item-top-wrap-svg"   @click="showModal = employee.id">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
                                                 </div>
                                                 <span  class="main-item-top-wrap-text" @click="showModal = employee.id">Удалить</span>
-                                                <div v-if="showModal == employee.id" class="modal-mask" @click.self="showModal = false">
+                                                <div v-if="showModal === employee.id" class="modal-mask" @click.self="showModal = false">
                                                     <div class="modal-container">
                                                         <div class="modal-wrapper">
                                                             <div class="modal-actions">
@@ -145,7 +160,7 @@ export default {
         return {
             search: '',
             ispicked: null,
-            rules: ' все поля форм заполняются строго как в документах. ',
+            rules: ' добавьте работника и скачайте документы на получение электронной подписи. ',
             styleObject: {
                 boxShadow: 'none',
                 // top: '360px',
@@ -190,6 +205,7 @@ export default {
         }
     },
     created () {
+        this.$store.dispatch('setProgressValue', 100)
         this.$store.dispatch('initialiseStoreMyMOInfo')
         this.$store.dispatch('initialiseStoreIndividual')
         this.$store.dispatch('initialiseStoreAuthRepresent')
@@ -470,22 +486,22 @@ export default {
                         text: [
                             'Я, ',
                             {
-                                text: this.surname + ' ' + this.name + ' ' + this.patronymic,
+                                text: this.authrepresent.surname + ' ' + this.authrepresent.name + ' ' + this.authrepresent.patronymic,
                                 style: 'usersBold',
                             },{
                                 text: ', паспорт: '
                             },{ 
-                                text: this.series + ' ' + this.number,
+                                text: this.authrepresent.series + ' ' + this.authrepresent.number,
                                 style: 'usersBold'
                             },{
                                 text: ' выдан: '
                             },{
-                                text: this.issued_by,
+                                text: this.authrepresent.issued_by,
                                 style: 'usersBold'
                             },{
                                 text: ', дата выдачи: '
                             }, {
-                                text: this.date_of_issue,
+                                text: this.authrepresent.date_of_issue,
                                 style: 'usersBold'
                             }, {
                                 text: ' г.,'
@@ -520,7 +536,7 @@ export default {
                 ]
             }
             console.log('this.surname=', this.surname)
-            let name = this.surname + '_' + this.name.charAt(0) + this.patronymic.charAt(0)+ '_согласие.pdf'
+            let name = this.authrepresent.surname + '_' + this.authrepresent.name.charAt(0) + this.authrepresent.patronymic.charAt(0)+ '_согласие.pdf'
             pdfMake.createPdf(docDefinition).download(name)
         },
         getDateNow() {
@@ -1143,7 +1159,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.ind.position + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
+                                [ { text: this.toLowerCaseStr(this.ind.position) + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
                                 [ 'паспорт: серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
                             ]
                         }                     
@@ -1158,7 +1174,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.authrepresent.position + ' ' + this.authrepresent.surname + ' ' + this.authrepresent.name + ' ' + this.authrepresent.patronymic, alignment: 'center'} ],
+                                [ { text: this.toLowerCaseStr(this.authrepresent.position) + ' ' + this.authrepresent.surname + ' ' + this.authrepresent.name + ' ' + this.authrepresent.patronymic, alignment: 'center'} ],
                                 [ 'паспорт: серия ' + this.authrepresent.series + ' № ' + this.authrepresent.number + ', выдан ' + this.authrepresent.date_of_issue + ' г. ' + this.authrepresent.issued_by]
                             ]
                         }                     
@@ -1369,7 +1385,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.toLowerCaseStr(this.ind.position) + '\n' + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
+                                [ { text: this.toLowerCaseStr(this.ind.position) + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
                                 [ 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
                             ]
                         }                     

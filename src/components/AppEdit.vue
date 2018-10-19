@@ -84,7 +84,7 @@
                         <div class="item item-flex">
                             <label for="series" class="label-name">Серия</label>
                             <div class="item-wrap">
-                                <input class="in series" id="series" v-model.lazy="series" maxlength="4" placeholder="1234" @focus="onFocus('series')" v-bind:class="{ 'input-err': error.series }"> 
+                                <input class="in series" id="series" size="4" v-model.lazy="series" maxlength="4" placeholder="1234" @focus="onFocus('series')" v-bind:class="{ 'input-err': error.series }"> 
                                 <label v-show="!error.series" class="label-show">{{ series }} </label>
                                 <label v-show="error.series" class="label-error">{{ errorText.series }} </label>
                             </div>
@@ -199,6 +199,22 @@ export default {
                 place_of_birth: null,
                 position: null,
                 snils: null
+            },
+            errorFalse: {
+                surname: false ,
+                name: false ,
+                patronymic: false,
+                patronymicTr: false,
+                sex: false,
+                series: false,
+                number: false,
+                issued_by: false,
+                date_of_issue: false,
+                code: false,
+                date_of_birth: false,
+                place_of_birth: false,
+                position: false,
+                snils: false         
             },
             errorHTML: {
                 issued_by: '',
@@ -358,12 +374,28 @@ export default {
             this.sex = 'муж.'
         },
         add(){
-            this.$store.dispatch('addEmployee')
-            this.$router.push('/employees')
+            if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
+                this.$router.push('/employees')
+                this.$store.dispatch('addEmployee')
+            } else {
+                for ( let key in this.error) {
+                    if (this.error[key] != false)
+                        this.error[key] = true
+                }
+                this.rules = 'исправьте все ошибки'
+            }
         },
         edit(){
-            this.$store.dispatch('editEmployee', this.$route.params.id)
-            this.$router.push('/employees')
+            if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
+                this.$store.dispatch('editEmployee', this.$route.params.id)
+                this.$router.push('/employees')
+            } else {
+                for ( let key in this.error) {
+                    if (this.error[key] != false)
+                        this.error[key] = true
+                }
+                this.rules = 'исправьте все ошибки'
+            }
         },
         onFocus(value) {
             console.log('edfefrf')
@@ -496,7 +528,7 @@ export default {
                     if (item == 'Р-ОН' ) {
                         console.log(item, 'Р-ОН');
                     }
-                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'СТ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'ДЕТ.') && (item != 'СТ.') && (item != 'РЕСПУБ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
                 })
                 newArr = arrFilter.map( (item, i) => {
                     console.log( i + ": " + item )
@@ -643,6 +675,21 @@ export default {
     created() {
         if ( this.$route.name == 'edit') {     
             this.$store.dispatch('getEditEmployee', this.$route.params.id)
+        this.checkForm(this.surname, 'surname')
+        this.checkForm(this.name, 'name')
+        this.checkForm(this.patronymic, 'patronymic')
+        // this.checkForm(this.patronymicTr, 'patronymicTr')
+          
+        this.chekSeries(this.series)
+        this.chekNumber(this.number)
+        this.chekIssuedBy(this.issued_by, 'issued_by')
+        this.chekIssuedBy(this.place_of_birth, 'place_of_birth')
+        this.chekCode(this.code)
+        this.chekDate(this.date_of_birth, 'date_of_birth')
+        this.chekDate(this.date_of_issue, 'date_of_issue')
+        this.chekSnils(this.snils)
+        this.chekSex(this.sex)
+        this.chekPosition(this.position)
             console.log(' пытаемся сохрнаиться ')
         }
         if ( this.$route.name == 'new') {
@@ -721,6 +768,7 @@ h1 {
     margin-top: 4px;
 }
 .in {
+    font-family: 'Roboto', sans-serif;
     outline: 0;
     padding: 9px 10px 11px;
     border-radius: 4px;
@@ -728,11 +776,13 @@ h1 {
     font-size: 15px;
     color: #2c3e50;
     font-weight: 600;
+    word-wrap: break-word;
     /* border-color: #caced4; */
 }
 .in::placeholder {
     font-weight: 400;
     color: #909499;
+    /* text-align: left; */
 }
 .in:focus:not(.input-err) {
     border: 1px solid rgb(117, 116, 116);
@@ -771,22 +821,25 @@ svg {
     border-top: 1px solid #caced4;
 }
 .snils {
-    width: 105px;
+    width: 115px;
 }
 .series {
+    display: block;
     width: 35px;
 }
 
 .number {
-    width: 50px;
+    width: 55px;
+   
 }
 .date {
-    width: 75px;
-    /* size: 10; */
+    width: 78px;
+
 }
 
 .code {
-    width: 55px;
+    width: 60px;
+
 }
 
 .btn-wrap {
@@ -842,6 +895,9 @@ svg {
     .item-flex {
         flex-direction: row;
         justify-content: space-between;
+    }
+    .item-block {
+        display: block;
     }
     .item-wrap {
         /* display: flex; */

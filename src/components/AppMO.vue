@@ -4,7 +4,7 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/two" class="btn-link">
+                        <router-link to="/" class="btn-link">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="48px" height="48px" viewBox="1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
                             <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6l6,6L15.41,16.59z"/>
@@ -477,7 +477,7 @@ export default {
         onward() {
             // this.$router.push('/four')
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/four')
+                this.$router.push('/three')
             } else {
                 this.rules = 'исправьте все ошибки'
                 console.log('this.error=',this.error)
@@ -487,7 +487,7 @@ export default {
         }
     },
     created () {
-        this.$store.dispatch('setProgressValue', 49)
+        this.$store.dispatch('setProgressValue', 50)
         this.$store.dispatch('initialiseStoreIndividual')
         this.$store.dispatch('initialiseStoreMyMOInfo')
         this.mo = this.$store.state.mo.myMOInfo

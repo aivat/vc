@@ -4,7 +4,7 @@
             <div class="mo-wrap">
                 <header>
                     <div class="mo-body-link">
-                        <router-link to="/four" class="btn-link">
+                        <router-link to="/two" class="btn-link">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="48px" height="48px" viewBox="1 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
                             <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6l6,6L15.41,16.59z"/>
@@ -309,17 +309,17 @@ export default {
                     if (item == 'Р-ОН' ) {
                         console.log(item, 'Р-ОН');
                     }
-                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'СТ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'ДЕТ.') && (item != 'СТ.') && (item != 'РЕСПУБ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
                 })
                 newArr = arrFilter.map( (item, i) => {
                     console.log( i + ": " + item )
                     if ( value == '' ) {
                         err = true
-                        return '<span style="text-decoration: underline; color: red"> Заполните поле</span>'
+                        return '<span style="text-decoration: underline; color: rgba(217, 48, 37, 1)"> Заполните поле</span>'
                     }
                     if (~item.indexOf(".")) {
                         err = true
-                        return '<span style="text-decoration: underline; color: red">' + item + '</span>'
+                        return '<span style="text-decoration: underline; color: rgba(217, 48, 37, 1)">' + item + '</span>'
                     } 
                     if (~item.indexOf("-")) {
                         errT = true
@@ -389,7 +389,7 @@ export default {
         },
         onward() {
             if ( JSON.stringify(this.errorFalse) === JSON.stringify(this.error) ) {
-                this.$router.push('/six')
+                this.$router.push('/employees')
             } else {
                 for ( let key in this.error) {
                     if (this.error[key] != false)
@@ -403,7 +403,7 @@ export default {
         }
     },
     created () {
-        this.$store.dispatch('setProgressValue', 82)
+        this.$store.dispatch('setProgressValue', 75)
         this.$store.dispatch('initialiseStoreAuthRepresent')
         this.checkForm(this.surname, 'surname')
         this.checkForm(this.name, 'name')
