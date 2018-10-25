@@ -704,7 +704,18 @@ export default {
                             }                            
                         ],
                         columnGap: 2,
-                        //  margin: [0, 0, 0, 2]
+                    }, {
+                    columns: [
+                            {
+                                width: 'auto',
+                                text: 'выдан: '
+                            }, {
+                                width: 'auto',
+                                text: this.ind.issued_by,
+                                style: 'usersBold'
+                            }                            
+                        ],
+                        columnGap: 2,
                     }, {
                         columns: [
                             {
@@ -718,21 +729,6 @@ export default {
                             }                            
                         ],
                         columnGap: 2,
-                        //  margin: [0, 0, 0, 2]
-                    }, {
-                        columns: [
-                            {
-                                // width: 190,
-                                 width: 'auto',
-                                text: 'выдан: '
-                            }, {
-                                width: 'auto',
-                                text: this.ind.issued_by,
-                                style: 'usersBold'
-                            }                            
-                        ],
-                        columnGap: 2,
-                        // margin: [0, 0, 0, 2]
                     }, {
                         columns: [
                             {
@@ -806,7 +802,7 @@ export default {
                                 [ 'Locality', 'Город', this.mo.locality ],
                                 [ 'streetAddress', 'Адрес', this.mo.streetAddress ], 
                                 [ 'Organization', 'Наименование организации', this.mo.shortname_2 ],
-                                [ 'Title', 'Должность', this.ind.position ],
+                                [ 'Title', 'Должность', this.toLowerCaseStr(this.ind.position) ],
                                 [ 'OGRN', 'ОГРН', this.mo.OGRN ],
                                 [ 'SNILS', 'СНИЛС', this.ind.snils ],
                                 [ 'INN', 'ИНН', this.mo.INN ],
@@ -848,7 +844,7 @@ export default {
                         columns: [
                             {
                                 width: 150,
-                                text: this.ind.position
+                                text: this.ind.position.toLowerCase()
                             }, {
                                 width: 100,
                                 fontSize: 8,
@@ -1133,11 +1129,17 @@ export default {
                         // style:'body',
                         margin: [0, 0 , 0, 25]
                     }, {
-                        text: this.mo.locality
+                        text: this.mo.locality,
+                        style: {
+                            bold: true
+                        }
                     }, {
                         text: this.getDateNow(),
                         margin: [0, -12, 0, 0],
-                        alignment: 'right'
+                        alignment: 'right',
+                        style: {
+                            bold: true
+                        }
                     }, {
                         text: [
                             {
@@ -1227,32 +1229,18 @@ export default {
                                 alignment: 'center',                                
                             }
                         ]
-                    // }, {
-                    //     text: 'удостоверяю.',
-                    //     margin: [0, 10, 0, 15]
-                    // }, {
-                    //     table: {
-                    //         headerRows: 1,
-                    //         widths: ['auto', '*', 100],
-                    //         alignment: 'center',
-                    //         body: [ 
-                    //             [{ text: 'Должность доверителя', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
-                    //             [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic, alignment: 'center' },'']
-                    //         ]
-                    //     } 
                     }, {
                         text: 'Должность доверителя:',
                         margin: [0, 35, 0, 0]
                     }, {
                         columns: [
                             {
-                                width: 120,
-                                
+                                width: 150,
                                 text: this.ind.position.toLowerCase()
                             }, {
-                                width: 130,
+                                width: 100,
                                 fontSize: 8,
-                                text: '__________________________ (подпись доверителя)',
+                                text: '________________________ (подпись)',
                                 alignment: 'center'
                             }, {
                                 width: '*',
@@ -1266,13 +1254,12 @@ export default {
                     }, {
                         columns: [
                             {
-                                width: 120,
-                                
+                                width: 150,
                                 text: this.mo.position_nominative.toLowerCase()
                             }, {
-                                width: 130,
+                                width: 100,
                                 fontSize: 8,
-                                text: '__________________________ (подпись)',
+                                text: '________________________ (подпись)',
                                 alignment: 'center'
                             }, {
                                 width: '*',
@@ -1283,7 +1270,7 @@ export default {
                     }, {
                         text: 'М.П.',
                         fontSize: 8,
-                        margin: [350, 0, 0, 0]
+                        margin: [360, 0, 0, 0]
                     }
                 ]
             }
@@ -1340,11 +1327,17 @@ export default {
                         // style:'body',
                         margin: [0, 0 , 0, 25]
                     }, {
-                        text: this.mo.locality
+                        text: this.mo.locality,
+                        style: {
+                            bold: true
+                        }
                     }, {
                         text: this.getDateNow(),
                         margin: [0, -12, 0, 0],
-                        alignment: 'right'
+                        alignment: 'right',
+                        style: {
+                            bold: true
+                        }
                     }, {
                         text: [
                             {
@@ -1463,7 +1456,7 @@ export default {
                     }, {
                         text: 'М.П.',
                         fontSize: 8,
-                        margin: [350, 0, 0, 0]
+                        margin: [360, 0, 0, 0]
                     }
                 ]
             }
