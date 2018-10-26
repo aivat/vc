@@ -309,7 +309,7 @@ export default {
                     if (item == 'Р-ОН' ) {
                         console.log(item, 'Р-ОН');
                     }
-                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'ДЕТ.') && (item != 'СТ.') && (item != 'РЕСПУБ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
+                    return ( (item != 'Р-ОН' ) && (item != 'ОБЛ.') && (item != 'Д.') && (item != 'ДЕР.') && (item != 'ИМ.') && (item != 'ДЕТ.') && (item != 'СТ.') && (item != 'РЕСПУБ.') && (item != 'РЕСП.') && (item != 'Р.') && (item != 'Р-НЕ') && (item != 'Р-НА') && (item != 'С.') && (item != 'ПОС.') && (item != 'П.') && (item != 'ГГ.') && (item != 'Г.') && (item != 'ГОР.') && (item != 'Р.')) 
                 })
                 newArr = arrFilter.map( (item, i) => {
                     console.log( i + ": " + item )
