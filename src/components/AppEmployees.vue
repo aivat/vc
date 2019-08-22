@@ -88,7 +88,8 @@
                                             <div class="main-item-top-wrap-svg" v-bind:class="{ 'active-svg-down': employee.id == ispicked ?  true : false }">
                                                 <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z"/></svg>
                                             </div>
-                                            <label :for="index" v-html="employee.surname + ' ' + employee.name + ' ' + employee.patronymic"></label>
+                                            <!-- <label :for="index" v-html="employee.surname + ' ' + employee.name + ' ' + employee.patronymic"></label> -->
+                                             <label :for="index">{{employee.surname + ' ' + employee.name + ' ' + (employee.patronymic ? employee.patronymic : '')}}</label>
                                         </div>
                                         <div class="main-item-action">
                                             <div class="main-item-top-wrap">
@@ -302,6 +303,11 @@ export default {
             this.ispicked = value
             // console.log('qwe=',this.generationListEmp())
         },
+       getPatronymic() {
+            if ( this.ind.patronymic != null ) {
+                return this.ind.patronymic
+            } else return ''
+        },
        getPatronymicTr() {
             if ( this.ind.patronymicTr != null ) {
                 return this.ind.patronymicTr
@@ -376,7 +382,7 @@ export default {
                         text: [
                             'Я, ',
                             {
-                                text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(),
+                                text: this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr(),
                                 style: 'usersBold',
                             },{
                                 text: ', паспорт: '
@@ -430,7 +436,7 @@ export default {
                 ]
             }
             // console.log('this.surname=', this.surname)
-            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_согласие.pdf'
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + (this.getPatronymic() ? this.getPatronymic().charAt(0) : '')+ '_согласие.pdf'
             pdfMake.createPdf(docDefinition).download(name)
         },
         consentRepresent() {
@@ -644,8 +650,8 @@ export default {
                     //     ],
                     //     style: 'body'
                     }, {
-                        // text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic,
-                        text: this.editNameGenitive(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic) + ' ' + this.getPatronymicTr(),
+                        // text: this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic(),
+                        text: this.editNameGenitive(this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic()) + ' ' + this.getPatronymicTr(),
                         alignment: 'center',
                         margin: [0, 5, 0, 5],
                         style: 'usersBold'
@@ -796,7 +802,7 @@ export default {
                             widths: [ 120, 'auto', '*'],
 
                             body: [
-                                [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr() ],
+                                [ 'CommonName', 'Фамилия, Имя, Отчество', this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr() ],
                                 [ 'Contry', 'RU', 'Россия' ],
                                 [ 'State', 'Область', '56 Оренбургская область' ],
                                 [ 'Locality', 'Город', this.mo.locality ],
@@ -852,7 +858,7 @@ export default {
                                 alignment: 'center',
                             }, {
                                 width: '*',
-                                text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic) 
+                                text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic()) 
                             },
                             
                         ],
@@ -874,7 +880,16 @@ export default {
                     }, {
                         text: 'Регистрационный № _________________ от «_____» ________________ 20__ г.'
                     }, {
-                        text: 'Уполномоченное лицо ГБУЗ «МИАЦ» (доверенность №__ от __ . __ . 20__г.)		___________(______________)',
+                    columns: [
+                            {
+                                width: 380,
+                                text: 'Уполномоченное лицо ГБУЗ «МИАЦ»'
+                            }, {
+                                width: 'auto',
+                                text: '___________(______________)'
+                            }
+                        ],
+                        columnGap: 2,
                         margin: [0, 15, 0, 0]
                     }, {
                         text: 'М.П.',
@@ -884,7 +899,7 @@ export default {
                     }
                 ]
             }
-            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_заявление.pdf'
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + (this.getPatronymic() ? this.getPatronymic().charAt(0) : '')+ '_заявление.pdf'
             pdfMake.createPdf(docDefinition).download(name)
         },
         downloadGenericPowerAttorneyOrganization() {
@@ -987,7 +1002,7 @@ export default {
                                 //     rowSpan: 2, 
                                 //     text: '1.'
                                 //     }, { 
-                                //     text: this.toLowerCaseStr(this.ind.position) + '\n' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'left'
+                                //     text: this.toLowerCaseStr(this.ind.position) + '\n' + this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr(), alignment: 'left'
                                 //     } ],
                                 // [ {
                                 //     text: ''
@@ -1044,7 +1059,7 @@ export default {
                             body: this.generationListEmpSign()
                             // [ 
                             //     [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
-                            //     [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
+                            //     [this.ind.position, { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
                             // ]
                         } 
                     }, {
@@ -1076,7 +1091,7 @@ export default {
                     }
                 ]
             }
-            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_организация.pdf'
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + (this.getPatronymic() ? this.getPatronymic().charAt(0) : '')+ '_дов-ть_организация.pdf'
             pdfMake.createPdf(docDefinition).download(name)          
         },
         powerAttorneyEmployee() {
@@ -1161,7 +1176,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.toLowerCaseStr(this.ind.position) + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
+                                [ { text: this.toLowerCaseStr(this.ind.position) + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
                                 [ 'паспорт: серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
                             ]
                         }                     
@@ -1244,7 +1259,7 @@ export default {
                                 alignment: 'center'
                             }, {
                                 width: '*',
-                                text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic)    
+                                text: this.brevisNameHeadPhysician(this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic())
                             }
                         ],
                         columnGap: 80
@@ -1274,7 +1289,7 @@ export default {
                     }
                 ]
             }
-            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_сотрудник.pdf'
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + (this.getPatronymic() ? this.getPatronymic().charAt(0) : '')+ '_дов-ть_сотрудник.pdf'
             pdfMake.createPdf(docDefinition).download(name)            
         },
         powerAttorneyOrganization() {
@@ -1378,7 +1393,7 @@ export default {
                             widths: ['*'],
 
                             body: [   
-                                [ { text: this.toLowerCaseStr(this.ind.position) + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
+                                [ { text: this.toLowerCaseStr(this.ind.position) + ' ' + this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr(), alignment: 'center'} ],
                                 [ 'паспорт серия ' + this.ind.series + ' № ' + this.ind.number + ', выдан ' + this.ind.date_of_issue + ' г. ' + this.ind.issued_by]
                             ]
                         }                     
@@ -1428,7 +1443,7 @@ export default {
                             alignment: 'center',
                             body: [ 
                                 [{ text: 'Должность', alignment: 'center' }, { text: 'ФИО', alignment: 'center' }, { text: 'Подпись', alignment: 'center' }],
-                                [this.toLowerCaseStr(this.ind.position), { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.ind.patronymic + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
+                                [this.toLowerCaseStr(this.ind.position), { text: this.ind.surname + ' ' + this.ind.name + ' ' + this.getPatronymic() + ' ' + this.getPatronymicTr(), alignment: 'center' },'']
                             ]
                         } 
                     }, {
@@ -1460,7 +1475,7 @@ export default {
                     }
                 ]
             }
-            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + this.ind.patronymic.charAt(0)+ '_дов-ть_организация.pdf'
+            let name = this.ind.surname + '_' + this.ind.name.charAt(0) + (this.getPatronymic() ? this.getPatronymic().charAt(0) : '')+ '_дов-ть_организация.pdf'
             pdfMake.createPdf(docDefinition).download(name)          
         }
     }

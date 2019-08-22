@@ -25,9 +25,15 @@
                             </div>
                         </div>
                         <div class="item item-flex">
-                            <div for="patronymic" class="label-name" >Отчество</div>
+                            <div class="item-top">
+                                <label for="patronymic" class="label-name" >Отчество</label>
+                                <div class="item-top-check" @click="addPatr()">
+                                <svg v-if="readOnlyPatronymic" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                <svg v-if="!readOnlyPatronymic" :class="{ 'svg-active': !readOnlyPatronymic }" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
+                            </div>
                             <div class="item-wrap">
-                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ОТЧЕСТВО" v-bind:class="{ 'input-err': error.patronymic }" @focus="onFocus('patronymic')">
+                                <input class="in" type="text" id="patronymic" v-model.trim="patronymic" placeholder="ОТЧЕСТВО" v-bind:class="{ activeInput: readOnlyPatronymic, 'input-err': error.patronymic }" @focus="onFocus('patronymic')" :readonly="readOnlyPatronymic">
                                 <label class="label-show"> {{ patronymic }} </label>
                                 <label class="label-error" v-show="error.patronymic">{{ errorText.patronymic }} </label>
                             </div>
@@ -122,7 +128,7 @@
                                 <input class="in code" type="text" id="code" v-model="code" maxlength="7" placeholder="502-123" @focus="onFocus('code')" v-bind:class="{ 'input-err': error.code }">
                                 <label class="label-show" v-show="!error.code">{{ code }}</label>
                                 <label class="label-error" v-show="error.code">{{ errorText.code }} </label> 
-                            </div>                           
+                            </div>
                         </div>
                         <div class="item item-flex">
                             <label for="date_of_birth" class="label-name">Дата рождения</label>
@@ -168,6 +174,7 @@ export default {
             isMax: false,
             rules: ' все поля форм заполняются строго как в документах. ',
             readOnlyPatronymicTr: true,
+            readOnlyPatronymic: false,
             errorText: {
                 surname: null,
                 name: null,
@@ -469,6 +476,15 @@ export default {
             } else {
                 this.error[index] = null
             }
+        },
+        addPatr() {
+            if (!this.readOnlyPatronymic) {
+                this.error.patronymic = false
+                this.$store.dispatch('setEmployee', { value: null, index: 'patronymic' }) 
+            } else {
+                this.error.patronymic = null
+            }
+            this.readOnlyPatronymic = !this.readOnlyPatronymic
         },
         addPatrTr() {
             if (!this.readOnlyPatronymicTr) {
